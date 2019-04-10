@@ -1,0 +1,127 @@
+﻿@model CordobaModels.Entities.UserEntity
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cordoba</title>
+    <!-- Global stylesheets -->
+    @*<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">*@
+    <link href="~/Content/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/core.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/components.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    
+    <!-- Core JS files -->
+    <script type="text/javascript" src="~/Scripts/admin/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/admin/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/admin/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/admin/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="~/Scripts/admin/js/core/app.js"></script>
+    <!-- /theme JS files -->
+</head>
+<body>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href=""><img style=" margin-top: -16px; height: 52px;" src="~/Content/admin/images/logo/cordoba-logo.png" alt=""></a>
+            <ul class="nav navbar-nav pull-right visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            @*<ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">
+                        <i class="icon-display4"></i> <span class="visible-xs-inline-block position-right"> Go to website</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-user-tie"></i> <span class="visible-xs-inline-block position-right"> Contact admin</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-cog3"></i>
+                        <span class="visible-xs-inline-block position-right"> Options</span>
+                    </a>
+                </li>
+            </ul>*@
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page container -->
+    <div class="page-container login-container">
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main content -->
+            <div class="content-wrapper">
+                <!-- Content area -->
+                <div class="content">
+                    <!-- Simple login form -->
+                   @using (Html.BeginForm("Login", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                   {
+                  
+                     <div class="panel panel-body login-form">
+                         <div class="text-center">
+                             <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                             <h4 class="content-group">Login to your account <small class="display-block">Enter your credentials below</small></h4>
+                         </div>
+                         <div class="form-group has-feedback has-feedback-left">
+                             <input type="email" class="form-control" name="email" placeholder="Username" maxlength="100" required="required">
+                             <div class="form-control-feedback">
+                                 <i class="icon-user text-muted"></i>
+                             </div>
+                         </div>
+                         <div class="form-group has-feedback has-feedback-left">
+                             <input type="password" class="form-control" name="Password" placeholder="Password" maxlength="50" required="required">
+                             <div class="form-control-feedback" style="right:0px;">
+                                 <span ng-if="params.password"
+                                       ng-click="toggleShowPassword()"
+                                       class="glyphicon glyphicon-eye-open"
+                                       style="cursor: pointer; pointer-events: all;">
+                                 </span>
+                             </div>
+                             
+                             <div class="form-control-feedback">
+                                 <i class="icon-lock2 text-muted"></i>
+
+                             </div>
+
+
+                         </div>
+                         <div class="form-group">
+                             <button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 position-right"></i></button>
+                         </div>
+                         <div class="text-center">
+                             <a href="#">Forgot password?</a>
+                         </div>
+                     </div>
+
+                   }
+                  
+                    <!-- /simple login form -->
+                    <!-- Footer -->
+                    <div class="footer text-muted">
+                        &copy; 2017. <a href="#">Cordoba</a> 
+                    </div>
+                    <!-- /footer -->
+                </div>
+                <!-- /content area -->
+            </div>
+            <!-- /main content -->
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+</body>
+</html>

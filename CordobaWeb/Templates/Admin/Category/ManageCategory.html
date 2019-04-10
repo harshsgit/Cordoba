@@ -1,0 +1,184 @@
+﻿<div ng-controller="ManageCategoryController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage category.</li>
+                </ul>
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="submit" ng-click="InsertOrUpdateCategory(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li>
+                        <button type="button" ui-sref="ShowCategory" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+
+                    <li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Category" ng-click="DeleteCategory(CategoryId)"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <div role="tabpanel" class="form-horizontal" id="messages">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.NameLang_1en.$error.required">Category Name is required.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active" id="id1">
+                                        <a data-target="#GeneralTab" role="tab" data-toggle="tab">General</a>
+                                    </li>
+                                    <li role="presentation" id="id2">
+                                        <a data-target="#DataTab" role="tab" data-toggle="tab">Data</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="GeneralTab">
+                                       
+                                        <!--General Tab-->
+                                        <div class="tab-content">
+                                           
+                                            <div class="tab-pane fade active in" id="tab-general">
+                                                
+                                                <ul class="nav nav-tabs" id="language">
+                                                    <li ng-class="$index==0 ? 'active':''" ng-repeat="LangObj in LanguageList">
+                                                        
+                                                        <a data-target="#{{LangObj.language_id}}" data-toggle="tab" aria-expanded="true"><img ng-src="../../../Content/admin/images/flags/{{LangObj.image}}" title="{{LangObj.name}}"> {{LangObj.name}}</a>
+                                                    </li>
+                                                </ul> 
+                                                <div class="tab-content">
+                                                    <div class="tab-pane {{$index}}" id="{{LangObj.language_id}}" ng-class="$index==0 ? 'active':''" data-ng-repeat="LangObj in LanguageList">
+                                                        <div class="form-group required">
+                                                            <label class="col-lg-2 control-label " ng-class="LangObj.code=='en' ? 'mandatoryField':'' " for="input-name1">Category Name</label>
+                                                            <div class="col-sm-10">
+                                                                <!--<input type="hidden" name="CategoryNameLang[{{LangObj.language_id}}]" id="CategoryObj.CategoryDescriptionList[{{LangObj.language_id}}]" ng-model="CategoryObj.CategoryDescriptionList[$index].language_id" ng-value="{{LangObj.language_id}}" class="form-control" ng-init="ProductObj.ProductDescriptionList[$index].language_id=LangObj.language_id">-->
+                                                                <input type="text" name="NameLang_1{{LangObj.code}}" id="NameLang[{{LangObj.language_id}}]" ng-model="CategoryObj.CategoryDescriptionList[$index].name" placeholder="Category Name" class="form-control" ng-required="'NameLang_1en'=='NameLang_1{{LangObj.code}}'" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="input-description1">Description</label>
+                                                            <div class="col-sm-10">
+                                                                <!--<textarea ckeditor="" name="CategoryDescriptionLang[{{LangObj.language_id}}]" id="CategoryDescriptionLang[{{LangObj.language_id}}]" ng-model="CategoryObj.CategoryDescriptionList[$index].description" rows="5" cols="8"></textarea>-->
+                                                                <div text-angular="text-angular" name="CategoryDescriptionLang[{{LangObj.language_id}}]" id="CategoryDescriptionLang[{{LangObj.language_id}}]" ng-model="CategoryObj.CategoryDescriptionList[$index].description" rows="5" cols="8"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-hide="true">
+                                                            <label class="col-sm-2 control-label" for="input-description1">Report Category</label>
+                                                            <div class="col-sm-3">
+                                                                <select name="ReportCategoryID" class="form-control" ng-model="CategoryObj.ReportCategoryID" ng-options="options.ReportCategoryID as options.ReportCategoryName for   options in ReportCategoryList"></select>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End General Tab-->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="DataTab">
+                                        <div class="tab-pane fade active in" id="tab-data">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="input-Categories">Parent Category</label>
+                                                <div class="col-sm-10">
+
+                                                    <select class="form-control" ng-model="CategoryObj.parent_Id" ng-options="options.Category_Id as options.name for   options in ParentCategoryList | unique:'name'">
+                                                        <option ng-bind-html="options.name" value="{{options.Category_Id}}"></option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Stores</label>
+                                                <div class="col-sm-10">
+                                                    <div class="well well-sm" style="height: 150px; overflow: auto;">
+                                                        <!--<a ng-repeat="Item in CategoryObj.CategoryStoreList.CategoryStore">
+                                                            <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected"><label>&nbsp;&nbsp;{{Item.StoreName}}</label>
+                                                        </a>-->
+                                                        <div class="col-sm-6 checkbox" ng-repeat="Item in CategoryObj.StoreList">
+                                                            <label>
+                                                                <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" ng-click="CheckUnCheckList($index)">
+                                                                {{Item.name}}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="input-sort-order">Sort Order</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="sort_order" min="0" placeholder="Sort Order" id="input-sort-order" ng-model="CategoryObj.sort_order" class=" form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="input-status">Status</label>
+                                                <div class="col-sm-10">
+                                                    <select ng-options="Status.ID as Status.Name  for Status in CategoryStatus"
+                                                            class="form-control" ng-model="CategoryObj.status" name="CategoryStatus"></select>
+                                                </div>
+                                            </div>
+                                            <!--<div class="form-group">
+                                                <label class="col-sm-2 control-label">Upload Image </label>
+                                                <div class="col-sm-3">
+                                                    <input type="file" id="ImageUpload" ng-disabled="Category_Id==0" class="upload" file-model="fileUpload">
+
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <input type="button" class="btn btn-info" ng-disabled="Category_Id==0" ng-click="UploadImage()" value="Upload">
+                                                    <label class="control-label" ng-show="Category_Id==0">Upload functionality will be available in Edit Mode</label>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+

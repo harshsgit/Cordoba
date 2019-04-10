@@ -1,0 +1,587 @@
+﻿<!DOCTYPE html>
+<html ng-app="CordobaApp" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title ng-bind="storeName"></title>
+
+    @Styles.Render("~/bundles/Layout1CSS?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    <link href="~/Content/layout1/css/ContactUs.min.css" rel="stylesheet" />
+
+    <style>
+         @Html.Raw(HttpContext.Current.Session["CssOverride"].ToString());
+    </style>
+
+    @Styles.Render("~/bundles/Layout1CSS?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+
+    @if (Convert.ToString(HttpContext.Current.Session["css_file_name"]) != "")
+    {
+        @Styles.Render("~/Content/layout1/storecss/" + Convert.ToString(HttpContext.Current.Session["css_file_name"]))
+    }
+    <style>
+     @Html.Raw(Convert.ToString(HttpContext.Current.Session["CssOverride"]))
+    </style>
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        .spinner div {
+            /*top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;*/
+            z-index: 999999;
+            opacity: 0.8;
+            background-color: black;
+            width: 20px;
+            height: 20px;
+            position: fixed;
+            left: -20px;
+            top: 40px;
+            border-radius: 50%;
+            animation: move 4s infinite cubic-bezier(.2,.64,.81,.23);
+        }
+
+            .spinner div:nth-child(2) {
+                animation-delay: 150ms;
+            }
+
+            .spinner div:nth-child(3) {
+                animation-delay: 300ms;
+            }
+
+            .spinner div:nth-child(4) {
+                animation-delay: 450ms;
+            }
+
+        #greenDot {
+            background-color: green;
+        }
+
+        #yellowDot {
+            background-color: yellow;
+        }
+
+        #redDot {
+            background-color: red;
+        }
+
+        #blueDot {
+            background-color: blue;
+        }
+
+        @@keyframes move {
+            0% {
+                left: 0%;
+            }
+
+            40% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        #impliedsubmit {
+            color: #263238;
+            background-color: #ffffff;
+        }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div ng-controller="DashboardController" ng-cloak>
+        <input type="hidden" value="false" id="IsFromAdmin" />
+        <div class="header navbar-fixed-top">
+            <header class="w-hidden-small w-hidden-tiny top-nav">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        @*<li><a href="{{StoreDetailInSession.url}}" target="_blank" ng-bind="StoreDetailInSession.url"></a></li>*@
+                        <li ng-if="CustomerDetail.customer_id>0 && (StoreDetailInSession.store_id == 45 || StoreDetailInSession.store_id == 25 || StoreDetailInSession.store_id == 23 || StoreDetailInSession.store_id == 46 ||StoreDetailInSession.store_id == 47 ||StoreDetailInSession.store_id == 1080 )">
+                            <select name="Language" id="input-Language" ng-model="selectedlanguage" ng-change="UpdateLanguageForCustomer(selectedlanguage)"
+                                    ng-options="Language.language_id as Language.name  for Language in LanguageList"
+                                    class="form-control">
+                                <option value="">- Select Language -</option>
+                            </select>
+                        </li>
+                        <li class="active"><a href="" class="cursor-pointer" ui-sref="EditProfile" ng-if="CustomerDetail.customer_id>0">My Account</a></li>
+                        <li><a href="" ng-click="GotoMyWishlist()">My Wishlist</a></li>
+                        <li ng-if="!(CustomerDetail.customer_id>0)">
+                            <a href="" id="lnkLoginPopUp" ng-click="OpenLoginPopUp()">Login</a>
+                        </li>
+                        <li ng-if="CustomerDetail.customer_id>0">
+                            <p class="hi-text">Hi</p>
+                            <a href="javascript:;" class="dropdown-toggle" id="dropdownMenu1" ng-click="GetCustomerDetails();" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-bind="CustomerDetail.firstname +' '+CustomerDetail.lastname"><span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><p>You have: <span ng-bind="(CustomerDetail.points | number : 0)+' Points'"></span></p></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="" class="cursor-pointer" ng-click="Logout()">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <nav class="navbar navbar-default navbar-fixed-top">
+
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand" href="#" ui-sref="Home"><img ng-src="{{StoreDetailInSession.logo}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Logo" /></a>
+                    </div>
+                    <div class="main-menu">
+                        <div class="search-panel">
+                            <a class="cart-block" ui-sref="CartDetail({cartgroup_id:CustomerDetail.cartgroup_id})">
+                                <i class="fa fa-shopping-cart" id="cart_icon"></i>
+                                <span class="badge" ng-bind="CustomerDetail.TotalItemAdded"></span>
+                            </a>
+                            @*<div class="search-block">
+                                    <input type="text" id="txtSearchFor" my-enter="GotoProductList(WhatYouarelookingfor)" ng-model="WhatYouarelookingfor" placeholder="What are you looking for?" />
+                                    <a href="#" ui-sref="LayoutCategoryORProductList({CategoryId:-3})"> </a>
+                                </div>*@
+                            <div class="search-block">
+                                <form role="search">
+                                    <input placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" name="srch-term" ng-model="WhatYouarelookingfor" id="srch-term" type="text">
+                                    <a class="search-icon" ng-click="GotoProductList(WhatYouarelookingfor)"><i class="glyphicon glyphicon-search"></i></a>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active"><a href="" class="cursor-pointer" ui-sref="Home">Home</a></li>
+                                <li><a href="" class="cursor-pointer" ui-sref="LayoutCategoryORProductList({CategoryId:-1})">Our Products</a></li>
+                                <li><a href="" ui-sref="ContactUs">Contact Us</a></li>
+                                <li><a ui-sref="MyReward" ng-if="CustomerDetail.customer_id>0">Recognition</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        @*<div class="loader" data-loading><img class="Centerloader" src="~/Content/layout1/images/loader.gif" /></div>*@
+        <div class="loader" data-loading>
+            <div class="spinner">
+                <div id="greenDot"></div>
+                <div id="yellowDot"></div>
+                <div id="redDot"></div>
+                <div id="blueDot"></div>
+            </div>
+        </div>
+
+        @RenderBody()
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 pb-15">
+                        <a class="footer-logo" href="#" ui-sref="Home"><img ng-src="{{StoreDetailInSession.logo}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Logo" style="max-height:60px"></a>
+                    </div>
+                    <div class="col-lg-8 col-md-9 col-sm-9 col-xs-12 pb-15">
+                        <div id="navbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active"><a href="#" class="cursor-pointer" ui-sref="Home">Home</a></li>
+                                <li><a href="" class="cursor-pointer" ui-sref="EditProfile" ng-if="CustomerDetail.customer_id>0">My Account</a></li>
+                                <li><a href="" class="cursor-pointer" ng-click="OpenTermsCondition()">Terms &amp; Conditions</a></li>
+                                <li><a href="" class="cursor-pointer"  ng-if="StoreDetailInSession.store_id==1087" ui-sref="TermsOfUse">Terms of Use</a></li>
+                                <li><a href="" class="cursor-pointer" ng-if="StoreDetailInSession.store_id==1087" ui-sref="WebsitePrivacyStatement">Website Privacy Statement</a></li>
+                                <li><a href="" class="cursor-pointer" ng-if="StoreDetailInSession.store_id==1087" ui-sref="CookiePolicy">Cookie Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <br />
+                <p>Copyright © @DateTime.UtcNow.Year Cordoba</p>
+            </div>
+        </footer>
+
+
+        <div class="about-overlay"></div>
+        <div class="about-us">
+            <div id="aboutScroll" class="welcome-block">
+                <a href="javascript:;" class="showDesc">About Us</a>
+                <div ng-bind-html="WelcomeMsg[0]"></div>
+                @*<div ng-bind-html="trustAsHtml(WelcomeMsg[0])"></div>*@
+                <div class="more-content">
+                    <div ng-bind-html-unsafe="WelcomeMsg[1] | HTMLtrusted">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <a href="#" id="back-to-top" title="Back to top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </div>
+        <!-- login modal popup -->
+        <!-- login modal popup -->
+        <div class="modal" id="DivLoginModel" role="dialog">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        @*<a href="javascript:;" class="close-modal" data-dismiss="modal">Ok</a>*@
+                        <div class="modal-body">
+                            <div class="login_text">
+                                <div class="icon-text">
+                                    <img src="~/Content/layout1/images/checkin.png" alt="image" />
+                                    <h4>MANAGE YOUR ORDERS</h4>
+                                    <p>Track orders, manage cancellations & returns.</p>
+                                </div>
+                                <div class="icon-text">
+                                    <img src="~/Content/layout1/images/wishlist.png" alt="image" />
+                                    <h4>SHORTLIST ITEMS YOU LOVE</h4>
+                                    <p>Keep items you love on a watchlist.</p>
+                                </div>
+                                <div class="icon-text">
+                                    <img src="~/Content/layout1/images/notification.png" alt="image" />
+                                    <h4>AWESOME OFFERS UPDATES FOR YOU</h4>
+                                    <p>Be first to know about great offers and save.</p>
+                                </div>
+                            </div>
+                            <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate>
+                                <div class="login_page">
+                                    <h2>Login</h2>
+                                    <div class="form-group pt-20">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" name="EmailAddress" id="email" placeholder="Enter email" ng-model="CustomerObj.email" required="required" ng-blur="validateEmailaddress()">
+                                        <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && (loginForm.EmailAddress.$error.required || loginForm.EmailAddress.$error.email)">Enter valid email id!</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password:</label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="CustomerObj.password" required="required">
+                                        <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && loginForm.password.$error.required">Password is required!</p>
+
+                                        <a href="javascript:;" ng-click="ForgotPassword(forgotPasswordForm)" class="forgot-password">Forgot Password?</a>
+                                    </div>
+                                    <div class="chekbox-main checkbox secondary">
+                                        <input type="checkbox" id="checkbox" />
+                                        <label for="checkbox">Remember Me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-click="Login(loginForm)">Submit</button>
+
+                                </div>
+                            </form>
+
+
+                            @*forgot password*@
+                            <form name="forgotPasswordForm" id="forgotPasswordForm" class="form-horizontal" ng-hide="IsVisibleforgotPasswordForm" novalidate>
+                                <div class="login_page">
+                                    <h2>Forgot Password?</h2>
+                                    <div class="form-group pt-20">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" name="EmailAddress" id="emailForgotPassword" placeholder="Enter email" ng-model="otpObj.email" required="required">
+                                        <p class="text-danger validationErrors" ng-show="forgotPasswordForm.$submitted && (!forgotPasswordForm.$valid) && (forgotPasswordForm.EmailAddress.$error.required || forgotPasswordForm.EmailAddress.$error.email)">Enter valid email id!</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-click="ForgotPassword(forgotPasswordForm)">Submit</button>
+                                    <button type="button" class="btn btn-empty mt-5 text-center" ng-click="OpenLoginPopUp()">cancel</button>
+                                </div>
+                            </form>
+
+
+                            @*Verify OTP*@
+                            <form name="OTPForm" id="OTPForm" class="form-horizontal" ng-hide="IsVisibleOTPForm" novalidate>
+                                <div class="login_page">
+                                    <input type="hidden" class="form-control" name="email" id="emailOTP">
+                                    <div class="form-group pt-20">
+                                        <label for="otp">One Time Password:</label>
+                                        <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OneTimePassword" ng-model="otpObj.otp" min="0" max="6" required="required">
+                                        <input type="text" class="form-control" name="otp" id="otpVerifyOTP" placeholder="Enter OneTimePassword" ng-model="otpObj.confirmotp" required="required">
+                                        <p class="text-danger validationErrors" ng-show="OTPForm.$submitted && (!OTPForm.$valid) && (OTPForm.otp.$error.required || OTPForm.otp.$error.otp)">Enter valid One Time Password!</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-disabled="otpObj.otp != otpObj.confirmotp" ng-click="VerifyOTP(OTPForm)">Submit</button>
+
+                                </div>
+                            </form>
+
+                            @* Chnage Password *@
+                            <form name="ChangePasswordForm" id="ChangePasswordForm" class="form-horizontal" ng-hide="IsVisibleChangePassswordForm" novalidate>
+                                <div class="login_page">
+                                    <input type="hidden" class="form-control" name="email" id="emailChangePassword">
+                                    <div class="form-group pt-20">
+                                        <label for="otp">Password:</label>
+                                        <input type="password" class="form-control" name="password" id="otpChangePassword" placeholder="Enter Password" ng-model="otpObj.password" min="0" max="6" required="required">
+                                        <label for="otp">Confirm Password:</label>
+                                        <input type="password" class="form-control" name="confirmPasssword" id="otpConfirmChangePassword" placeholder="Confirm Password" ng-model="otpObj.confirmPassword" min="0" max="6" required="required">
+
+                                        <p class="text-danger validationErrors" ng-show="ChangePasswordForm.$submitted && (!otpObj.$valid) && (otpObj.password != otpObj.confirmPassword)">Password does not match</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-disabled="otpObj.password != otpObj.confirmPassword" ng-click="ChangePassword(ChangePasswordForm)">Submit</button>
+
+                                </div>
+                            </form>
+
+                            @*Reset Password for first time visited customer*@
+                            <form name="FirstTimeVisiteForm" id="FirstTimeVisiteForm" class="form-horizontal" ng-hide="IsVisibleFirstTimeVisiteForm" novalidate>
+                                <div class="login_page">
+                                    <input type="hidden" class="form-control" name="email" id="emailFirstTimeVisit">
+                                    <div class="form-group pt-20">
+                                        <p>Hi .... </p>
+                                        <p>
+                                            Welcome to new platform of {{StoreDetailInSession.name}}store.com We are here to serve you with better user experience. For security reason to access the store, we need your co-operation to set the secured password.
+                                            Pressing on NEXT button will provide you acess for setup new password.
+                                        </p>
+                                        <p>
+                                            Thanks.<br />
+                                            {{StoreDetailInSession.name}}store.com
+                                        </p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-4 text-center" ng-click="OpenResetPasswordForm()">NEXT</button>
+                                </div>
+                            </form>
+
+                            @*Reset Password with OTP cerification*@
+                            <form name="ResetPassForm" id="ResetPassForm" class="form-horizontal" ng-hide="IsVisibleResetPassswordForm" novalidate>
+                                <div class="login_page">
+                                    @*<input type="hidden" class="form-control" name="email" id="emailreset">*@
+                                    <div class="form-group pt-20">
+                                        <p>Kindly check your email that contains One Time Password.</p>
+                                        <label for="otp">One Time Password:</label>
+                                        <input type="text" class="form-control" name="otpreset" id="otpreset" placeholder="Enter OneTimePassword" ng-model="resetObj.otp" min="0" max="6" required="required">
+                                        <p class="text-danger validationErrors" ng-show="ResetPassForm.$submitted && (!ResetPassForm.$valid) && (ResetPassForm.otpreset.$error.required || ResetPassForm.otpreset.$error.otp)">Enter valid One Time Password!</p>
+
+                                        <label for="otp">Password:</label>
+                                        <input type="password" class="form-control" name="password" id="pass" placeholder="Enter Password" ng-model="resetObj.password" min="0" max="6" required="required">
+                                        <label for="otp">Confirm Password:</label>
+                                        <input type="password" class="form-control" name="confirmPasssword" id="cnfirmpass" placeholder="Confirm Password" ng-model="resetObj.confirmPassword" min="0" max="6" required="required">
+                                        <p class="text-danger validationErrors" ng-show="ResetPassForm.$submitted && (!resetObj.$valid) && (resetObj.password != resetObj.confirmPassword)">Password does not match</p>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-disabled="resetObj.password != resetObj.confirmPassword" ng-click="ResetPassword(ResetPassForm)">Submit</button>
+                                </div>
+                            </form>
+
+
+
+                            @*<form name="OTPForm" id="OTPForm" class="form-horizontal" ng-hide="IsVisibleOTPForm" novalidate>
+                                    <div class="login_page">
+                                        <input type="hidden" class="form-control" name="email" id="email">
+                                        <div class="form-group pt-20">
+                                            <label for="otp">OTP:</label>
+                                            <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP" ng-model="otpObj.otp" required="required">
+                                            <p class="text-danger validationErrors" ng-show="OTPForm.$submitted && (!OTPForm.$valid) && (OTPForm.EmailAddress.$error.required || OTPForm.EmailAddress.$error.email)">Enter valid OTP!</p>
+                                        </div>
+                                        <button type="submit" class="btn btn-empty mt-5 text-center" ng-click="ForgotPassword(OTPForm)">Submit</button>
+                                    </div>
+                                </form>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms and Condition popup -->
+        <div class="modal" id="DivTermsConditionModel" role="dialog">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-lg vertical-align-center">
+                    <div class="modal-content">
+                        <div class="panel-heading">
+                        </div>
+                        <a href="javascript:;" class="close-modal" data-dismiss="modal">Ok</a>
+                        <div class="modal-body category-list" style="background-color:whitesmoke">
+                            <div ng-bind-html="TermsConditionMsg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Terms and Condition popup -->
+    </div>
+
+    @Scripts.Render("~/bundles/Layout1Js?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    @*@Scripts.Render("~/bundles/angular")*@
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/angular-dragdrop.min.js"></script>
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/angular-local-storage.js"></script>
+    <script src="~/Scripts/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular-datatables.min.js"></script>
+    <script src="~/Scripts/angular-ui-switch.min.js"></script>
+    <script src="~/Scripts/angular-star-rating/main.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-0.12.1.min.js"></script>
+
+    <script src="~/Scripts/ng-ckeditor.js"></script>
+    @Scripts.Render("~/bundles/appConfig?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    @Scripts.Render("~/bundles/LayoutControllers?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    @*<script src="~/Scripts/jquery.twbsPagination.min.js"></script>*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.mCustomScrollbar.defaults.theme = 'dark-thick';
+
+            ApplicationVersion = '@Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"])';
+
+            $(".category-list, #aboutScroll").mCustomScrollbar();
+            $(".showDesc").click(function () {
+                var hidden = $(".about-us");
+                if (hidden.hasClass("visible")) {
+                    hidden.animate({ "right": "-350px" }, "slow").removeClass("visible");
+                    $(".showDesc").animate({ "right": "-54px" }, "slow").removeClass("visible");
+                    $(".showDesc").text("About Us");
+                    $(".about-overlay").fadeOut("slow");
+
+                } else {
+                    hidden.animate({ "right": "0px" }, "slow").addClass("visible");
+                    $(".showDesc").animate({ "right": "197px" }, "slow").addClass("visible");
+                    $(".showDesc").text("Close");
+                    $(".about-overlay").fadeIn("slow");
+                }
+            });
+
+            //$('#readMore').click(function () {
+
+            //    $('.more-content').slideToggle();
+
+            //    var LinkText = $("#readMore").text();
+            //    LinkText = LinkText.replace(/\s/g, '');
+            //    if (LinkText == "ReadMore") {
+            //        $("#readMore").text("Read Less");
+            //    }
+            //    else {
+            //        $("#readMore").text("Read More");
+            //    }
+            //});
+
+            $(".readMore").click(function () {
+                $('.more-content').slideToggle();
+                $(".readMore").hide();
+                $(".readLess").show();
+            });
+
+            $(".readLess").click(function () {
+                $('.more-content').slideToggle();
+                $(".readLess").hide();
+                $(".readMore").show();
+            });
+
+            $('.category-list').mCustomScrollbar();
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 1) {
+                $('.top-nav').addClass("hidden");
+            }
+            else {
+                $('.top-nav').removeClass("hidden");
+            }
+        });
+
+        if ($('#back-to-top').length) {
+            var scrollTrigger = 100, // px
+		        backToTop = function () {
+		            var scrollTop = $(window).scrollTop();
+		            if (scrollTop > scrollTrigger) {
+		                $('#back-to-top').addClass('show');
+		            } else {
+		                $('#back-to-top').removeClass('show');
+		            }
+		        };
+            backToTop();
+            $(window).on('scroll', function () {
+                backToTop();
+            });
+            $('#back-to-top').on('click', function (e) {
+                e.preventDefault();
+                $('html,body').animate({
+                    scrollTop: 0
+                }, 700);
+            });
+        }
+
+        function CartAnimation(target, Image) {
+            var cart = $('#cart_icon');
+            if (Image != undefined && Image != null) {
+                var imgtodrag = $('<img id="dynamic">');
+                imgtodrag.attr('src', Image);
+            }
+            else {
+                var imgtodrag = $('<img id="dynamic">');
+                imgtodrag.attr('src', '/Content/layout1/images/step-4-process.png');
+            }
+            if (imgtodrag) {
+                var imgclone = imgtodrag.clone()
+                if (imgclone.length) {
+                    imgclone.offset({
+                        top: target.offset().top,
+                        left: target.offset().left
+                    })
+                  .css({
+                      //'opacity': '0.5',
+                      'position': 'absolute',
+                      'width': '150px',
+                      'z-index': '99999'
+                  });
+
+                    imgclone.appendTo($('body'))
+                    .animate({
+                        'top': cart.offset().top + 10,
+                        'left': cart.offset().left + 10,
+                        'width': 75,
+                    }, 1000, 'easeInOutExpo');
+
+                    setTimeout(function () {
+                        cart.effect("shake", {
+                            times: 2
+                        }, 200);
+                    }, 0);
+
+                    imgclone.animate({
+                        'width': 0,
+                        'height': 0
+                    }, function () {
+                        $(this).detach()
+                    });
+                }
+            }
+        }
+
+    </script>
+
+    <div class="modal fade" id="Reloadlookup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Cordoba Store</h4>
+                </div>
+                <div class="wthbox">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">System Updates</h3>
+                        </div>
+                        <div class="panel panel-body">
+                            <div class="row">
+                                <b>
+                                    There have been updated to the system. Click OK to refresh the page.<br />
+                                    <span style="color:red;"> Note:  All unsaved changes will be lost.</span>
+                                    <br /><br />
+                                    Click Later to go back and save all changes first.
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="javascript: window.location.reload(false);">OK</button>
+                        <button type="button" class="btn btn-default" onclick="javascript: angular.element('#Reloadlookup').modal('hide');">LATER</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

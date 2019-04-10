@@ -1,0 +1,122 @@
+﻿<div ng-controller="AddOrUpdateCurrencyController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage Currency.</li>
+                </ul>
+                <div class="text-right">
+
+                </div>
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <li>
+                        <button type="submit" ng-click="SaveCurrency(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Currency" ng-click="DeleteCurrency(CurrencyObj)"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                       <div role="tabpanel" class="form-horizontal" id="messages">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.Title.$error.required">Title is required.</li>
+                                                <li ng-show="form.Code.$error.required">Code is required.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-1">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Title</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="Title" maxlength="32" placeholder="Enter Title" ng-model="CurrencyObj.title" required="required">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Code</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="Code" maxlength="3" placeholder="Enter Code" ng-model="CurrencyObj.code" required="required">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Symbol Left</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="LeftSymbol" maxlength="12" placeholder="Enter Left Symbol" ng-model="CurrencyObj.symbol_left">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Symbol Right</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="RightSymbol" maxlength="12" placeholder="Enter Right Symbol" ng-model="CurrencyObj.symbol_right">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Decimal Place</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="DecimalPlace" maxlength="1" placeholder="Enter Decimal Place" ng-model="CurrencyObj.decimal_place">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Value</label>
+                                        <div class="col-lg-8">
+                                            <input type="number" class="form-control" name="CurrencyValue" maxlength="14" placeholder="Enter Value" ng-model="CurrencyObj.value" required="required">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

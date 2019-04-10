@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CordobaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblCompanyLayout">
+    <Key>
+      <PropertyRef Name="CompanyLayoutId" />
+    </Key>
+    <Property Name="CompanyLayoutId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HostName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="LayoutName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="2000" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="CordobaModelStoreContainer">
+    <EntitySet Name="tblCompanyLayout" EntityType="Self.tblCompanyLayout" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

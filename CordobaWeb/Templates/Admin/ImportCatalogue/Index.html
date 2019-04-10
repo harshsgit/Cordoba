@@ -1,0 +1,261 @@
+﻿<style>
+    .modal-dialog {
+        z-index: 0;
+    }
+</style>
+
+
+
+<div ng-controller="ImportCatalogueController">
+    <form id="form" class="form-horizontal" name="form" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li> This page allows you to import a supplier catalogue by uploading a CSV file</li>
+                </ul>
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="submit" ng-click="ImportCatalogue(false)" class="btn btn-success cursor-pointer">Import <i class="fa fa-cloud-upload position-right"></i></button>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div role="tabpanel" class="form-horizontal" id="messages">
+                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && (ImportCatalogueObject.SupplierId==0 || ImportCatalogueObject.language_id==0 || ImportCatalogueObject.catalogue_Id==0)">
+                            <ul ng-show="validationErrors">
+                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                            </ul>
+                            <ul ng-show="form.$submitted && (ImportCatalogueObject.SupplierId==0 || ImportCatalogueObject.language_id==0 || ImportCatalogueObject.catalogue_Id==0)">
+                                <li ng-show="ImportCatalogueObject.SupplierId<=0">Supplier is required.</li>
+                                <li ng-show="ImportCatalogueObject.language_id<=0">Language is required.</li>
+                                <li ng-show="ImportCatalogueObject.catalogue_Id<=0">Destination Catalogue is required.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover list">
+                            <tbody>
+                                <tr>
+                                    <td width="25%">Supplier: </td>
+                                    <td>
+                                        <select ng-options="supplier.supplier_id as supplier.name for supplier in SupplierList" ng-model="ImportCatalogueObject.SupplierId" style="width:45%" class="form-control" name="ddSupplier" required="required"></select>
+                                        <!--<select name="supplier" style="width:45%" class="form-control">
+                                            <option value="1">Procurement International Limited</option>
+                                            <option value="2">Apple</option>
+                                            <option value="3">John Lewis</option>
+                                            <option value="4">Drum Lessons R Us</option>
+                                            <option value="5">Red Letter Day</option>
+                                            <option value="6">Virgin Experience</option>
+                                            <option value="7">All Garden Fun</option>
+                                            <option value="8">Tesco Direct</option>
+                                            <option value="9">Mow Direct</option>
+                                            <option value="10">Splash and Relax</option>
+                                            <option value="11">Home Leisure Direct</option>
+                                            <option value="12">PlayGamesUK</option>
+                                            <option value="13">Bose</option>
+                                            <option value="14">Liberty Games</option>
+                                            <option value="15">Simply Acer</option>
+                                            <option value="16">Best Buy</option>
+                                            <option value="17">Edenred Travel</option>
+                                            <option value="18">Currys</option>
+                                            <option value="19">Waitrose</option>
+                                            <option value="20">Whiskey Exchange</option>
+                                            <option value="21">Waud Wine Club</option>
+                                            <option value="22">Edenred Vouchers</option>
+                                            <option value="23">Jessops</option>
+                                            <option value="24">Detector Distribution </option>
+                                            <option value="25">E-buyer.com</option>
+                                            <option value="26">Jigsaw24 (Apple)</option>
+                                            <option value="27">Amazon</option>
+                                            <option value="28">AV Promotions </option>
+                                            <option value="48">Edenred</option>
+                                        </select>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="25%">Language:</td>
+                                    <td>
+                                        <select ng-options="lang.language_id as lang.name for lang in LanguageList" ng-model="ImportCatalogueObject.language_id " style="width:20%" class="form-control" name="ddlanguage" required="required"></select>
+                                        <!--<select name="language" style="width:20%" class="form-control" >
+                                            <option value="1">English</option>
+                                            <option value="2">Deutsch</option>
+                                            <option value="3">Français</option>
+                                            <option value="4">Italiano</option>
+                                            <option value="5">Español</option>
+                                            <option value="6">Português</option>
+                                            <option value="7">Nederlands</option>
+                                        </select>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="25%">Catalogue source CSV (UTF-8 encoded): </td>
+                                    <td>
+                                        <!--<input type="file" name="upload">-->
+                                        <input type="file" ng-model-instant id="fileToUpload" onchange="angular.element(this).scope().setFiles(this)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td width="25%">
+                                        Destination Catalogue: 				<span class="help">Nb: All existing products in this catalogue will be removed!</span>
+                                    </td>
+                                    <td>
+                                        <select ng-options="catalog.catalogue_Id as catalog.Name for catalog in CatalogueList" ng-model="ImportCatalogueObject.catalogue_Id" style="width:45%" class="form-control" name="ddCatalogue" required="required"></select>
+                                        <!--<select name="catalouge" style="width:45%" class="form-control">
+                                            <option value=""> --- None --- </option>
+                                            <option value="18">CVD Edenred Vouchers</option>
+                                            <option value="20">Edenred</option>
+                                            <option value="23">Miscellaneous Suppliers</option>
+                                            <option value="24">Xmas Hampers</option>
+                                            <option value="42">SSG Procurement UK (Without Nursery or Apple)</option>
+                                            <option value="45">PB Jigsaw24 Multilingual (Apple)</option>
+                                            <option value="46">AV Promotions (Kindle)</option>
+                                            <option value="47">Procurement (Australia)</option>
+                                            <option value="48">Procurement (India)</option>
+                                            <option value="49">Procurement (Canada)</option>
+                                            <option value="53">Somcan (Canada)</option>
+                                            <option value="55">Spicers Hampers</option>
+                                            <option value="56">Harco (United States)</option>
+                                            <option value="57">Edenred (India)</option>
+                                            <option value="58">Procurement UK (Without Apple)</option>
+                                            <option value="59">Procurement UK (Without HSVouchers or Apple)</option>
+                                            <option value="61">PB Procurement Multilingual (Without Apple)</option>
+                                            <option value="62">PB UK Amazon Vouchers</option>
+                                            <option value="63">Spicers Hampers (No Alcohol)</option>
+                                            <option value="64">Procurement UK (Without Alcohol or Apple)</option>
+                                            <option value="65">CVD Compliments Vouchers</option>
+                                            <option value="66">Edenred (UAE)</option>
+                                            <option value="67">Edenred (Japan)</option>
+                                            <option value="68">Edenred (NZ)</option>
+                                            <option value="69">Jigsaw24 UK 2015 (Apple)</option>
+                                            <option value="72">Grenke Vouchers</option>
+                                            <option value="73">Accumulate (Australia)</option>
+                                            <option value="77">Data Cable 1</option>
+                                            <option value="78">Procurement EU Multilanguage</option>
+                                            <option value="79">Procurement UK (without HS Vouchers)</option>
+                                            <option value="81">All Vouchers</option>
+                                            <option value="82">ngc uk</option>
+                                            <option value="84">Virgin Wines</option>
+                                            <option value="85">Jigsaw Apple 2016</option>
+                                            <option value="86">Spicer Easter Hampers</option>
+                                            <option value="87">Harrods GC</option>
+                                            <option value="88">Irish Catalogue</option>
+                                            <option value="89">Jigsaw Nov 2016</option>
+                                            <option value="90">This is it 2016</option>
+                                            <option value="91">PB CA Vouchers</option>
+                                            <option value="92">PB US Vouchers</option>
+                                            <option value="93"> Black Cactus AU</option>
+                                            <option value="94"> Vouchers AU</option>
+                                            <option value="95">Spicers Valentines 2017</option>
+                                            <option value="96">Interflora 2017</option>
+                                            <option value="97">German Vouchers</option>
+                                            <option value="98">French Vouchers</option>
+                                            <option value="99">ngc-eu</option>
+                                            <option value="100">Spicers Mothers Day 2017</option>
+                                        </select>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="page-header-content" ng-if="NotValidRecordsInImport.length>0">
+            <div class="panel panel-default form-horizontal">
+                <div class="panel-body">
+                    <div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-1 text-right  text-bold"> Note: </div>
+                            <div class="col-sm-9 text-bold">
+                                Code,Name,price_excl_vat,description,delivery_zone_PIL_RATE_1,image_full_url Fields are mandatory While Importing Data.
+                                <br />
+                                <br />
+                                So, This are invalid records in Attached File.
+                                <br />
+                                <br />
+                                Do you want to Countine??
+                                <br />
+                                <br />
+                                <input type="button" data-toggle="modal" data-target="#DivConfirmIgnore" value="Submit" class="btn btn-primary" />
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped datatable-responsive" width="100%" datatable="ng" dt-column-defs="dtColumnDefs" dt-options="dtOptions">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Item in NotValidRecordsInImport">
+                                <td ng-bind="Item.code"></td>
+                                <td ng-bind="Item.name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="DivConfirmIgnore">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title">Confirmation</h5>
+                    </div>
+                    <div class="modal-body">
+                        Do you Confirm for Importing Data that are valid? Please note no any kind of Opeartion will perform on Invalid data.
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="ImportCatalogue(true)">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    $("#fileToUpload").change(function () {
+        var fileExtension = ['csv','xls','xlsx'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Only formats are allowed : " + fileExtension.join(', '));
+        }
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+

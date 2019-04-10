@@ -1,0 +1,105 @@
+﻿<div class="container" ng-controller="CartDetailController">
+    <div class="order-detail cart-detail mt-30">
+        <div class="col-sm-12">
+            <div class="points">
+                <ul>
+                    <li>
+                        <p class="bag-desc">{{AllItemTotalPoints}} Points will be deducted from your account.<span class="pull-right">Available Points : {{CustomerDetail.points}} Points</span></p>
+                    </li>              
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="orders" ng-repeat="Item in CartItemList">
+                <div class="order-desc">
+                    <div class="col-md-7 col-sm-8">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#"><img class="media-object" ng-src="{{Item.ProductImage}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product"></a>
+                            </div>
+                            <div class="media-body">
+                                <a ui-sref="LayoutProductDetail({ProductId:Item.product_id})" class="media-heading" ng-bind-html="Item.name"></a>
+                                <p class="model-no"><span>Modal Number: </span>{{Item.model}}</p>
+                                <p class="model-no"><span>Quantity:</span> {{Item.quantity}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-4">
+                        <p class="product-price"><span>Points:</span> {{Item.points}}</p>
+                        <p class="product-price" ng-if="Item.quantity>1"><span>Subtotal: {{Item.totalpoints}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="orders">
+                <div class="address">
+                    <div class="addess-heading">
+                        <h2>Delivery Address</h2>
+                        <div class="delivery-address">
+                            <a href="#" ui-sref="AddressBook">Add New</a>
+                        </div>
+                    </div>
+                    <div class="addess-desc mt-20">
+                        <h4>{{CustomerDetail.firstname}} {{CustomerDetail.lastname}}</h4>
+                        <p>{{SelectedCustomerAddress.company}}<br />{{SelectedCustomerAddress.address_1}} <br> {{SelectedCustomerAddress.address_2}}, <br> {{SelectedCustomerAddress.postcode}},{{SelectedCustomerAddress.city}}, <br> {{SelectedCustomerAddress.county}}</p>
+                        <span style="color:red;" ng-show="ValidateAddress">Please add Address1 and/or Postcode for selected address.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chckout-add">
+                <a href="" ng-click="NavigateAddressSlide(SelectedCustomerAddress.SelectedIndex,1)"><i class="fa fa-angle-left"></i></a>
+                <p>{{SelectedCustomerAddress.company}}, {{SelectedCustomerAddress.address_1}} {{SelectedCustomerAddress.address_2}},{{SelectedCustomerAddress.postcode}},{{SelectedCustomerAddress.city}}</p>
+                <a href="" ng-click="NavigateAddressSlide(SelectedCustomerAddress.SelectedIndex,1)"><i class="fa fa-angle-right"></i></a>
+            </div>
+            <div class="orders">
+                <div class="address">
+                    <div class="addess-heading">
+                        <h2>Comment</h2>
+                    </div>
+
+                    <div class="addess-desc mt-20">
+                        <textarea class="form-control" ng-model="PlaceOrderObj.Comment" placeholder="Write your comment here..."></textarea>
+                        <!--<textarea class="form-control comment" rows="2" id="comment"></textarea>-->
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="orders">
+                <div class="address">
+                    <!--<div class="addess-desc mt-20">
+                        <input type="checkbox" class="cursor-pointer ng-pristine ng-valid ng-touched" ng-model="TermAndCondition"><span class="ml-10">Please accept Terms &amp; Conditions </span>
+                        <button class="cursor-pointer pr-10 btn-link" ng-click="OpenTermsCondition()">Terms &amp; Conditions</button>
+                        <br /><span style="color:red;" ng-show="validationmsg">Please select Terms &amp; Conditions</span>
+                    </div>-->
+                    <div class="chekbox-main checkbox secondary">
+                        <input type="checkbox" id="checkbox" ng-model="TermAndCondition">
+                        <label for="checkbox">Please accept Terms &amp; Conditions</label>
+                        <button class="cursor-pointer pr-10 btn-link" ng-click="OpenTermsCondition()">Terms &amp; Conditions</button>
+                    </div>
+                    <br /><span style="color:red;" ng-show="validationmsg">Please select Terms &amp; Conditions.</span>
+                </div>
+            </div>
+
+                <div class="orders">
+                    <div class="address">
+                        <div class="addess-heading">
+                            <h2>Payment Summary</h2>
+                        </div>
+
+                        <div class="payment-summary mt-20" ng-repeat="Item in CartItemList">
+                            <p ng-bind="'- '+Item.name"></p>
+                            <p ng-bind="Item.totalpoints +' Points'"></p>
+                        </div>
+                        <div class="payment-summary total">
+                            <span>Order Total:</span>
+                            <span ng-bind="AllItemTotalPoints+' Points'"></span>
+                            <br />
+                            <a href="" ng-click="PlaceOrder()" class="btn btn-empty">Place Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

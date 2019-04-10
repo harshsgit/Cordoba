@@ -1,0 +1,87 @@
+﻿<div ng-controller="ManageCatalogueController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage Manage Product Catalogue.</li>
+                </ul>
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="submit" ng-click="InsertUpdateCatalogue(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Catalogue" ng-click="DeleteCatalogue(CatalogueObj)"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <div role="tabpanel" class="form-horizontal" id="messages">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.Name.$error.required"> Product catalogue name is required.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-1">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Product Catalogue Name</label>
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" name="Name" maxlength="60" placeholder="Enter Country Name" ng-model="CatalogueObj.Name" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

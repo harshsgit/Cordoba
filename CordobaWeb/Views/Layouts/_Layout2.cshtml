@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html ng-app="CordobaApp" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title ng-bind="storeName"></title>
+    <!-- Bootstrap -->
+    @Styles.Render("~/bundles/Layout2CSS?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    @if (Convert.ToString(HttpContext.Current.Session["css_file_name"]) != "")
+    {
+        @Styles.Render("~/Content/layout2/storecss/" + Convert.ToString(HttpContext.Current.Session["css_file_name"]))
+    }
+    <style>
+     @Html.Raw(HttpContext.Current.Session["CssOverride"].ToString());
+    </style>
+    <style>
+        .spinner div {
+            /*top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;*/
+            z-index: 999999;
+            opacity: 0.8;
+            background-color: black;
+            width: 20px;
+            height: 20px;
+            position: fixed;
+            left: -20px;
+            top: 40px;
+            border-radius: 50%;
+            animation: move 4s infinite cubic-bezier(.2,.64,.81,.23);
+        }
+
+            .spinner div:nth-child(2) {
+                animation-delay: 150ms;
+            }
+
+            .spinner div:nth-child(3) {
+                animation-delay: 300ms;
+            }
+
+            .spinner div:nth-child(4) {
+                animation-delay: 450ms;
+            }
+
+        #greenDot {
+            background-color: green;
+        }
+
+        #yellowDot {
+            background-color: yellow;
+        }
+
+        #redDot {
+            background-color: red;
+        }
+
+        #blueDot {
+            background-color: blue;
+        }
+
+        @@keyframes move {
+            0% {
+                left: 0%;
+            }
+
+            40% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+          #impliedsubmit {
+            color: #263238;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="master-container" ng-controller="DashboardController" ng-cloak>
+        <input type="hidden" value="false" id="IsFromAdmin" />
+        <div class="fix-header  navbar-fixed-top">
+            @*<div class="top-header">
+                <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="login">
+                            <ul>
+                                <li><a href="#">My Account</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li>
+                                    <p class="hi-text ">Hello</p>
+                                    <a href="javascript:;" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Nitin Patel <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li><p>you have: <span>4000 Points</span></p></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li class="active"><a class="acoount-info" href="editProfile.html">Personal Info</a></li>
+                                        <li><a class="acoount-info" href="changePassword.html">Change Password</a></li>
+                                        <li><a class="acoount-info" href="addressBook.html">Address Book</a></li>
+                                        <li><a class="acoount-info" href="orderHistory.html">Order History</a></li>
+                                        <li><a class="acoount-info" href="rewardPoints.html">Reward Points</a></li>
+                                        <li><a class="logout" href="#">Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+            </div>*@
+            <div class="top-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="login">
+                                <ul class="topnavbar-nav">
+                                    @*<li><a href="{{StoreDetailInSession.url}}" target="_blank" ng-bind="StoreDetailInSession.url"></a></li>*@
+                                    <li ng-if="CustomerDetail.customer_id>0">
+                                        <p class="hi-text ">You have {{CustomerDetail.points}} Points</p>
+                                    </li>
+                                    <li ng-if="CustomerDetail.customer_id>0 && (StoreDetailInSession.store_id == 45 || StoreDetailInSession.store_id == 25 || StoreDetailInSession.store_id == 23 || StoreDetailInSession.store_id == 46 ||StoreDetailInSession.store_id == 47 ||StoreDetailInSession.store_id == 1080 )">
+                                        <select name="Language" id="input-Language" ng-model="selectedlanguage" ng-change="UpdateLanguageForCustomer(selectedlanguage)"
+                                                ng-options="Language.language_id as Language.name  for Language in LanguageList"
+                                                class="form-control">
+                                            <option value="">- Select Language -</option>
+                                        </select>
+                                    </li>
+                                    <li><a href="" ng-click="GotoMyWishlist()">My Wishlist</a></li>
+                                    <li ng-if="!(CustomerDetail.customer_id>0)">
+                                        <a ng-click="OpenLoginPopUp()" id="lnkLoginPopUp">Login</a>
+                                    </li>
+                                    <li ng-if="CustomerDetail.customer_id>0">
+                                        <p class="hi-text ">Hello</p>
+                                        <a href="javascript:;" class="dropdown-toggle" id="dropdownMenu1" ng-click="GetCustomerDetails();" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-bind="CustomerDetail.firstname +' '+CustomerDetail.lastname"><span class="caret"></span></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li>
+                                                <p>
+                                                    you have: @*<span ng-bind="(CustomerDetail.points | number : 0)+' Points'"></span>*@
+                                                    <span>{{customerpoint}} Points</span>
+                                                </p>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li class="active"><a class="acoount-info" ui-sref="EditProfile" ng-if="CustomerDetail.customer_id>0">Personal Info</a></li>
+                                            <li><a class="acoount-info cursor-pointer" href="" ui-sref="ChangePassword">Change Password</a></li>
+                                            <li><a class="acoount-info cursor-pointer" href="" ui-sref="AddressBook">Address Book</a></li>
+                                            <li><a class="acoount-info cursor-pointer" href="" ui-sref="OrderHistory">Order History</a></li>
+                                            <li><a class="acoount-info cursor-pointer" href="" ui-sref="PointsAudit">Audit Points</a></li>
+                                            <li><a class="logout" href="#" ng-click="Logout()">Logout</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 headerRow">
+
+                            <div class="logo">
+                                <a href="#" ui-sref="Home"><img class="headerLogo" ng-src="{{StoreDetailInSession.logo}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Logo"></a>
+                            </div>
+                            <div class="main-menu">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+
+                                <div class="show_cart" ui-sref="CartDetail({cartgroup_id:CustomerDetail.cartgroup_id})">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-shopping-cart" id="cart_icon"></i>
+                                        <span class="badge" ng-bind="CustomerDetail.TotalItemAdded"></span>
+                                    </a>
+                                </div>
+                                <div class="search_products">
+                                    <div class="input-group add-on">
+                                        <input class="form-control add-on" placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" name="srch-term" ng-model="WhatYouarelookingfor" id="srch-term" type="text">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="GotoProductList(WhatYouarelookingfor)"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="navbar" class="navbar-collapse collapse toplinks">
+                                    <ul class="nav navbar-nav">
+                                        <li class="active"><a href="#" ui-sref="Home">Home</a></li>
+                                        <li><a href="" class="cursor-pointer" ui-sref="LayoutCategoryORProductList({CategoryId:-1})">Our Products</a></li>
+                                        <li><a href="" class="cursor-pointer" ui-sref="ContactUs">Contact</a></li>
+                                        <li>
+                                            <a ui-sref="MyReward" ng-if="CustomerDetail.customer_id>0 && CustomerDetail.store_id != 23 && CustomerDetail.store_id != 44
+                                           && CustomerDetail.store_id != 32 && CustomerDetail.store_id != 35 && CustomerDetail.store_id != 1082 && CustomerDetail.store_id != 1086 &&
+                                           CustomerDetail.store_id != 27 && CustomerDetail.store_id != 18 && CustomerDetail.store_id != 4 && CustomerDetail.store_id != 1080 &&
+                                           CustomerDetail.store_id != 1083">Recognition</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loader" data-loading>
+            <div class="spinner">
+                <div id="greenDot"></div>
+                <div id="yellowDot"></div>
+                <div id="redDot"></div>
+                <div id="blueDot"></div>
+            </div>
+        </div>
+        <div class="container mainbody">
+            @RenderBody()
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a class="footer-logo" href="#" ui-sref="Home"><img ng-src="{{StoreDetailInSession.logo}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Logo" style="max-height:60px"></a>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="footer_menu">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#" class="cursor-pointer" ui-sref="Home">Home</a></li>
+                                <li><a href="" class="cursor-pointer" ui-sref="EditProfile" ng-if="CustomerDetail.customer_id>0">My Account</a></li>
+                                <li><a href="" class="cursor-pointer" ng-click="OpenTermsCondition()">Terms &amp; Conditions</a></li>
+                                <li><a href="" class="cursor-pointer" ui-sref="ContactUs">Contact Us</a></li>
+                                <li class="pull-right">
+                                    <a href="#" class="cursor-pointer" id="fbIcon"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p class="footerlinksbtn">
+                    <span>
+                        <button class="cursor-pointer pr-10 btn-link" ui-sref="Home">Home</button>
+                        <button class="cursor-pointer pr-10 btn-link" ui-sref="EditProfile" ng-if="CustomerDetail.customer_id>0">My Account</button>
+                        <button class="cursor-pointer pr-10 btn-link" ng-click="OpenTermsCondition()">Terms &amp; Conditions</button>
+                        <button class="cursor-pointer pr-10 btn-link" ui-sref="ContactUs">Contact Us</button>
+                        <button class="cursor-pointer pr-10 btn-link" ng-if="StoreDetailInSession.store_id==1087" ui-sref="TermsOfUse">Terms of Use</button>
+                        <button class="cursor-pointer pr-10 btn-link" ng-if="StoreDetailInSession.store_id==1087" ui-sref="WebsitePrivacyStatement">Website Privacy Statement</button>
+                        <button class="cursor-pointer pr-10 btn-link" ng-if="StoreDetailInSession.store_id==1087" ui-sref="CookiePolicy">Cookie Policy</button>
+                    </span>
+                </p>
+                <br />
+                <p>
+                    Copyright © @DateTime.UtcNow.Year Cordoba
+                </p>
+
+            </div>
+        </footer>
+
+        <!-- login modal popup -->
+        <div class="modal" id="DivLoginModel" role="dialog">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            @*<a href="#" class="bottom-close" data-dismiss="modal">No Thanks</a>*@
+                            <div class="login_page_left">
+                                <h2>Login</h2>
+                                <img src="~/Content/layout2/images/online-shopping.png" class="pt-20" alt="online-shopping">
+                            </div>
+                            <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate>
+                                <div class="login_page_right">
+                                    <div class="form-group pt-20">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" ng-model="CustomerObj.email" required="required" ng-blur="validateEmailaddress()">
+                                        <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && (loginForm.email.$error.required || loginForm.email.$error.email)">Enter valid email id!</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password:</label>
+                                        <a href="javascript:;" ng-click="ForgotPassword(forgotPasswordForm)" class="forgot-password pull-right">Forgot Password?</a>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="CustomerObj.password" required="required">
+                                        <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && loginForm.password.$error.required">Password is required!</p>
+                                        @*<a href="javascript:;" ng-click="ForgotPassword(forgotPasswordForm)" class="forgot-password">Forgot Password?</a>*@
+                                    </div>
+                                    <div class="form-group chekbox-main checkbox mr-20">
+                                        <input type="checkbox" id="checkbox" />
+                                        <label for="checkbox">Remember me</label>
+                                    </div>
+                                    <button type="submit" class="submit_btn form-group" ng-click="Login(loginForm)">Submit</button>
+                                </div>
+                            </form>
+
+                            @*forgot password*@
+                            <form name="forgotPasswordForm" id="forgotPasswordForm" class="form-horizontal" ng-hide="IsVisibleforgotPasswordForm" novalidate>
+                                <div class="login_page">
+                                    <h2>Forgot Password?</h2>
+                                    <div class="form-group pt-20">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" name="EmailAddress" id="emailForgotPassword" placeholder="Enter email" ng-model="otpObj.email" required="required">
+                                        <p class="text-danger validationErrors" ng-show="forgotPasswordForm.$submitted && (!forgotPasswordForm.$valid) && (forgotPasswordForm.EmailAddress.$error.required || forgotPasswordForm.EmailAddress.$error.email)">Enter valid email id!</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-click="ForgotPassword(forgotPasswordForm)">Submit</button>
+                                    <button type="button" class="btn btn-empty mt-5 text-center" ng-click="OpenLoginPopUp()">cancel</button>
+                                </div>
+                            </form>
+
+
+                            @*Verify OTP*@
+                            <form name="OTPForm" id="OTPForm" class="form-horizontal" ng-hide="IsVisibleOTPForm" novalidate>
+                                <div class="login_page">
+                                    <input type="hidden" class="form-control" name="email" id="emailOTP">
+                                    <div class="form-group pt-20">
+                                        <label for="otp">One Time Password:</label>
+                                        <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OneTimePassword" ng-model="otpObj.otp" min="0" max="6" required="required">
+                                        <input type="text" class="form-control" name="otp" id="otpVerifyOTP" placeholder="Enter OneTimePassword" ng-model="otpObj.confirmotp" min="0" max="6" required="required">
+                                        @*<input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP" ng-model="otpObj.otp" required="required">*@
+                                        <p class="text-danger validationErrors" ng-show="OTPForm.$submitted && (!OTPForm.$valid) && (OTPForm.otp.$error.required || OTPForm.otp.$error.otp)">Enter valid One Time Password!</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-disabled="otpObj.otp != otpObj.confirmotp" ng-click="VerifyOTP(OTPForm)">Submit</button>
+
+                                </div>
+                            </form>
+                            @* Chnage Password *@
+                            <form name="ChangePasswordForm" id="ChangePasswordForm" class="form-horizontal" ng-hide="IsVisibleChangePassswordForm" novalidate>
+                                <div class="login_page">
+                                    <input type="hidden" class="form-control" name="email" id="emailChangedPassword">
+                                    <div class="form-group pt-20">
+                                        <label for="otp">Password:</label>
+                                        <input type="password" class="form-control" name="password" id="otpChangePassword" placeholder="Enter Password" ng-model="otpObj.password" min="0" max="6" required="required">
+                                        <label for="otp">Confirm Password:</label>
+                                        <input type="password" class="form-control" name="confirmPasssword" id="otpConfimChangePassword" placeholder="Confirm Password" ng-model="otpObj.confirmPassword" min="0" max="6" required="required">
+
+                                        <p class="text-danger validationErrors" ng-show="ChangePasswordForm.$submitted && (!otpObj.$valid) && (otpObj.password != otpObj.confirmPassword)">Password does not match</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-disabled="otpObj.password != otpObj.confirmPassword" ng-click="ChangePassword(ChangePasswordForm)">Submit</button>
+
+                                </div>
+                            </form>
+
+                            @*Reset Password for first time visited customer*@
+                            <form name="FirstTimeVisiteForm" id="FirstTimeVisiteForm" class="form-horizontal" ng-hide="IsVisibleFirstTimeVisiteForm" novalidate>
+                                <div class="login_page">
+                                    <input type="hidden" class="form-control" name="email" id="emailFirstTimeVisit">
+                                    <div class="form-group pt-20">
+                                        <p>Hi .... </p>
+                                        <p>
+                                            Welcome to new platform of {{StoreDetailInSession.name}}store.com We are here to serve you with better user experience. For security reason to access the store, we need your co-operation to set the secured password.
+                                            Pressing on NEXT button will provide you acess for setup new password.
+                                        </p>
+                                        <p>
+                                            Thanks.<br />
+                                            {{StoreDetailInSession.name}}store.com
+                                        </p>
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-4 text-center" ng-click="OpenResetPasswordForm()">NEXT</button>
+                                </div>
+                            </form>
+
+                            @*Reset Password with OTP cerification*@
+                            <form name="ResetPassForm" id="ResetPassForm" class="form-horizontal" ng-hide="IsVisibleResetPassswordForm" novalidate>
+                                <div class="login_page">
+                                    @*<input type="hidden" class="form-control" name="email" id="emailreset">*@
+                                    <div class="form-group pt-20">
+                                        <p>Kindly check your email that contains One Time Password.</p>
+                                        <label for="otp">One Time Password:</label>
+                                        <input type="text" class="form-control" name="otpreset" id="otpreset" placeholder="Enter OneTimePassword" ng-model="resetObj.otp" min="0" max="6" required="required">
+                                        <p class="text-danger validationErrors" ng-show="ResetPassForm.$submitted && (!ResetPassForm.$valid) && (ResetPassForm.otpreset.$error.required || ResetPassForm.otpreset.$error.otp)">Enter valid OTP!</p>
+
+                                        <label for="otp">Password:</label>
+                                        <input type="password" class="form-control" name="password" id="pass" placeholder="Enter Password" ng-model="resetObj.password" min="0" max="6" required="required">
+                                        <label for="otp">Confirm Password:</label>
+                                        <input type="password" class="form-control" name="confirmPasssword" id="cnfirmpass" placeholder="Confirm Password" ng-model="resetObj.confirmPassword" min="0" max="6" required="required">
+                                        <p class="text-danger validationErrors" ng-show="ResetPassForm.$submitted && (!resetObj.$valid) && (resetObj.password != resetObj.confirmPassword)">Password does not match</p>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-empty mt-5 text-center" ng-disabled="resetObj.password != resetObj.confirmPassword" ng-click="ResetPassword(ResetPassForm)">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-overlay"></div>
+        <div class="about-us">
+            <div id="aboutScroll" class="welcome-block">
+                <a href="javascript:;" class="showDesc">About Us</a>
+                <div ng-bind-html="WelcomeMsg[0]"></div>
+                <div class="more-content">
+                    <div ng-bind-html-unsafe="WelcomeMsg[1] | htmlToPlaintext">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <a href="#" id="back-to-top" title="Back to top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="container">
+            <a href="#" id="back-to-top" title="Back to top">
+                &uarr;
+            </a>
+        </div>
+        <!-- Terms and Condition popup -->
+        <div class="modal" id="DivTermsConditionModel" role="dialog">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-lg vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Terms &amp; Conditions</h4>
+                        </div>
+
+                        <div class="modal-body category-list" style="background-color:whitesmoke">
+                            <div ng-bind-html="TermsConditionMsg">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Terms and Condition popup -->
+    </div>
+
+    @Scripts.Render("~/bundles/Layout2AllJs?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".dropdown-toggle").dropdown();
+            $.mCustomScrollbar.defaults.theme = 'dark-thick';
+
+            ApplicationVersion = '@Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"])';
+
+            $(".content, #aboutScroll").mCustomScrollbar();
+
+            $(".showDesc").click(function () {
+                var hidden = $(".about-us");
+                if (hidden.hasClass("visible")) {
+                    hidden.animate({ "right": "-350px" }, "slow").removeClass("visible");
+                    $(".showDesc").animate({ "right": "-54px" }, "slow").removeClass("visible");
+                    $(".showDesc").text("About Us");
+                    $(".about-overlay").fadeOut("slow");
+
+                } else {
+                    hidden.animate({ "right": "0px" }, "slow").addClass("visible");
+                    $(".showDesc").animate({ "right": "297px" }, "slow").addClass("visible");
+                    $(".showDesc").text("Close");
+                    $(".about-overlay").fadeIn("slow");
+                }
+            });
+
+            $(".readMore").click(function () {
+                $('.more-content').slideToggle();
+                $(".readMore").hide();
+                $(".readLess").show();
+            });
+
+            $(".readLess").click(function () {
+                $('.more-content').slideToggle();
+                $(".readLess").hide();
+                $(".readMore").show();
+            });
+
+            $(".content, #aboutScroll").mCustomScrollbar();
+
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 1) {
+                $('.top-nav').addClass("hidden");
+            }
+            else {
+                $('.top-nav').removeClass("hidden");
+            }
+        });
+
+        if ($('#back-to-top').length) {
+            var scrollTrigger = 100, // px
+                backToTop = function () {
+                    var scrollTop = $(window).scrollTop();
+                    if (scrollTop > scrollTrigger) {
+                        $('#back-to-top').addClass('show');
+                    } else {
+                        $('#back-to-top').removeClass('show');
+                    }
+                };
+            backToTop();
+            $(window).on('scroll', function () {
+                backToTop();
+            });
+            $('#back-to-top').on('click', function (e) {
+                e.preventDefault();
+                $('html,body').animate({
+                    scrollTop: 0
+                }, 700);
+            });
+        }
+
+        function CartAnimation(target, Image) {
+            var cart = $('#cart_icon');
+            if (Image != undefined && Image != null) {
+                var imgtodrag = $('<img id="dynamic">');
+                imgtodrag.attr('src', Image);
+            }
+            else {
+                var imgtodrag = $('<img id="dynamic">');
+                imgtodrag.attr('src', '/Content/layout1/images/step-4-process.png');
+            }
+            if (imgtodrag) {
+                var imgclone = imgtodrag.clone()
+                if (imgclone.length) {
+                    imgclone.offset({
+                        top: target.offset().top,
+                        left: target.offset().left
+                    })
+                  .css({
+                      //'opacity': '0.5',
+                      'position': 'absolute',
+                      'width': '150px',
+                      'z-index': '99999'
+                  });
+
+                    imgclone.appendTo($('body'))
+                    .animate({
+                        'top': cart.offset().top + 10,
+                        'left': cart.offset().left + 10,
+                        'width': 75,
+                    }, 1000, 'easeInOutExpo');
+
+                    setTimeout(function () {
+                        cart.effect("shake", {
+                            times: 2
+                        }, 200);
+                    }, 0);
+
+                    imgclone.animate({
+                        'width': 0,
+                        'height': 0
+                    }, function () {
+                        $(this).detach()
+                    });
+                }
+            }
+        }
+    </script>
+
+    <div class="modal fade" id="Reloadlookup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Cordoba Store</h4>
+                </div>
+                <div class="wthbox">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">System Updates</h3>
+                        </div>
+                        <div class="panel panel-body">
+                            <div class="row">
+                                <b>
+                                    There have been updated to the system. Click OK to refresh the page.<br />
+                                    <span style="color:red;"> Note:  All unsaved changes will be lost.</span>
+                                    <br /><br />
+                                    Click Later to go back and save all changes first.
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="javascript: window.location.reload(false);">OK</button>
+                        <button type="button" class="btn btn-default" onclick="javascript: angular.element('#Reloadlookup').modal('hide');">LATER</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

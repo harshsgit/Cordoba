@@ -1,0 +1,109 @@
+﻿<div ng-controller="CustomerImportController">
+    <form id="form">
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li> This page allows you to import a new customer by uploading a .xls/.xlsx file</li>
+                </ul>
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button class="btn btn-info cursor-pointer">
+                            <a href="../../../SampleFile/customer_importer_template.xls">
+                                Downlaod Template<i class="fa fa-cloud-download position-right"></i>
+                            </a>
+                        </button>
+                        <button type="button" ng-click="CustomerImport()" class="btn btn-success cursor-pointer">Import <i class="fa fa-cloud-upload position-right"></i></button>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover list">
+                            <tbody>
+
+                                <!--<tr>
+                                    <td width="25%">Customer Group:</td>
+                                    <td>
+                                        <select ng-options="customer_group.customer_group_id as customer_group.name  for customer_group in CustomerGroupList"
+                                                class="form-control" ng-model="CustomerImportObj.customer_group_id" name="customer_group_List">
+                                            <option value=""> --- Please Select --- </option>
+                                        </select>
+                                    </td>
+                                </tr>-->
+                                <tr>
+                                    <td width="25%">Store:</td>
+                                    <td>
+                                        <select ng-options="store.store_id as store.name  for store in StoreList"
+                                                class="form-control" ng-model="store_id" name="store_List" ng-init="CheckStoreDropDownEnabled()" ng-disabled="IsStoreDropDownEnabled==false">
+                                            <option value=""> --- Please Select --- </option>
+                                        </select>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="25%">Xlsx,Xls file Import here: </td>
+                                    <td>
+                                        <!--<input type="file" name="upload">-->
+                                        <input type="file" ng-model-instant id="fileToUpload" onchange="angular.element(this).scope().setFiles(this)" />
+                                    </td>
+
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <script>
+        $("#fileToUpload").change(function () {
+            var fileExtension = ['xls','xlsx','csv'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Only formats are allowed : " + fileExtension.join(', '));
+            }
+        });
+
+
+    </script>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

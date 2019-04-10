@@ -1,0 +1,69 @@
+﻿<div ng-controller="CustomerRewardDetailsController">
+    <section class="my-account">
+        <div class="container">
+            <ul>
+                <li>
+                    <p class="bag-desc">{{PageTitle}} - {{RewardName}}</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="container">
+        <div class="account-block reward-points">
+            <div class="col-sm-12 table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rewarded Customer</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="RewardDetails.length>0">
+                        <tr ng-repeat="Item in RewardDetails  | unique:'reward_giventouser_id'">
+                            <td class="text-center" ng-bind="Item.RewardedCustomer"></td>
+                            <td class="text-center">
+                                <div>
+                                    <img ng-src="{{Item.Customer_img}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" width="100" height="100" />
+                                </div>
+                            </td>
+                            <td>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rewarded By Customer</th>
+                                            <th>
+                                                Customer Photo
+                                            </th>
+                                            <th>Medal</th>
+                                            <th>comment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="childItem in RewardDetails | filter:{'reward_giventouser_id':Item.reward_giventouser_id}:true">
+                                            <td width="20%" class="text-center">{{childItem.RewardedByCustomer}}</td>
+                                            <td width="30%" class="text-center">
+                                                <div>
+                                                    <img ng-src="{{Item.Reward_Customer_Img}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" width="100" height="100" />
+                                                </div>
+                                            </td>
+                                            <td width="10%" class="text-center">{{childItem.Medal}}</td>
+                                            <td width="40%" class="text-center">{{childItem.comment}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <!--<td ng-bind="Item.RewardedByCustomer"></td>
+                            <td ng-bind="Item.Medal"></td>-->
+
+
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="RewardDetails.length==0">
+                        <tr>
+                            <td>No Records Found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

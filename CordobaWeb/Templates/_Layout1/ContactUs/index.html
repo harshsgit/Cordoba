@@ -1,0 +1,78 @@
+﻿<div class="contact" id="contact" ng-controller="ContactUsController">
+    <div id="page">
+        <div id="main-container">
+            <div id="sitecontent">
+                <div class="wrapper">
+                    <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                    <form id="contact-form" name="contactForm" class="styled-form" novalidate>
+                        <h1 class="pagetitle">Contact us</h1>
+                        <div class="note">
+                            <p>
+                                We are here to answer any questions you may have about our <b>{{StoreDetailInSession.name}}</b>
+                                experiences. Reach out to us and we'll respond as soon as we can.
+                            </p>
+                            <p>
+                                Even if there is something you have always wanted to experience and
+                                can't find it on <b>{{StoreDetailInSession.name}}</b>, let us know and we promise we'll do our
+                                best to find it for you or send you there.
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="form-horizontal" id="messages" style="margin-top:8px">
+                            <div class="alert alert-danger alert-dismissible validationErrors" ng-show="contactForm.$submitted &&(!contactForm.$valid)">
+                                <ul>
+                                    <li ng-show="contactForm.FirstName.$error.required">First name is required.</li>
+                                    <li ng-show="contactForm.LastName.$error.required">Last name is required.</li>
+                                    <li ng-show="contactForm.Email.$error.required || contactForm.Email.$error.email">Email address is not valid.</li>
+                                    <li ng-show="contactForm.Phone.$error.required">Phone is required.</li>
+                                    <li ng-show="contactForm.Message.$error.required">Enquiry message is required.</li>
+                                    <!--<li ng-show="!captchaValid">You must complete the antispam verification.</li>-->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="form-group col-md-6 col-sm-12">
+                            <label for="id_name">First Name: <span class="required">*</span></label>
+                            <span class="field"><input type="text" ng-model="contactUsObj.firstname" name="FirstName" required="required" /></span>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            <label for="id_name">Last Name: <span class="required">*</span></label>
+                            <span class="field"><input type="text" ng-model="contactUsObj.lastname" name="LastName" required="required" /></span>
+                        </div>
+                         <div class="form-group col-md-12 col-sm-12">
+                            <label for="id_email">Email: <span class="required">*</span></label>
+                            <span class="field"><input type="email" ng-model="contactUsObj.email" name="Email" required="required" /></span>
+                        </div>
+                         <div class="form-group col-md-12 col-sm-12">
+                            <label for="id_message">Enquiry<span class="required">*</span> : If your enquiry relates to an order placed on the site, please include your Order Id below:</label>
+                            <span class="field"><textarea cols="40" ng-model="contactUsObj.description" rows="5" name="Message" required="required"></textarea></span>
+                        </div>
+                    </div>
+                        <!--<div class="row half first">
+                            <label for="id_tapcha_0">Verify: <span class="required">*</span></label>
+                            <div class="g-recaptcha" data-sitekey="6LdVYCoUAAAAAKY0fQMj0adUreM8txNLs59ULs8J"></div>
+                        </div>-->
+
+                        <p class="submit-row">
+                            <button type="submit" ng-click="SendContactUsDetail(contactForm)">SEND</button>
+                        </p>
+                    </form>
+                    </div>
+                <div class="col-md-4">
+                    <aside id="contact-info">
+                        <dl>
+                            <dt>Find us on:</dt>
+                            <dd class="social-links">
+                                <a class="fb cursor-pointer" href="" title="Find us on Facebook">Facebook</a>
+                                <a class="tt cursor-pointer" href="" title="Find us on Twitter">Twitter</a>
+                            </dd>
+                        </dl>
+                    </aside>
+                </div>
+            </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src='https://www.google.com/recaptcha/api.js'></script>-->

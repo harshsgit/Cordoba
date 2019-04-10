@@ -1,0 +1,86 @@
+﻿<div ng-controller="OnlineCustomerReportController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{PageTitle}}</span> </h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup Coupoonline Customers.</li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="page-header-content">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Customers Online List</h3>
+            </div>
+            <div class="panel-body">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-ip">IP</label>
+                                <input type="text" name="filter_ip" value="" id="input-ip" placeholder="IP" i="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-customer">Customer</label>
+                                <input type="text" name="filter_customer" value="" placeholder="Customer" id="input-customer" class="form-control">
+                            </div>
+                            <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <br />
+                    <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblOnlineCustomer" dt-options="dtOptions" width="100%">
+                        <thead>
+                            <tr>
+                                <th>IP</th>
+                                <th>Customer</th>
+                                <th>Last Page Visited</th>
+                                <th>Referer</th>
+                                <th>Last Click</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Item in OnlineCustomerList">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+               
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

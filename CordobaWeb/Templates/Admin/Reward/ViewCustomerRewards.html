@@ -1,0 +1,116 @@
+﻿<div ng-controller="ViewCustomerRewardController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i>  {{PageTitle}} - {{RewardName}}</h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup customers of rewards.</li>
+            </ul>
+            <!--<ul class="breadcrumb-elements">
+                <li><button type="button" class="btn btn-primary btn-md" data-placement="top" data-toggle="tooltip" title="Add New Reward" ui-sref="ManageReward"><i class="glyphicon glyphicon-plus-sign position-left"></i> New Reward</button></li>
+            </ul>-->
+        </div>
+    </div>
+    <div class="page-header-content">
+
+        <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblCustomerReward" dt-options="dtOptions" width="100%">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Rewards (Medal)</th>
+                    <th>IsWinner</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="Item in ViewRewards">
+                    <td ng-bind="Item.Customer"></td>
+                    <td ng-bind="Item.Rewards"></td>
+                    <td ng-bind="Item.IsWinner"></td>
+                    <td class="cursor-pointer text-center">
+                        <a ui-sref="ViewRewardCustomerDetails({rewarduserid:Item.reward_user_id,customername:Item.Customer})" data-placement="top" data-toggle="tooltip" title="View Customer Reward Details"> <i class="glyphicon glyphicon-eye-open cursor-pointer"></i></a>
+                        <a ng-if="!Item.IsWinner" ng-click="RewardWinnerModal(Item.Customer,Item.reward_user_id,Item.Rewards)" data-placement="top" data-toggle="tooltip" title="Declare Winner"> <i class="glyphicon glyphicon-king cursor-pointer"></i></a>
+                        <a ng-if="Item.IsWinner" ng-click="Delete_RewardWinner(Item.reward_user_id)" data-placement="top" data-toggle="tooltip" title="Delete Winner"> <i class="glyphicon glyphicon-erase cursor-pointer"></i></a>
+                    </td>
+                    <!--<td class="cursor-pointer text-center">
+                        <a ui-sref="ManageReward({rewardId:Item.id})" data-placement="top" data-toggle="tooltip" title="Edit"> <i class="glyphicon glyphicon-edit cursor-pointer"></i></a>
+                        <a ui-sref="ViewReward({rewardId:Item.id})" data-placement="top" data-toggle="tooltip" title="View"> <i class="glyphicon glyphicon-eye-open cursor-pointer"></i></a>
+                    </td>-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="UserWinnerModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">✖</button>
+                    <h4 class="modal-title" id="myModalLabel">Winner - {{RewardName}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label mandatoryField">Winner Name:</label>
+                            <div class="col-lg-8">
+                                <label ng-bind="WinnerName"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label mandatoryField">Medal/Star:</label>
+                            <div class="col-lg-8">
+                                <label ng-bind="WinnerMedal"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Comment:</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" maxlength="100" ng-model="AdminComment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                  
+                    <!--<div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label mandatoryField">Final Ratting:</label>
+                            <div class="col-lg-8">
+                                <div ng-if="rewardTypeId==2" class="medal-rating">
+                                    <input id="gold1" type="radio" name="medal1" value="gold" />
+                                    <label class="medal gold" for="gold1">Gold</label>
+                                    <input id="silver1" type="radio" name="medal1" value="silver" />
+                                    <label class="medal silver" for="silver1">Silver</label>
+                                    <input id="bronze1" type="radio" name="medal1" value="bronze" />
+                                    <label class="medal bronze" for="bronze1">Bronze</label>
+                                </div>
+                                <div ng-if="rewardTypeId==1">
+                                    <angular-star-rating max="maxValue" value="rattinVal" id="ratingValue" hover='changeOnHover'
+                                                         is-readonly='isReadonly'></angular-star-rating>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="Declare_RewardWinner()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

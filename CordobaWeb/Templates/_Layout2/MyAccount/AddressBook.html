@@ -1,0 +1,132 @@
+﻿    <div class="container">
+        <div class="my-account mt-30">
+            <div class="col-sm-12">
+                <div class="points ">
+                    <h3>Addresses</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-controller="AddressBookController">
+    <div class="col-sm-12">
+        <div class="account-block addresbook pt-0">
+
+            <div class="col-sm-12">
+                <div class="row">
+                    
+                        <div class="col-sm-6 col-md-4">
+                            <div class="new-address" >
+                                <div class="box">
+                                    <a href="" ng-click="AddORUpdateAddressBinding(null)">Add Address</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4" ng-repeat="AddressObj in AddressList">
+                            <div class="address-box" data-ng-style="AddressObj.IsDefaultAddress && {'border-color':'green'}">
+                                <div class="box">
+                                    <h4 ng-bind="AddressObj.firstname+' '+AddressObj.lastname">N</h4>
+                                    <p>
+                                        {{AddressObj.company}}<br>
+                                        {{AddressObj.address_1}}<br>
+                                        {{AddressObj.address_2}},<br>
+                                        {{AddressObj.city}},{{AddressObj.postcode}}<br>
+                                        {{AddressObj.county}}
+                                    </p>
+                                    <p>{{AddressObj.telephone}} </p>
+                                    <a href="" class="edit"  ng-click="AddORUpdateAddressBinding(AddressObj)">Edit</a>
+                                    <a href="" class="delete" ng-click="DeleteAddress(AddressObj)">Delete</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <form name="NewAddressForm" id="NewAddressForm" class="add-address mt-30" ng-if="NeedToShowAddressDetailForm==1" novalidate>
+
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+
+                                <div role="tabpanel" class="form-horizontal mt-10" id="messages" >
+                                    <div class="alert alert-danger alert-dismissible validationErrors" ng-show="NewAddressForm.$submitted && !NewAddressForm.$valid">
+                                        <ul ng-show="validationErrors">
+                                            <li ng-repeat="error in validationErrors">{{error}}</li>
+                                        </ul>
+                                        <ul ng-show="NewAddressForm.$submitted && (!NewAddressForm.$valid)">
+                                            <li ng-show="NewAddressForm.firstname.$error.required">First name is required.</li>
+                                            <li ng-show="NewAddressForm.lastname.$error.required">Last name is required.</li>
+                                            <!--<li ng-show="NewAddressForm.company.$error.required">Company name is required.</li>-->
+                                            <li ng-show="NewAddressForm.address_1.$error.required">Address1 is required.</li>
+                                            <li ng-show="NewAddressForm.city.$error.required">City is required.</li>
+                                            <li ng-show="NewAddressForm.county.$error.required">County is required.</li>
+                                            <li ng-show="NewAddressForm.country.$error.required">County is required.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-12 mb-20">
+                            <div class="block-heading">
+                                <h4 class="heading">Add New Address</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>First Name</label>
+                            <input type="text" maxlength="32" ng-model="AddressObj.firstname" name="firstname" required="required" class="form-control" value="" placeholder="" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Last Name</label>
+                            <input maxlength="32" type="text" class="form-control" value="" name="lastname" ng-model="AddressObj.lastname" required="required" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Company</label>
+                            <input type="text" maxlength="50" class="form-control" name="company" value="" ng-model="AddressObj.company" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Address 1</label>
+                            <input type="text" maxlength="128" class="form-control" name="address_1" value="" ng-model="AddressObj.address_1" required="required" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Address 2</label>
+                            <input type="text" maxlength="128" class="form-control" name="address_2" value="" ng-model="AddressObj.address_2" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>City</label>
+                            <input type="text" maxlength="128" class="form-control" name="city" value="" ng-model="AddressObj.city" required="required" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Post Code</label>
+                            <input type="text" maxlength="30" class="form-control" value="" ng-model="AddressObj.postcode" />
+                        </div>                       
+                        <div class="col-sm-4">
+                            <label>County</label>
+                            <input type="text" maxlength="128" class="form-control" name="county" ng-model="AddressObj.county" required="required" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Country</label>
+                            <select ng-options="Country.country_id as Country.name  for Country in CountryList" class="form-control" name="country" ng-model="AddressObj.country_id" required="required"></select>
+                        </div>
+           
+                        <div class="col-sm-12 default-address">
+                            <label>Default Address:</label>
+                            <switch ng-model="AddressObj.IsDefaultAddress" on="Yes" off="No" class="green"></switch>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 mt-15 pull-right text-right">
+                            <div class="cart-btn">
+                                <input type="submit" name="cart_btn" class="add_cart" ng-click="AddOrUpdateAddressDetail(NewAddressForm)" value="Save Address">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    

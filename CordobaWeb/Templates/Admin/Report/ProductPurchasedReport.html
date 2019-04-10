@@ -1,0 +1,99 @@
+﻿<div ng-controller="ProductPurchasedReportController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{PageTitle}}</span> </h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup Products Purchased Report.</li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <li>
+                    <button type="button" ng-click="ExportProductPurchasedList()" class="btn btn-success cursor-pointer">Export <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-header-content">
+
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-date-start">Date Start</label>
+                                <div class="input-group myDatePicker date">
+                                    <input type="text" id="filter_date_start" name="filter_date_start" ng-model="ProductFilter.DateStart" class="form-control" placeholder="MM/DD/YYYY">
+                                    <span class="input-group-addon cursor-pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-date-end">Date End</label>
+                                <div class="input-group myDatePicker date">
+                                    <input type="text" id="filter_date_End" name="filter_date_End" ng-model="ProductFilter.DateEnd" class="form-control" placeholder="MM/DD/YYYY">
+                                    <span class="input-group-addon cursor-pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-status">Order Status</label>
+
+                                <select ng-options="OrderStatus.order_status_id as OrderStatus.name  for OrderStatus in OrderStatusList | orderBy:'order_status_id'"
+                                        class="form-control" ng-model="ProductFilter.order_status_id" name="OrderStatus"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-status">Store</label>
+                                <select ng-options="Store.store_id as Store.name  for Store in StoreList | orderBy:'store_id'"
+                                        class="form-control" ng-model="ProductFilter.store_id" name="Store" ng-disabled="store_id != 0"></select>
+                            </div>
+                            <button ng-click="GetProductPurchasedList()" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <br />
+                    <table id="tblProductPurchased" class="table table-bordered table-striped datatable-responsive" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Model</th>
+                                <th>Category</th>
+                                <th>Store</th>
+                                <th>Quantity</th>
+                                <th>Purchased Date</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,452 @@
+﻿<style>
+    .zindex {
+        z-index: 999999;
+    }
+</style>
+<div ng-controller="ManageCustomerController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage Customer.</li>
+                </ul>
+                <ul class="breadcrumb-elements">
+                    <li ng-if="IsStoreAdmin==0">
+                        <button type="submit" ng-click="InsertUpdateCustomer(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <!--<li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Customer" ng-click="DeleteCustomer()"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+
+
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <div role="tabpanel" class="form-horizontal" id="messages" style="margin-top:8px">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.FirstName.$error.required">First name is required.</li>
+                                                <li ng-show="form.LastName.$error.required">Last name is required.</li>
+                                                <li ng-show="form.EmailAddress.$error.required || form.EmailAddress.$error.email">Email address is Required! OR Email address is not valid.</li>
+                                                <li ng-show="form.Telephone.$error.required">Telephone is required.</li>
+                                                <li ng-show="form.Password.$error.required">Password is required.</li>
+                                                <li ng-show="form.Store.$error.required">Store is required.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a data-target="#GenaralTab" role="tab" data-toggle="tab">General</a></li>
+                                    <!--<li role="presentation"><a data-target="#HistoryTab" role="tab" data-toggle="tab">History</a></li>-->
+                                    <li role="presentation" ng-show="customer_id>0"><a data-target="#TransactionTab" role="tab" data-toggle="tab">Transactions</a></li>
+                                    <li role="presentation" ng-show="customer_id>0"><a data-target="#RewardPointTab" role="tab" data-toggle="tab">Audit Points</a></li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="GenaralTab">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-2">
+                                                <!-- required for floating -->
+                                                <!-- Nav tabs -->
+                                                <ul class="nav nav-tabs tabs-left">
+                                                    <li class="active cursor-pointer"><a data-target="#GeneralChild" role="tab" data-toggle="tab">General&nbsp;</a></li>
+                                                    <li ng-repeat="Address  in CustomerObj.AddressList">
+                                                        <a data-target="#Address1" class="cursor-pointer" role="tab" data-toggle="tab" ng-click="GotoAddress(Address)"><i class="icon-minus-circle2 cursor-pointer" ng-click="RemoveAddress(Address)"></i>&nbsp;&nbsp;Address {{$index+1}}&nbsp;</a>
+                                                    </li>
+                                                    <li class=" cursor-pointer"><a role="tab" data-toggle="tab" ng-click="AddAddress()"><i class="icon-plus-circle2"></i>&nbsp;&nbsp;Add Address</a></li>
+                                                </ul>
+
+                                                <div ng-disabled="IsEditMode != true" class="customerImage">
+                                                    <img ng-src="{{CustomerImageObj.Image}}" alt="no image" style="max-height:150px" />
+                                                    <br />
+                                                    <br />
+                                                    <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="UploadImagePopUp()" value="Upload">
+                                                    <button type="button" ng-if="CustomerImageObj.Image != undefined" ng-click="deleteCustomerImage()" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xs-10">
+                                                <!-- Tab panes -->
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="GeneralChild">
+                                                        <div class="col-md-12">
+
+                                                            <!--<div class="form-group">
+                                                                <label class="col-lg-2 control-label">Customer Group</label>
+                                                                <div class="col-lg-9">
+                                                                    <select ng-options="CustomerGroup.customer_group_id as CustomerGroup.name  for CustomerGroup in CustomerGroupList"
+                                                                            class="form-control" ng-model="CustomerObj.customer_group_id" name="customer_group">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>-->
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label mandatoryField">First Name</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="FirstName" maxlength="30" placeholder="Enter First Name" ng-model="CustomerObj.firstname" required="required">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label mandatoryField">Last Name</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="LastName" maxlength="30" placeholder="Enter Last Name" ng-model="CustomerObj.lastname" required="required">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label mandatoryField">E-mail</label>
+                                                                <div class="col-lg-9">
+                                                                    <!--<input type="email" class="form-control" validate-email name="Email" maxlength="90" placeholder="Enter  Email" ng-model="CustomerObj.email" required="required">-->
+                                                                    <input class="form-control" type="email" validate-email maxlength="90" name="EmailAddress" placeholder="Enter Email" ng-model="CustomerObj.email" required="required" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label mandatoryField">Telephone</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="Telephone" maxlength="30" placeholder="Enter Telephone" ng-model="CustomerObj.telephone" required="required">
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<div class="form-group">
+                                                                <label class="col-lg-2 control-label">Client Reference Number</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="ClientReferenceNumber" maxlength="50" placeholder="Enter Client Reference Number" ng-model="CustomerObj.ClientReferenceNumber">
+                                                                </div>
+                                                            </div>-->
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label mandatoryField">Password</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="password" class="form-control" name="Password" maxlength="35" placeholder="Enter Password" ng-model="CustomerObj.password" required="required">
+                                                                    <br />
+                                                                    <button type="button" ng-click="SendCustomerPassword()" class="btn btn-success cursor-pointer">Send Password<i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Store</label>
+                                                                <div class="col-lg-9">
+                                                                    <select ng-options="store.store_id as store.name  for store in StoreList"
+                                                                            class="form-control" ng-model="CustomerObj.store_id" name="Store" required="required">
+                                                                        <option value="number:0"> --- Please Select --- </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Status</label>
+                                                                <div class="col-lg-9">
+                                                                    <select name="status" id="input-status" ng-model="CustomerObj.status" ng-options="status.ID as status.Name  for status in Status" class="form-control"></select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Approved</label>
+                                                                <div class="col-lg-9">
+                                                                    <!--<select name="Approved" ng-model="CustomerObj.activated" id="Approved-status" class="form-control">
+                                                                        <option value="number:1">Yes</option>
+                                                                        <option value="number:0">No</option>
+                                                                    </select>-->
+                                                                    <select ng-options="status.ID as status.Name  for status in Status"
+                                                                            class="form-control" ng-model="CustomerObj.activated" name="Approved"></select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Customer As Admin</label>
+                                                                <div class="col-lg-9">
+                                                                    <!--<select name="statusAdmin" ng-model="CustomerObj.is_admin" id="input-status" class="form-control">
+                                                                        <option value="number:1">Yes</option>
+                                                                        <option value="number:0">No</option>
+                                                                    </select>-->
+                                                                    <select ng-options="status.ID as status.Name  for status in Status"
+                                                                            class="form-control" ng-model="CustomerObj.is_admin" name="Approved"></select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Customer As Department Head</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="checkbox" ng-model="CustomerObj.is_department">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Department</label>
+                                                                <div class="col-lg-9">
+                                                                    <select ng-options="department.customer_department_id as department.name  for department in CustomerDepartmentList"
+                                                                            class="form-control" ng-model="CustomerObj.customer_department_id" name="DepartmentId"></select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="Address1">
+                                                        <div class="col-md-12">
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">First Name</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="AddressFirstName" maxlength="30" placeholder="Enter First Name" ng-model="CustomerObj.Address.firstname">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">Last Name</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="AddressLastName" maxlength="30" placeholder="Enter Last Name" ng-model="CustomerObj.Address.lastname">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">Company</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="AddressCompanyName" maxlength="30" placeholder="Enter Company Name" ng-model="CustomerObj.Address.company">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">Address 1</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="AddressAddress1" maxlength="120" placeholder="Enter Primary Address" ng-model="CustomerObj.Address.address_1">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">Address 2</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="AddressAddress2" maxlength="120" placeholder="Enter Secondary Address" ng-model="CustomerObj.Address.address_2">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">City</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="AddressCity" maxlength="120" placeholder="Enter City Name" ng-model="CustomerObj.Address.city">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Postcode</label>
+                                                                <div class="col-lg-9">
+                                                                    <input type="text" class="form-control" name="Addresspostcode" maxlength="10" placeholder="Enter postcode Name" ng-model="CustomerObj.Address.postcode">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">Country</label>
+                                                                <div class="col-lg-9">
+                                                                    <select ng-change="GetZoneListByCountry(CustomerObj.Address.country_id)" ng-options="Country.country_id as Country.name  for Country in CountryList"
+                                                                            class="form-control" ng-model="CustomerObj.Address.country_id" name="Addressstore_List">
+                                                                        <option value=""> --- Please Select --- </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-lg-2 control-label">Region/State</label>
+                                                                <div class="col-lg-9">
+                                                                    <select ng-options="Region.name as Region.name  for Region in RegionStateList"
+                                                                            class="form-control" ng-model="CustomerObj.Address.county" name="AddressRegion_LIst">
+                                                                        <option value=""> --- Please Select --- </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-2 control-label">Default Address</label>
+                                                                <div class="col-sm-10">
+                                                                    <label class="radio">
+                                                                        <input type="checkbox" name="address[1][default]" ng-model="CustomerObj.Address.IsDefaultAddress">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <!--General Tab-->
+                                        <!--End General Tab-->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="HistoryTab">
+                                        <div class="tab-pane fade active in" id="tab-data">
+                                            <!--History Tab-->
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered  table-striped datatable-responsive" datatable="ng" id="tblHistory" dt-options="dtOptions" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date Added</th>
+                                                            <th>Comment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="Item in HistoryList">
+                                                            <td ng-bind="Item.CreatedDate"></td>
+                                                            <td ng-bind="Item.Comment"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label mandatoryField"> Comment</label>
+                                                    <div class="col-lg-9">
+                                                        <textarea type="text" class="form-control" name="Comment" rows="5" placeholder="Enter Comment" ng-model="StoreObj.Comment"></textarea>
+                                                    </div>
+
+                                                </div>
+                                                <button class="btn btn-primary pull-right" data-placement="top" data-toggle="tooltip" title="" data-original-title="Add history"><i class="icon-plus-circle2"></i> Add History</button>
+                                            </div>
+                                            <!--End History Tab-->
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="TransactionTab">
+                                        <div class="tab-pane fade active in" id="tab-data">
+                                            <!--Transaction Tab-->
+                                            <table class="table table-bordered  table-striped datatable-responsive" datatable="ng" id="tblTransaction" dt-options="dtOptions" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date Added</th>
+                                                        <th>Description</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="Item in CustomerObj.TransactionList">
+                                                        <td ng-bind="Item.date_added | date:GlobalDateFormat"></td>
+                                                        <td ng-bind="Item.comment"></td>
+                                                        <td ng-bind="Item.total"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+                                            <!--<div class="form-group">
+                                                <label class="col-lg-2 control-label ">Description</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" name="Description" maxlength="2000" placeholder="Enter Transaction Description" ng-model="TransactionObj.Description">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label ">Amount</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" name="Amount" maxlength="200" placeholder="Enter Postcode Name" ng-model="TransactionObj.Amount">
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary pull-right" data-placement="top" data-toggle="tooltip" title="" data-original-title="Add Transaction"><i class="icon-plus-circle2"></i> Add Transaction</button>-->
+                                            <!--End Transaction Tab-->
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="RewardPointTab">
+                                        <div class="tab-pane fade active in" id="tab-data">
+                                            <!--Transaction Tab-->
+                                            <div>
+                                                <table class="table table-bordered  table-striped datatable-responsive" datatable="ng" id="tblRewardPoint" dt-options="dtOptions" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date Added</th>
+                                                            <th>Description</th>
+                                                            <th>Points</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="Item in CustomerObj.PointsAuditList | orderBy : '-timestamp'">
+                                                            <td ng-bind="Item.timestamp | date:GlobalDateFormat"></td>
+                                                            <td ng-bind="Item.comment"></td>
+                                                            <td>{{Item.Withdrawal!='-' ? Item.Withdrawal : Item.Deposit}} </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="text-right">Balance</td>
+                                                            <td>{{TotalBalance}}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+
+                                            </div>
+
+                                            <div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label mandatoryField">Description</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" class="form-control" name="Description" maxlength="2000" placeholder="Enter Reward Points Description" ng-model="RewardPointObj.Description">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label mandatoryField">Point</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="number" class="form-control" name="Point" maxlength="200" placeholder="Enter Points" ng-model="RewardPointObj.Point">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="btn btn-primary pull-right" ng-if="IsStoreAdmin==0" ng-click="AddRewardPointObj(RewardPointObj)" data-placement="top" data-toggle="tooltip" title="" data-original-title="Add Reward Points"><i class="icon-plus-circle2"></i> Add Points</label>
+                                            <!--End Transaction Tab-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+
+
+        </div>
+    </form>
+
+    <!--Send Password Popup-->
+
+    <div class="modal zindex" id="DivSendPasswrod" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form name="form1" id="form1" class="form-horizontal" novalidate>
+                            <input type="text" class="form-control" name="NewPassword" required="required" id="abcd" placeholder="Enter Password" ng-model="NewPassword">
+                            <p class="text-danger validationErrors" ng-show="form1.$submitted && (!form1.$valid) && (form1.NewPassword.$error.required || form1.NewPassword.$error.email)">Enter new password</p>
+                            <br />
+                            <button type="submit" ng-click="SendCustomerPasswordEmail(form1)" class="btn btn-success cursor-pointer">Send Email<i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                            <a style="float:right" href="javascript:;" class="close-modal" data-dismiss="modal"><img src="../../../Content/Images/ic-close.png" /></a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Order Summary</title>
+</head>
+
+<body>
+
+    <table cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="width:100%;">
+        <tr>
+            <td align="center" valign="middle">
+                <table cellpadding="0" cellspacing="0" bgcolor="#ffffff" width="600" style="padding:20px 0 20px 0;">
+                    <tr>
+                        <td align="left" valign="top" style="font-size:23px; line-height:30px; color:#000; font-family:Arial, Helvetica, sans-serif;">##StoreName##</td>
+                        <td align="right" valign="middle"><img src="##StoreLogo##" style="max-width:130px;max-height:100px" alt="##StoreName##"></td>
+                        <!--../Content/Images/logo2.png-->
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="color:#000; font-size:18px; line-height:23px; font-family:Arial, Helvetica, sans-serif; padding:30px 0 0 0;">Your Order has been ##OrderStatusName##</td>
+                    </tr>
+                    <!--<tr>
+                        <td colspan="2" align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; border-bottom:solid 1px #ddd;">Do not reply to this email! Need help with your order? Please contact us by phone at ##Phone##</td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="border-top:solid 1px #ddd; padding:20px 0 15px 0; color:#000; font-size:18px; line-height:23px; font-family:Arial, Helvetica, sans-serif;">Order Information</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Order Id</td>
+                        <td align="left" valign="middle" style="color:#000 ;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##OrderId##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Invoice Id</td>
+                        <td align="left" valign="middle" style="color:#000 ;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##InvoiceId##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#FF0000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;"><b>Order Status</b></td>
+                        <td align="left" valign="middle" style="color:#FF0000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;"><b>##OrderStatusName##</b></td>
+                    </tr>
+                    <!--<tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Order Type</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##OrderType##</td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="border-top:solid 1px #ddd; padding:20px 0 15px 0; color:#000; font-size:18px; line-height:23px; font-family:Arial, Helvetica, sans-serif;">Customer Information</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Customer Name</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##CustumerName##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Customer Contact No</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##CustumerPhone##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Customer Email Id</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##CustumerEmail##</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="border-top:solid 1px #ddd; padding:20px 0 15px 0; color:#000; font-size:18px; line-height:23px; font-family:Arial, Helvetica, sans-serif;">Payer Information</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Payment Name</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##PaymentName##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Payment Address</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##PaymentAddress##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Payment Method</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##PaymentMethod##</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="border-top:solid 1px #ddd; padding:20px 0 15px 0; color:#000; font-size:18px; line-height:23px; font-family:Arial, Helvetica, sans-serif;">Shipping Information</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Shipping Name</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##ShippingName##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Shipping Address</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##ShippingAddress##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Shipping Company</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##ShippingCompany##</td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Shipping Method</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##ShippingMethod##</td>
+                    </tr>
+                    <!--<tr>
+                        <td align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0; font-weight:bold;">Currency</td>
+                        <td align="left" valign="middle" style="color:#000;float:right; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:0 0 15px 0;">##Currency##</td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="border-top:solid 1px #ddd; padding:20px 0 15px 0; color:#000; font-size:18px; line-height:23px; font-family:Arial, Helvetica, sans-serif;">Order Details</td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle" colspan="2">
+                            <table cellpadding="0" cellspacing="0" width="700">
+                                ##FinalTable##
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:10px 0 0 0; border-top:solid 1px #ddd;">See you soon! </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left" valign="middle" style="color:#000; font-size:12px; line-height:16px; font-family:Arial, Helvetica, sans-serif; padding:5px 0 5px 0;">##StoreName##  Online Ordering</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<div ng-controller="AuditPointsController">
+    <section class="my-account">
+        <div class="container">
+            <ul>
+                <li>
+                    <a href="#" ui-sref="EditProfile"><span data-hover="Personal&nbsp;Info">Personal Info</span></a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="ChangePassword"><span data-hover="Change&nbsp;Password">Change Password</span></a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="AddressBook"><span data-hover="Address&nbsp;Book">Address Book</span></a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="OrderHistory"><span data-hover="Order&nbsp;History">Order History</span></a>
+                </li>
+                <li class="active">
+                    <a href="#" ui-sref="PointsAudit"><span data-hover="Audit&nbsp;Points">Audit Points</span></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="container">
+        <div class="account-block reward-points" style="margin-bottom:50px">
+            <div class="col-sm-12 table-responsive">
+                <table class="table table-hover" id="tblPointsAudit">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Withdrawal</th>
+                            <th class="text-center">Deposit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="Item in AuditPointsList">
+                            <td class="text-center" ng-bind="Item.timestamp | date:GlobalDateFormat"></td>
+                            <td class="text-center" ng-bind="Item.comment"></td>
+                            <td class="text-center" ng-bind="Item.Withdrawal"></td>
+                            <td class="text-center" ng-bind="Item.Deposit"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>
+                                    Deposit Balance :
+                                </b><span ng-bind="(totalBalance | number : 0)+' Points'"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

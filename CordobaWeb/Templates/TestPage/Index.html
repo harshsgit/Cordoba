@@ -1,0 +1,47 @@
+﻿<div ng-controller="TestController">
+
+    <h1 class="title">Manage Company Layouts</h1>
+    <!--<h1 class="title new_Location">Add Location Contact</h1>-->
+    <div class="top_msg">This page allow you to Manage Company Layouts.</div>
+    <div class="wthbox wth_content  form-horizontal">
+
+        <form name="form" novalidate class="css-form">
+            <div class="toplinks">
+                <ul>
+                    <li><button class="glyphicon glyphicon-floppy-save" ng-click="Save(form)" title="Save" data-toggle="tooltip" data-placement="top"></button></li>
+                    
+                </ul>
+            </div>
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="form.$submitted && !form.$valid">
+
+                <ul>
+                    <li ng-show="form.hostname.$error.required">Host name is required.</li>
+                    <li ng-show="form.layoutname.$error.required">Layout name is required.</li>
+
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label rn_pad mandatoryField">Host Name</label>
+                <div class="col-sm-6 col-md-4">
+                    <input type="text" class="form-control" required="required" name="hostname" maxlength="100" placeholder="Enter Host Name i.e : Google.com" ng-model="CompanyLayoutObj.HostName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label rn_pad mandatoryField">Layout Name</label>
+                <div class="col-sm-6 col-md-4">
+                    <input type="text" class="form-control" required="required" name="layoutname" maxlength="100" placeholder="Enter Layout Name" ng-model="CompanyLayoutObj.LayoutName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-lg-2 control-label rn_pad mandatoryField">Description</label>
+                <div class="col-sm-6 col-md-4">
+                    <input type="text" class="form-control" name="description" maxlength="500" ng-model="CompanyLayoutObj.Description" />
+                </div>
+            </div>
+
+
+        </form>
+
+
+    </div>
+</div>

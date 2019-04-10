@@ -1,0 +1,144 @@
+@media screen and (max-width: 1199px) {
+	.polular_catagories a {
+		font-size: 19px;
+	}
+	.new img {
+    	float: left;
+    	height: 378px;
+    	width: 100%;
+	}
+	.search_products {
+    	width: 230px;
+	}
+	.hot-deals h2 {
+		font-size: 20px;
+	}
+	.hot-deals .flex-direction-nav .flex-prev {
+    	top: -13%;
+	}
+	.hot-deals .flex-direction-nav .flex-next {
+		top: -13%;
+	}
+	.add_cart {
+	padding: 5px 5px !important;
+	max-width: 100% !important;
+	margin-bottom: 10px;
+	}
+	/*.col-product img {
+		max-height: 90px !important;
+	}*/
+}
+@media screen and (max-width: 991px) {
+	.search_products::before {
+		top: 7px;
+	}
+	.show_cart {
+		padding-top: 5px;
+	}
+	.saller h4 {
+		font-size: 17px;
+	}
+	.saller p {
+		font-size: 16px;
+	}
+	.footer img {
+    	max-width: 100%;
+	}
+	.footer_menu {
+		width: 50%;
+		float: left;
+	}
+	.footer_menu ul li {
+		display: block;
+		border: none;
+		padding: 0;
+	}
+	.footer img {
+    	padding-top: 30px;
+	}
+	.footer_menu img {
+		padding: 0px;
+	}
+	.navbar-nav > li > a {
+        font-size: 13px;
+		padding:15px 5px;
+    }
+}
+@media screen and (max-width: 767px) {
+	.navbar-header {
+    	width: auto;
+	}
+	
+	.account-block{margin-bottom: 30px;}
+	.logo {
+    	float: left;
+    	width: 185px;
+	}
+	.login {
+		float: none;
+		text-align: center;
+	}
+	.main-menu {
+		padding-top: 0;
+	}
+	.show_cart {
+    	float: right;
+    	padding-top: 20px;
+	}
+	.search_products::before {
+		top: 12px;
+	}
+	.nav > li {
+		padding: 10px 0px;
+	}
+	.special_offers img {
+		width: 100%;
+	}
+	.slider_text h1 {
+		font-size: 27px;
+	}
+	.letest-product .flex-direction-nav .flex-prev {
+		top: -15%;
+	}
+	.letest-product .flex-direction-nav .flex-next {
+		top: -15%;
+	}
+	.hot-deals .flex-direction-nav .flex-prev {
+    	top: -12.5%;
+	}
+	.hot-deals .flex-direction-nav .flex-next {
+		top: -12.5%;
+	}
+	
+}
+@media screen and (max-width: 480px) {
+	.my-account {
+    margin-top: 60px;
+	}
+	.heading {
+		font-size: 17px;
+	}
+	.letest-product .flex-direction-nav .flex-prev {
+		top: -14%;
+	}
+	.letest-product .flex-direction-nav .flex-next {
+		top: -14%;
+	}
+	.hot-deals .flex-direction-nav .flex-prev {
+		top: -13%;
+	}
+	.hot-deals .flex-direction-nav .flex-next {
+		top: -13%;
+	}
+	.hot-deals h2 {
+		font-size: 17px;
+		padding :12px 20px;
+	}
+	.footer_menu {
+		width: 100%;
+		float: left;
+	}
+}
+@media screen and (max-width: 323px) {
+	
+}

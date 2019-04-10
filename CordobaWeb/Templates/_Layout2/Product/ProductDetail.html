@@ -1,0 +1,117 @@
+﻿<div ng-controller="ProductDetailLayoutController">
+    <div class="product-detail mt-30">
+        <div class="container">
+            <div class="col-sm-6">
+                <div class="image-zooming">
+                    <div class="product-image">
+                        <div class="magnify">
+                            <div class="large"></div>
+                            <img class="small " src="{{ProductObj.Image}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <h3 class="heading" ng-bind-html="ProductObj.name"></h3>
+                <div class="price mt-10">
+                    <p>
+                        Price: <span ng-bind="(ProductObj.points | number:0)+' Points'"></span>
+                    </p>
+                </div>
+                <!--<div class="price mt-10">
+                                <p>Manufacture:<span ng-bind="ProductObj.ManufactureName"> </span></p>
+                            </div>
+                            <div class="price mt-10">
+                                <p>Supplier:<span ng-bind="ProductObj.SupplierName"></span></p>
+                            </div>-->
+                <div class="ship mt-10">
+                    <p>
+                        Product Code: <span ng-bind="ProductObj.Model"></span>
+                    </p>
+                </div>
+                <div class="cart-btn" ng-controller="AddProductToCartController">
+                    <input type="button" name="cart_btn" ng-click="AddProductToCart(ProductObj,$event)" class="add_cart" value="ADD TO CART" />
+                </div>
+                <br />
+                <div class="cart-btn">
+                    <a class="ng-scope col-sm-12" style="margin:0px;padding:0px;cursor:pointer" ng-if="ProductObj.IsProductInWishlist!=true" ng-click="AddtoWishList(ProductObj)">
+                        <i ng-class="ProductObj.IsProductInWishlist==true? 'fa fa-heart' : 'fa fa-heart-o' " class="fa fa-heart-o"></i> Move to Wishlist
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="description mb-15">
+            <h3 class="heading">Description</h3>
+            <!--<p ng-bind-html="ProductObj.description"></p>-->
+            <p ng-bind-html="ProductObj.descriptionHtml"></p>
+        </div>
+    </div>
+    <div class="recently-viewed mb-30" ng-if="RelatedProductList.length>0">
+        <div class="container-fluid">
+            <div class="col-sm-12 mt-20 ">
+                <div class="col-sm-12">
+                    <div class="block-heading">
+                        <h4>People Also Buy</h4>
+                    </div>
+                </div>
+                <div class="col-md-3" ng-repeat="SimilarProduct in RelatedProductList">
+                    <div class="product-block">
+                        <div class="product-img">
+                            <img ng-src="{{SimilarProduct.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="latest product" data-action="zoom" />
+                        </div>
+                        <a ui-sref="LayoutProductDetail({ProductId:SimilarProduct.product_id})" ng-bind-html="SimilarProduct.name"></a>
+                        <p ng-bind="SimilarProduct.Model"></p>
+                        <p>
+                            <span ng-bind="SimilarProduct.Price+' Points'"></span>
+                        </p>
+                        <div class="row" ng-controller="AddProductToCartController">
+                            <button class="btn btn-default add_to_cart_dish" ng-click="AddProductToCart(SimilarProduct)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        var native_width = 0;
+        var native_height = 0;
+
+        $(".large").css("background", "url('" + $(".small").attr("src") + "') no-repeat");
+
+        $(".magnify").mousemove(function (e) {
+            if (!native_width && !native_height) {
+                var image_object = new Image();
+                image_object.src = $(".small").attr("src");
+                native_width = image_object.width;
+                native_height = image_object.height;
+            }
+            else {
+                var magnify_offset = $(this).offset();
+                var mx = e.pageX - magnify_offset.left;
+                var my = e.pageY - magnify_offset.top;
+                if (mx < $(this).width() && my < $(this).height() && mx > 0 && my > 0) {
+                    $(".large").fadeIn(100);
+                }
+                else {
+                    $(".large").fadeOut(100);
+                }
+                if ($(".large").is(":visible")) {
+                    var rx = Math.round(mx / $(".small").width() * native_width - $(".large").width() / 2) * -1;
+                    var ry = Math.round(my / $(".small").height() * native_height - $(".large").height() / 2) * -1;
+                    var bgp = rx + "px " + ry + "px";
+                    var px = mx - $(".large").width() / 2;
+                    var py = my - $(".large").height() / 2;
+
+                    $(".large").css({ left: px, top: py, backgroundPosition: bgp });
+                }
+            }
+        })
+    });
+
+</script>

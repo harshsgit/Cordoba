@@ -1,0 +1,144 @@
+﻿<div ng-controller="AddOrUpdateRewardController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i>  {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage reward.</li>
+                </ul>
+
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <li>
+                        <button type="submit" ng-click="SaveReward(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Reward" ng-click="DeleteReward(RewardObj.id)"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div role="tabpanel" class="form-horizontal" id="messages">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="(form.$submitted && !form.$valid) || (form.$submitted && checkCustomError())">
+                                            <ul>
+                                                <li ng-show="form.StoreId.$error.required">Store is required.</li>
+                                                <li ng-show="form.Title.$error.required">Reward Title is required.</li>
+                                                <li ng-show="form.RewardType.$error.required">Reward Type is required.</li>
+                                                <li ng-show="form.StartDate.$error.required">Start Date is required.</li>
+                                                <li ng-show="form.EndDate.$error.required">End Date is required.</li>
+                                                <li ng-show="form.RewardStatus.$error.required">Reward Status is required.</li>
+                                                <li ng-show="invalidEndDate">End Date must be greater than Start Date.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-1">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label mandatoryField">Store</label>
+                                        <div class="col-lg-8">
+                                            <select ng-model="RewardObj.store_id" ng-options=" store.store_id as store.name for store in StoreList"
+                                                    class="form-control cursor-pointer" required="required" name="StoreId" ng-disabled="((StoreId != 0) || (RewardId != 0))"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label mandatoryField">Title</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="Title" maxlength="100" placeholder="Enter Reward Title" ng-model="RewardObj.Title" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label mandatoryField">Reward Type</label>
+                                        <div class="col-lg-8">
+                                            <select ng-options="rewardtype.reward_type_id as rewardtype.name  for rewardtype in RewardTypeList" class="form-control" ng-model="RewardObj.reward_type_id" required="required" name="RewardType" ng-disabled="NeedTodisableRewardType()"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label mandatoryField">Start Date</label>
+                                        <div class="col-lg-8">
+                                            <!--<input type="text" class="form-control" name="StartDate" maxlength="50" placeholder="Enter Start Date" ng-model="RewardObj.start_date" required="required">-->
+                                            <div class="input-group myDatePicker date startdate">
+                                                <input type="text" class="form-control" ng-model="RewardObj.start_date" name="StartDate" required="required" />
+                                                <span class="input-group-addon cursor-pointer">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label mandatoryField">End Date</label>
+                                        <div class="col-lg-8">
+                                            <!--<input type="text" class="form-control" name="EndDate" maxlength="50" placeholder="Enter End Date" ng-model="RewardObj.end_date" required="required">-->
+                                            <div class="input-group myDatePicker date enddate">
+                                                <input type="text" class="form-control" ng-model="RewardObj.end_date" name="EndDate" required="required" />
+                                                <span class="input-group-addon cursor-pointer">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label mandatoryField">Status</label>
+                                        <div class="col-lg-8">
+                                            <select ng-options="status.ID as status.Name  for status in StatusForActive" class="form-control" ng-model="RewardObj.status" required="required" name="RewardStatus"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Description</label>
+                                        <div class="col-lg-8">
+                                            <textarea type="text" class="form-control" ng-model="RewardObj.description" name="Description" maxlength="100"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Need to sent Mail for Reward?</label>
+                                        <div class="col-lg-8">
+                                            <input type="checkbox" class="checkbox" name="SentMail" ng-model="RewardObj.sent_mail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Reward Need to display on Dashboard?</label>
+                                        <div class="col-lg-8">
+                                            <input type="checkbox" class="checkbox" name="DisplayDashborad" ng-model="RewardObj.display_dashborad">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Department wise Grouping</label>
+                                        <div class="col-lg-1">
+                                            <input type="checkbox" class="checkbox" name="IsCustomerDepartment" ng-model="RewardObj.IsCustomerDepartment">
+                                        </div>
+                                        <div class="col-lg-7 pull-left mt-5">
+                                            (Mark as True will display users department wise for award purpose)
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+        </div>
+    </form>
+</div>

@@ -1,0 +1,572 @@
+﻿<div ng-controller="OrdersController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to manage Order.</li>
+            </ul>
+            <div class="text-right">
+
+
+
+            </div>
+            <ul class="breadcrumb-elements">
+                <li>
+                    <button type="button" ng-click="PrintOrder()" class="btn btn-success cursor-pointer" title="Print Order"><i class="fa fa-print" aria-hidden="true"></i></button>&nbsp;
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-header-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a data-target="#OrderDetails" role="tab" data-toggle="tab">Order Details</a></li>
+                                <li role="presentation" ng-if="false"><a data-target="#PaymentDetail" role="tab" data-toggle="tab">Payment Details</a></li>
+                                <li role="presentation"><a data-target="#Shippingdetail" role="tab" data-toggle="tab">Shipping Details</a></li>
+                                <li role="presentation"><a data-target="#Products" role="tab" data-toggle="tab">Products</a></li>
+                                <li role="presentation"><a data-target="#History" role="tab" data-toggle="tab">History</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="OrderDetails">
+                                    <!--OrderDetails Tab-->
+                                    <table class="table  table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-sm-2">Order ID:</td>
+                                                <td>{{'#'+OrderDetails.order_id}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Invoice No.:</td>
+                                                <td><input type="button" value="Generate" class="btn btn-success" /> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Store Name:</td>
+                                                <td>{{OrderDetails.store_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Store Url:</td>
+                                                <td><a href="{{OrderDetails.store_url}}" target="_blank">{{OrderDetails.store_url}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <!--{{OrderDetails.customer_id}}-->
+                                                <td class="col-sm-2">Customer:</td>
+                                                <td><a ui-sref="ManageCustomer({CustomerId:OrderDetails.customer_id})">{{OrderDetails.customer}}</a></td>
+                                            </tr>
+                                            <!--<tr ng-if="OrderDetails.customer_group_id!=0">
+                                                <td class="col-sm-2">Customer:</td>
+                                                <td><a href="#">{{OrderDetails.customer}}</a></td>
+                                            </tr>-->
+                                            <tr>
+                                                <td class="col-sm-2">E-Mail:</td>
+                                                <td><a href="mailto:{{OrderDetails.email}}">{{OrderDetails.email}}</a> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Telephone:</td>
+                                                <td>{{OrderDetails.telephone}}</td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td class="col-sm-2">Fax:</td>
+                                                <td>{{OrderDetails.fax}}</td>
+                                            </tr>-->
+                                            <tr>
+                                                <td class="col-sm-2">Total:</td>
+                                                <td>{{OrderDetails.total +' Points'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Order Status:</td>
+                                                <td>{{OrderDetails.OrderStatusName}}</td>
+                                            </tr>
+                                            <tr ng-if="OrderDetails.comment!=''">
+                                                <td class="col-sm-2">Comment:</td>
+                                                <td>{{OrderDetails.comment}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">IP Address:</td>
+                                                <td>{{OrderDetails.ip}}</td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td class="col-sm-2">User Agent:</td>
+                                                <td>{{orderdetails.UserAgent}}</td>
+                                            </tr>-->
+                                            <tr>
+                                                <td class="col-sm-2">Accept Language:</td>
+                                                <td>{{OrderDetails.LanguageName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Date Added:</td>
+                                                <td>{{OrderDetails.date_added | date:GlobalDateFormat}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Date Modified:</td>
+                                                <td>{{OrderDetails.date_modified | date:GlobalDateFormat}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Comment:</td>
+                                                <td>{{OrderDetails.comment}}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                    <!--End OrderDetails Tab-->
+                                    <div>
+                                        <div>
+                                            <h3>Update Order Status</h3>
+                                            <hr />
+                                        </div>
+                                        <div class="panel panel-flat">
+                                            <div class="panel-heading">
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 rn_pad control-label text-right">Order Status</label>
+                                                        <div class="col-lg-10">
+                                                            <select ng-options="orderstatus.Id as orderstatus.Name for orderstatus in  OrderStatus" ng-model="OrderHistory.order_status_id" class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Notify Customer</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="checkbox" ng-model="OrderHistory.notify" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Comment</label>
+                                                        <div class="col-lg-10">
+                                                            <textarea class="form-control" ng-model="OrderHistory.comment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-2"></div>
+                                                        <div class="col-lg-10 text-right">
+                                                            <input type="button" value="Update order Status" class="btn btn-primary" ng-click="InsertOrderHistory(OrderHistory)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div>
+                                        <div>
+                                            <h3>Update Order Status</h3>
+                                            <hr />
+                                        </div>
+                                        <div class="panel panel-flat">
+                                            <div class="panel-heading">
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 rn_pad control-label text-right">Order Status</label>
+                                                        <div class="col-lg-10">
+                                                            <select ng-options="orderstatus.order_status_id as orderstatus.name for orderstatus in  OrderStatusList" ng-model="OrderHistory.order_status_id" class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Notify Customer</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="checkbox" ng-model="OrderStatusNotify" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Comment</label>
+                                                        <div class="col-lg-10">
+                                                            <textarea class="form-control" ng-model="OrderStatusComment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-2"></div>
+                                                        <div class="col-lg-10 text-right">
+                                                            <input type="button" value="Update Status" class="btn btn-primary" ng-click="UpdateOrderStatus()" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="PaymentDetail" ng-if="false">
+                                    <!--OrderDetails Tab-->
+                                    <table class="table  table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-sm-2">First Name:</td>
+                                                <td>{{OrderDetails.payment_firstname}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Last Name:</td>
+                                                <td>{{OrderDetails.payment_lastname}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Address 1:</td>
+                                                <td>{{OrderDetails.payment_address_1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Address 2:</td>
+                                                <td>{{OrderDetails.Address2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">City:</td>
+                                                <td>{{OrderDetails.payment_city}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Postcode:</td>
+                                                <td>{{OrderDetails.payment_postcode}}</td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td class="col-sm-2">Region / State:</td>
+                                                <td>{{OrderDetails.RegionState}}</td>
+                                            </tr>-->
+                                            <tr>
+                                                <td class="col-sm-2">Country:</td>
+                                                <td>{{OrderDetails.payment_country}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Payment Method:</td>
+                                                <td>{{OrderDetails.payment_method}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="Shippingdetail">
+                                    <!--OrderDetails Tab-->
+                                    <table class="table  table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-sm-2">First Name:</td>
+                                                <td>{{OrderDetails.shipping_firstname}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Last Name:</td>
+                                                <td>{{OrderDetails.shipping_lastname}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Company:</td>
+                                                <td>{{OrderDetails.shipping_company}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Address 1:</td>
+                                                <td>{{OrderDetails.shipping_address_1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Address 2:</td>
+                                                <td>{{OrderDetails.shipping_address_2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">City:</td>
+                                                <td>{{OrderDetails.shipping_city}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Postcode:</td>
+                                                <td>{{OrderDetails.shipping_postcode}}</td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td class="col-sm-2">Region / State:</td>
+                                                <td>{{Shippingdetail.RegionState}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Region / State Code:</td>
+                                                <td>{{Shippingdetail.RegionStateCode}}</td>
+                                            </tr>-->
+                                            <tr>
+                                                <td class="col-sm-2">Country:</td>
+                                                <td>{{OrderDetails.shipping_country}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-sm-2">Shipping Method:</td>
+                                                <td>{{OrderDetails.shipping_method}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="Products">
+                                    <!--OrderDetails Tab-->
+                                    <table class="table  table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="col-sm-4">Product</td>
+                                                <td class="col-sm-2">Model</td>
+                                                <td class="col-sm-2 text-right">Quantity</td>
+                                                <td class="col-sm-2 text-right">Unit Price</td>
+                                                <td class="col-sm-2 text-right">Total</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="product in Products">
+                                                <td>{{product.name}}</td>
+                                                <td>{{product.model}}</td>
+                                                <td class="text-right">{{product.quantity}}</td>
+                                                <td class="text-right">
+                                                    <span ng-show="IsStoreAdmin==0">
+                                                        {{product.price | number : 0 | currency:'£'}}
+                                                    </span>
+                                                    <span>
+                                                        {{' ('+product.points+' Points)'}}
+                                                    </span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span ng-show="IsStoreAdmin==0">
+                                                        {{product.total | currency:'£'}}
+                                                    </span>
+                                                    <span>
+                                                        {{' ('+ product.totalpoints * product.quantity+' Points)'}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right">{{subtotal_title}}</td>
+                                                <td class="text-right">
+                                                    <span ng-show="IsStoreAdmin==0">
+                                                        {{(Products[0].subtotal_value | currency:'£')}}
+                                                    </span>
+                                                    <span>
+                                                        {{' (' + Products[0].subtotal_text + ')'}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" colspan="4">{{total_title}}</td>
+                                                <td class="text-right">
+                                                    <span ng-show="IsStoreAdmin==0">
+                                                        {{(Products[0].total_value | currency:'£')}}
+                                                    </span>
+                                                    <span>
+                                                        {{' (' + Products[0].total_text +')'}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="History">
+                                    <!--OrderDetails Tab-->
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="col-sm-3">Date Added</td>
+                                                <td class="col-sm-3">Comment</td>
+                                                <td class="col-sm-3">Status</td>
+                                                <td class="col-sm-3">Customer Notified</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="orderHistory in OrderHistoryList">
+                                                <td class="col-sm-3">{{orderHistory.date_added | date:GlobalDateFormat}}</td>
+                                                <td class="col-sm-3">{{orderHistory.comment}}</td>
+                                                <td class="col-sm-3">{{orderHistory.name}}</td>
+                                                <td class="col-sm-3">{{orderHistory.notify == 1 ? 'Yes' : 'No'}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <br />
+                                    <!--<div>
+                                        <div>
+                                            <h3>Add Order History</h3>
+                                            <hr />
+                                        </div>
+                                        <div class="panel panel-flat">
+                                            <div class="panel-heading">
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 rn_pad control-label text-right">Order Status</label>
+                                                        <div class="col-lg-10">
+                                                            <select ng-options="orderstatus.Id as orderstatus.Name for orderstatus in  OrderStatus" ng-model="OrderHistory.order_status_id" class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Notify Customer</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="checkbox" ng-model="OrderHistory.notify" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Comment</label>
+                                                        <div class="col-lg-10">
+                                                            <textarea class="form-control" ng-model="OrderHistory.comment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-2"></div>
+                                                        <div class="col-lg-10 text-right">
+                                                            <input type="button" value="Add History" class="btn btn-primary" ng-click="InsertOrderHistory(OrderHistory)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Order print Section  -->
+    <div id="OrderPrintSection" ng-hide="true">
+        <div class="container">
+            <div style="page-break-after: always;">
+                <h1>Order {{'#'+OrderDetails.order_id}}</h1>
+                Date :{{OrderDetails.date_added | date:GlobalDateFormat}}
+                <br />
+                <table class="table table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <td style="width: 50%;"><b>Supplier</b></td>
+                            <td style="width: 50%;"><b>To</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <address>
+                                    {{OrderDetails.SupplierName}}
+                                    <br>{{OrderDetails.SupplierAddress}}<br />
+                                </address>
+                            </td>
+                            <td>
+                                <address>
+                                    {{OrderDetails.shipping_firstname+' '+OrderDetails.shipping_lastname}}
+                                    <br />
+                                    {{OrderDetails.shipping_company}}
+                                    <br />
+                                    {{OrderDetails.shipping_address_1}}
+                                    <br />
+                                    {{OrderDetails.shipping_address_2}}
+                                    <br />
+                                    {{OrderDetails.shipping_city}} {{OrderDetails.shipping_postcode}}
+                                    <br />
+                                    {{OrderDetails.shipping_country}}
+                                    <br />
+                                    <b> Customer Email :</b> {{OrderDetails.email}}
+                                    <br />
+                                    <b>E-Mail:</b> contact@cordobarewards.co.uk<br />
+                                    <b>Web Site:</b> <a href="{{OrderDetails.store_url}}" target="_blank">{{OrderDetails.store_url}}</a>
+                                </address>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <table class="table table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <td><b>Product</b></td>
+                            <td><b>Model</b></td>
+                            <td class="text-right"><b>Quantity</b></td>
+                            <td class="text-right"><b>Unit Price</b></td>
+                            <td class="text-right"><b>Total</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr ng-repeat="product in Products">
+                            <td>{{product.name}}</td>
+                            <td>{{product.model}}</td>
+                            <td class="text-right">{{product.quantity}}</td>
+                            <td class="text-right">
+                                <span ng-show="IsStoreAdmin==0">
+                                    {{product.price | number : 0 | currency:'£'}}
+                                </span>
+                                <span>
+                                    {{' ('+product.points+' Points)'}}
+                                </span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-show="IsStoreAdmin==0">
+                                    {{product.total | number : 0 | currency:'£'}}
+                                </span>
+                                <span>
+                                    {{' ('+product.totalpoints+' Points)'}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-right">{{subtotal_title}}</td>
+                            <td class="text-right">
+                                <span ng-show="IsStoreAdmin==0">
+                                    {{(Products[0].subtotal_value | currency:'£')}}
+                                </span>
+                                <span>
+                                    {{' (' + Products[0].subtotal_text + ')'}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" colspan="4">{{total_title}}</td>
+                            <td class="text-right">
+                                <span ng-show="IsStoreAdmin==0">
+                                    {{(Products[0].total_value | currency:'£')}}
+                                </span>
+                                <span>
+                                    {{' (' + Products[0].total_text +')'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <table ng-if="OrderDetails.comment!=''&& OrderDetails.comment!=null" class="table table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <td><b>Comment</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> {{OrderDetails.comment}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--Order print Section-->
+</div>

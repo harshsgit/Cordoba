@@ -1,0 +1,148 @@
+﻿<style>
+    .pagination {
+        float: right;
+    }
+
+        .pagination .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .pagination .btn-primary {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+    [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        -webkit-appearance: checkbox;
+    }
+</style>
+<div class="container-fluid products" ng-controller="CategoryListController">
+    <div class="col-lg-3 col-md-4 col-xs-12">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 mb-20" >  <!--ng-if="SelectedSubCategory==-3"-->
+                <div class="block pb-5">
+                    <div class="col-sm-12">
+                        <div class="block-heading">
+                            <h4>Search by Points</h4>
+                        </div>
+                        <div class="searchByPointsContent">
+                            <ul>
+                                <li ng-repeat="SearchByPoint in SearchByPointsEnum">
+                                    <input type="checkbox" class="cursor-pointer ng-pristine ng-valid ng-touched" ng-checked="SearchByPoint.Checked" ng-model="SearchByPoint.Checked" ng-change="SearchFilterByArray()"><span>{{'    ' + SearchByPoint.Name}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 mb-20">
+                <div class="block pb-5">
+                    <div class="col-sm-12">
+                        <div class="block-heading">
+                            <h4>Categories</h4>
+                        </div>
+                    </div>
+                    <div class="category-list">
+                        <ul class="col-sm-12">
+                            <li ng-class="SelectedCategoryId==category.Category_Id ? 'active cursor-pointer' : 'cursor-pointer' " ng-if="category.parent_Id==0" ng-repeat="category in CategoryList">
+                                <a href="" class="cursor-pointer" ng-bind-html="category.name" ng-click="GetCategory(category.Category_Id)"></a>
+                                <ul>
+                                    <li ng-class="SelectedSubCategory==SubCategory.Category_Id? 'active cursor-pointer' : 'cursor-pointer' " ng-if="SubCategory.parent_Id>0  && SelectedCategoryId==category.Category_Id && SubCategory.parent_Id==category.Category_Id" ng-repeat="SubCategory in CategoryList | filter:{ 'parent_Id' : category.Category_Id } | unique:'name'| orderBy : 'name'">
+                                        <a href="" class="cursor-pointer" ng-click="GetSubCategory(SubCategory.Category_Id,1)" ng-bind-html="SubCategory.name"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-xs-12" ng-if="SelectedCategoryId>0 && !(SelectedSubCategory>0)">
+        <div class="row">
+            <div class="col-sm-12 latest-product mb-30">
+                <div class="block-heading">
+                    <h4 ng-bind-html="SelectedCategory.name"></h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-sm-3" ng-if="category.parent_Id==SelectedCategoryId" ng-repeat="category in CategoryList | filter:{ parent_Id: category.Category_Id } ">
+                        <div class="product-block">
+                            <div class="product-img cursor-pointer" ng-click="GetSubCategory(category.Category_Id,1)">
+                                <img ng-src="{{category.image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="latest product" />
+                            </div>
+                            <a href="" class="cursor-pointer" ng-click="GetSubCategory(category.Category_Id,1)" ng-bind-html="category.name"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-xs-12 product-list" ng-if="(SelectedCategoryId>0 && SelectedSubCategory>0) || (SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)">
+
+        <div class="row" style="min-height:750px">
+            <div class="col-sm-12 latest-product mb-30">
+                <div class="block-heading">
+                    <h4 ng-bind-html="TitleHeader"></h4>
+                </div>
+                <br />
+                <div class="pull-left">
+                    <br />
+                    <div class="filterProductDiv form-group pull-left" ng-if="ProductList.length>0"> <!--SelectedSubCategory==-3 &&-->
+                        <div>
+                            <label class="rn_pad control-label mt-5">
+                                Sort By
+                            </label>
+                            &nbsp;&nbsp;
+                            <div class="pull-right">
+                                <select ng-options="SortByObject.Id as SortByObject.Name  for SortByObject in SortByEnum"
+                                        class="form-control" ng-model="SortById" ng-change="SortBy(SortById)" name="NameSort"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pull-right">
+                    <ul ng-show="(SelectedCategoryId>0 && SelectedSubCategory>0)|| (SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)" pagination total-items="totalRecords" items-per-page="20" max-size="maxSize" ng-model="SelectedPageIndex" ng-click="GoToPage(SelectedPageIndex)" ng-init="set()"></ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="product-block" ng-repeat="product in ProductList">
+                        <div class="product-img" ng-controller="AddProductToCartController">
+                            <img ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product" data-action="zoom" />
+                            <button class="btn btnaddtocart add-cart-btn add_to_cart_dish" ng-click="AddProductToCart(product,$event)" data-label="Add to cart"> Add to Cart</button> <!--<i class="fa fa-opencart"></i>-->
+                        </div>
+                        <a href="" class="cursor-pointer" ui-sref="LayoutProductDetail({ProductId:product.product_id})" title="{{product.name}}" ng-bind="product.name"></a>
+                        <p>
+                            <span class="pull-left" ng-bind="(product.points | number:0)+' Points'"> </span><span class="pull-right cursor-pointer">
+                                <a ng-if="product.IsProductInWishlist==true" href="" title="Remove from wishlist" class="cursor-pointer remove-item pull-right"><i class="fa fa-heart pull-right" ng-click="RemoveFromWishList(product)"></i></a>
+                            </span>
+                        </p>
+
+                        <p title="{{product.Model}}" ng-bind="product.Model"></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <ul ng-show="(SelectedCategoryId>0 && SelectedSubCategory>0)|| (SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)" pagination total-items="totalRecords" items-per-page="20" max-size="maxSize" ng-model="SelectedPageIndex" ng-click="GoToPage(SelectedPageIndex)" ng-init="set()"></ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.mCustomScrollbar.defaults.theme = 'dark-thick';
+        $('.category-list').mCustomScrollbar();
+    });
+
+</script>
+

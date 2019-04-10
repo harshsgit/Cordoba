@@ -1,0 +1,55 @@
+﻿<div ng-controller="ViewRewardCustomerDetailsContoller">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i>  {{PageTitle}} - {{CustomerName}}</h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup customers of rewards.</li>
+            </ul>
+            <!--<ul class="breadcrumb-elements">
+                <li><button type="button" class="btn btn-primary btn-md" data-placement="top" data-toggle="tooltip" title="Add New Reward" ui-sref="ManageReward"><i class="glyphicon glyphicon-plus-sign position-left"></i> New Reward</button></li>
+            </ul>-->
+        </div>
+    </div>
+    <div class="page-header-content">
+
+        <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblcustomerdetails" dt-options="dtOptions" width="100%">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Medal</th>
+                    <th>Comment</th>
+                    <th>Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="Item in CustomerRewards">
+                    <td ng-bind="Item.Customer"></td>
+                    <td ng-bind="Item.Medal"></td>
+                    <td ng-bind="Item.comment"></td>
+                    <td ng-bind="Item.reward_given_date | date:GlobalDateFormat"></td>
+                    <td class="cursor-pointer text-center">
+                        <a data-placement="top" data-toggle="tooltip" ng-click="DeleteRewardUser(Item.id)"> <i class="glyphicon glyphicon-erase cursor-pointer"></i></a>
+                        
+                    </td>
+                    <!--<td class="cursor-pointer text-center">
+                        <a ui-sref="ManageReward({rewardId:Item.id})" data-placement="top" data-toggle="tooltip" title="Edit"> <i class="glyphicon glyphicon-edit cursor-pointer"></i></a>
+                        <a ui-sref="ViewReward({rewardId:Item.id})" data-placement="top" data-toggle="tooltip" title="View"> <i class="glyphicon glyphicon-eye-open cursor-pointer"></i></a>
+                    </td>-->
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+</div>

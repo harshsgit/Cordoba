@@ -1,0 +1,98 @@
+﻿<div ng-controller="AddOrUpdateCustomerDepartmentController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage customer department.</li>
+                </ul>
+
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="submit" ng-click="SaveCustomerDepartment(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <!--<li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Customer Department" ng-click="DeleteCustomerDepartment(CustomerDepartmentObj)"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <div role="tabpanel" class="form-horizontal" id="messages">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.store_id.$error.required">Store is required.</li>
+                                                <li ng-show="form.name.$error.required">Department name is required.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-1">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label mandatoryField">Store</label>
+                                        <div class="col-lg-8">
+                                            <select ng-options="option.store_id as option.name  for option in StoreList" ng-disabled="StoreId != 0" class="form-control" ng-model="CustomerDepartmentObj.store_id" required="required" name="store_id"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label mandatoryField">Department Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="name" maxlength="50" placeholder="Enter Department Name" ng-model="CustomerDepartmentObj.name" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="input-status">Status</label>
+                                        <div class="col-lg-8">
+                                            <select ng-model="CustomerDepartmentObj.statuscode" ng-options="Status.ID as Status.Name  for Status in CustomerDeptStatus"
+                                                    class="form-control" name="xyz"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

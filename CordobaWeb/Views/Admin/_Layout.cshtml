@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<html ng-app="CordobaApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cordoba</title>
+
+    @*@Styles.Render("~/bundles/AdminCss")*@
+    @Styles.Render("~/bundles/AdminCss?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    <link href="~/Content/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="~/content/admin/css/components.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/core.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/admin/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/toastr.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/css/angular-ui-switch.min.css" rel="stylesheet" />
+    <link href="~/Content/admin/css/print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        #impliedsubmit {
+            color: #263238;
+            background-color: #ffffff;
+        }
+
+        .ta-editor {
+            min-height: 400px;
+            height: auto;
+            overflow: auto;
+            font-family: inherit;
+            font-size: 100%;
+        }
+    </style>
+</head>
+<body ng-controller="LayoutController">
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+        <input id="hdAdminUserId" type="hidden" value="@Convert.ToString(@HttpContext.Current.Session["AdminUserId"])" />
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" ui-sref="Home">
+                <img style=" margin-top -16px; height 52px;" src="~/Content/admin/images/logo/cordoba-logo.png" alt="">
+            </a>
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            @*<ul class="nav navbar-nav">
+                    <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-git-compare"></i>
+                            <span class="visible-xs-inline-block position-right">Git updates</span>
+                            <span class="badge bg-warning-400">9</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-content">
+                            <div class="dropdown-content-heading">
+                                Git updates
+                                <ul class="icons-list">
+                                    <li><a href="#"><i class="icon-sync"></i></a></li>
+                                </ul>
+                            </div>
+                            <ul class="media-list dropdown-content-body width-350">
+                                <li class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-pull-request"></i></a>
+                                    </div>
+                                    <div class="media-body">
+                                        Drop the IE <a href="#">specific hacks</a> for temporal inputs
+                                        <div class="media-annotation">4 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="btn border-warning text-warning btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-commit"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Add full font overrides for popovers and tooltips
+                                        <div class="media-annotation">36 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-branch"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <a href="#">Chris Arney</a> created a new <span class="text-semibold">Design</span> branch
+                                        <div class="media-annotation">2 hours ago</div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="btn border-success text-success btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-merge"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <a href="#">Eugene Kopyov</a> merged <span class="text-semibold">Master</span> and <span class="text-semibold">Dev</span> branches
+                                        <div class="media-annotation">Dec 18, 18:36</div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-pull-request"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Have Carousel ignore keyboard events
+                                        <div class="media-annotation">Dec 12, 05:46</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="dropdown-content-footer">
+                                <a href="#" data-popup="tooltip" title="All activity"><i class="icon-menu display-block"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>*@
+            @*<p class="navbar-text"><span class="label bg-success-400">Online</span></p>*@
+            <ul class="nav navbar-nav navbar-right pull-right">         
+                <li class="dropdown" title="Stores">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-life-ring fa-lg"></i></a>
+
+                    <div class="dropdown-menu dropdown-content width-350 ">
+                        <div class="dropdown-content-heading">
+                            Stores
+                        </div>
+                        <ul class="media-list dropdown-content-body">
+                            <li class="media" ng-repeat="Store in StoreList">
+                                @*<div class="media-left"><img src="{{Store.logo}}" class="img-circle img-sm" alt=""></div>*@
+                                <div class="media-body">
+                                    <a href="{{Store.url}}" target="_blank" class="media-heading">
+                                        <span class="text-semibold" ng-bind="Store.name"></span>
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div class="dropdown-content-footer">
+                        </div>
+                    </div>
+                </li>
+
+                @*<li class="dropdown" ng-controller="dashboard_OrderCountController">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <span class="label label-danger pull-left" ng-bind="TopAlertStatusDropDown[0].total"></span>
+                        <i class="fa fa-bell fa-lg"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
+                        <li class="dropdown-header">Orders</li>
+                        <li ng-if="AlertObj.type==1" ng-repeat="AlertObj in TopAlertStatusDropDown | filter:{ 'Active' : 1}">
+                            <a class="cursor-pointer" href="" ng-click="GoToState(AlertObj)">
+                                <span ng-if="AlertObj.Name=='Completed' && AlertObj.IncludeInTotal!=1" class="label label-success pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal!=1" class="label label-warning pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal==1" class="label label-danger pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                {{AlertObj.Name}}
+                            </a>
+                        </li>
+                        <li class="dropdown-header">Customers</li>
+                        <li ng-if="AlertObj.type==2" ng-repeat="AlertObj in TopAlertStatusDropDown | filter:{ 'Active' : 1}">
+                            <a class="cursor-pointer" href="" ng-click="GoToState(AlertObj)">
+                                <span ng-if="AlertObj.Name=='Completed' && AlertObj.IncludeInTotal!=1" class="label label-success pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal!=1" class="label label-warning pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal==1" class="label label-danger pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                {{AlertObj.Name}}
+                            </a>
+                        </li>*@
+                        @*<li class="dropdown-header">Products</li>
+                        <li ng-if="AlertObj.type==3" ng-repeat="AlertObj in TopAlertStatusDropDown | filter:{ 'Active' : 1}">
+                            <a class="cursor-pointer" href="" ng-click="GoToState(AlertObj)">
+                                <span ng-if="AlertObj.Name=='Completed' && AlertObj.IncludeInTotal!=1" class="label label-success pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal!=1" class="label label-warning pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal==1" class="label label-danger pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                                {{AlertObj.Name}}
+                            </a>
+                        </li>*@
+
+                        @*<li><a class="cursor-pointer"  href=""><span class="label label-success pull-right">{{DeliveredOrderCount}}</span>Delivered</a></li>
+                            <li><a class="cursor-pointer"  href=""><span class="label label-danger pull-right">{{ReturnedOrderCount}}</span>Returned</a></li>*@
+                        @*<li class="divider"></li>*@
+                        @*<li class="dropdown-header">Customers</li>
+                            <li><a><span class="label label-danger pull-right">363</span>Pending approval</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Products</li>
+                                        @*<li class="divider"></li>*@
+                    @*</ul>
+                </li>*@
+
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle " data-toggle="dropdown">
+                        <span class="ProfilePicTopLinkCircle">@CordobaCommon.ProjectSession.AdminLoginSession.firstname[0]@CordobaCommon.ProjectSession.AdminLoginSession.lastname[0]</span>&nbsp;@CordobaCommon.ProjectSession.AdminLoginSession.email
+                        @*<div class="ProfilePicCircle">@CordobaCommon.ProjectSession.AdminLoginSession.firstname[0]@CordobaCommon.ProjectSession.AdminLoginSession.lastname[0]</div>*@
+                        @*<img src="~/Content/admin/images/placeholder.jpg" alt="">*@
+                        @*<span></span>*@
+                        <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        @*<li><a href="" onclick="UnderMaintenance()" class="cursor-pointer"><i class="icon-user-plus"></i>profile</a></li>*@
+                        @*<li><a href="#"><i class="icon-coins"></i> My balance</a></li>
+                            <li><a href="#"><span class="badge bg-teal-400 pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>*@
+                        <li class="divider"></li>
+                        @*<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>*@
+                        <li><a href="@Url.Action("Login", "Admin", null)" ng-click="ClearLocalStorage()"><i class="icon-switch2"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page container -->
+    <div class="page-container" >
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main">
+                <div class="sidebar-content">
+                    <!-- User menu -->
+                    <div class="sidebar-user">
+                        <div class="category-content">
+                            <div class="media">
+                                <a href="" class="cursor-pointer media-left">
+                                    @*<img src="~/Content/admin/images/placeholder.jpg" class="img-circle img-sm" alt="">*@
+                                    <div class="ProfilePicCircle">@CordobaCommon.ProjectSession.AdminLoginSession.firstname[0]@CordobaCommon.ProjectSession.AdminLoginSession.lastname[0]</div>
+                                </a>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">@CordobaCommon.ProjectSession.AdminLoginSession.firstname @CordobaCommon.ProjectSession.AdminLoginSession.lastname</span>
+                                    <div class="text-size-mini text-muted">
+                                        <i class="text-size-small"></i> &nbsp;Administrator
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /user menu -->
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible" id="noprint">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+                                <!-- Main -->
+                                <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
+                                <li class="active">
+                                    <a href="#" ui-sref="Home">
+                                        <i class="icon-home4"></i>
+                                        <span>Dashboard</span>
+                                        <ul></ul>
+                                    </a>
+                                </li>
+
+                                <li ng-show="!(storeId>0)">
+                                    <a href="#"><i class="fa fa-tags fa-fw"></i> <span>Master Management</span></a>
+                                    <ul>
+                                        <li><a href="#" ui-sref="Language"><i class="fa fa-language"></i> <span> Language</span></a></li>
+                                        <li><a href="#" ui-sref="ShowCountry"><i class="fa fa-flag"></i> <span> Countries</span></a></li>
+                                        <li><a href="#" ui-sref="Currency"><i class="fa fa-money"></i> <span> Currency</span></a></li>
+                                        <li><a href="#" ui-sref="ShowSupplier"><i class="fa fa-industry"></i> <span> Supplier</span></a></li>
+                                        <li><a href="#" ui-sref="ShowManufacturer"><i class="fa fa-building-o"></i> <span> Manufacturers</span></a></li>
+                                        <li><a href="#" ui-sref="Users"><i class="fa fa-user"></i> <span>Cordoba Users</span></a></li>
+                                        @*<li><a href="#" ui-sref="CustomerGroup"><i class="icon-forward"></i> <span> Customer Group</span></a></li>*@
+                                        <li><a href="#" ui-sref="ShowCategory"><i class="fa fa-list"></i> <span> Categories</span></a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="icon-gear"></i>Store Management <span></span></a>
+                                    <ul>
+                                        <li ng-if="IsStoreAdmin==0"><a href="#" ui-sref="ShowStore"><i class="fa fa-building-o"></i> <span> Store</span></a></li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-users"></i> <span> Customers</span></a>
+                                            <ul>
+                                                <li><a href="#" ui-sref="Customer"><i class="icon-forward"></i> <span> Customer</span></a></li>
+                                                <li ng-if="IsStoreImportPoint==1"><a href="" ui-sref="PointsImporter" class="cursor-pointer"><i class="fa fa-file"></i> <span> Points Importer</span></a></li>
+                                                <li ng-if="IsStoreAdmin==0"><a href="" ui-sref="CustomerImport" class="cursor-pointer"><i class="fa fa-file"></i> <span> Customers Import</span></a></li>
+                                                @*<li><a href="" class="cursor-pointer"><i class="icon-forward"></i> <span> Customers Export</span></a></li>*@
+                                                <li ng-if="IsStoreAdmin==0"><a href="" ui-sref="PointsImporter" class="cursor-pointer"><i class="fa fa-file"></i> <span> Points Importer</span></a></li>
+                                                <li><a href="" ui-sref="ShowCustomerDepartment" class="cursor-pointer"><i class="fa fa-industry"></i> <span> Customer Department</span></a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li ng-if="IsStoreAdmin==0"><a href="#" ui-sref="Product"><i class="fa fa-product-hunt"></i> <span> Products</span></a></li>
+                                        <li ng-if="IsStoreAdmin==0"><a href="#" ui-sref="PopularCategory"><i class="fa fa-list-alt"></i> <span> Popular Category</span></a></li>
+                                        <li ng-if="IsStoreAdmin==0"><a href="#" ui-sref="Banner"><i class="fa fa-picture-o"></i> <span> Banners</span></a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="fa fa-shopping-cart"></i> <span>Sales</span></a>
+                                    <ul>
+                                        <li><a href="#" ui-sref="ShowOrders"><i class="icon-forward"></i> <span> Orders</span></a></li>
+                                        @*<li><a href="#"><i class="icon-forward"></i> <span> Recurring Orders</span></a></li>*@
+                                        @*<li><a href="#" ui-sref=""><i class="icon-forward"></i> <span> Returns</span></a></li>*@
+
+
+                                        @*<li><a href="#"><i class="icon-forward"></i> <span> Gift Vouchers</span></a></li>
+                            <li><a href="#"><i class="icon-forward"></i> <span> PayPal</span></a></li>*@
+
+                                        @*<li><a href="#" ui-sref="ShowCategory"><i class="icon-forward"></i> <span> Categories</span></a></li>
+                            <li><a href="#" ui-sref="ShowSupplier"><i class="icon-forward"></i> <span> Supplier</span></a></li>
+                            <li><a href="#" ui-sref="ShowManufacturer"><i class="icon-forward"></i> <span> Manufacturers</span></a></li>
+                            <li><a href="#" ui-sref="Product"><i class="icon-forward"></i> <span> Products</span></a></li>
+                            <li><a href="#" ui-sref="ShowProductCatalogue"><i class="icon-forward"></i> <span>  Product Catalogues</span></a></li>*@
+
+                                    </ul>
+                                </li>
+
+                                @*<li ng-if="IsStoreAdmin==0">*@
+                                <li>
+                                    <a href="#"><i class="fa fa-wrench fa-fw"></i>Tools <span></span></a>
+                                    <ul>
+                                        <li ng-if="IsStoreAdmin==0"><a href="#" ui-sref="ImportCatalogue"><i class="icon-forward"></i> <span>Import Catalogues </span></a></li>
+                                        <li><a href="#" ui-sref="ShowProductCatalogue"><i class="icon-forward"></i> <span>  Product Catalogues</span></a></li>
+                                    </ul>
+
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-graph"></i>Report <span></span></a>
+                                    <ul>
+                                        <li>
+                                            <a href="#"><i class="icon-forward"></i> <span> Sales Analytics</span></a>
+                                            <ul>
+                                                <li><a href="#" ui-sref="OrderReport"><i class="icon-forward"></i> <span> Orders Summary</span></a></li>
+                                                @*<li><a href="#" ui-sref="ShippingReport"><i class="icon-forward"></i> <span> Shipping</span></a></li>*@
+                                                <li><a href="#" ui-sref="ReturnReport"><i class="icon-forward"></i> <span> Orders Returns Summary</span></a></li>
+                                                @*<li><a href="#" ui-sref="CouponsReport"><i class="icon-forward"></i> <span> Coupons</span></a></li>*@
+                                            </ul>
+                                        </li>
+                                        <li ng-if="IsStoreAdmin==0">
+                                            <a href="#"><i class="icon-forward"></i> <span> Product Analytics</span></a>
+                                            <ul>
+                                                @*<li><a ui-sref="ProductViewedReport"><i class="icon-forward"></i> <span> Viewed</span></a></li>*@
+                                                <li><a ui-sref="ProductPurchasedReport"><i class="icon-forward"></i> <span> Purchased Summary</span></a></li>
+                                                <li><a ui-sref="ProductViewedReport"><i class="icon-forward"></i> <span> Viewed Summary</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="icon-forward"></i> <span> Transaction Reports</span></a>
+                                            <ul>
+                                                <li><a ui-sref="TransactionReport" class="cursor-pointer"><i class="icon-forward"></i> <span> Transaction Reports</span></a></li>
+                                                <li><a ui-sref="TransactionItemReport" class="cursor-pointer"><i class="icon-forward"></i> <span> Transaction Item Reports</span></a></li>
+                                                <li><a ui-sref="TransactionItemCategoryReport" class="cursor-pointer"><i class="icon-forward"></i> <span> Transaction Item Category</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li ng-if="IsStoreAdmin==0">
+                                            <a ui-sref="StoreReport"><i class="icon-forward"></i> <span>Store Report</span></a>
+                                        </li>
+                                        <li ng-if="IsStoreAdmin==0">
+                                            <a ui-sref="CustomerBalanceReport"><i class="icon-forward"></i> <span>Customer Balance Report</span></a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-gift fa-fw"></i>Rewards <span></span></a>
+                                    <ul>
+                                        <li><a href="#" ui-sref="ShowReward"><i class="icon-forward"></i> <span> Rewards</span></a></li>
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /main navigation -->
+                </div>
+            </div>
+            <!-- /main sidebar -->
+            <!-- Main content -->
+            <div class="loader" data-loading><img class="Centerloader" src="~/Content/Images/Loading.gif" /></div>
+            <div class="content-wrapper">
+                <!-- Page header -->
+                <!-- /page header -->
+                <!-- Content area -->
+                <div class="content">
+
+                    @RenderBody()
+                    <!-- Footer -->
+                    <div class="footer text-muted">
+                        &nbsp;&nbsp;&nbsp;  &copy; 2017-18. <a href="#">
+                            Cordoba
+                        </a>
+                        @*by <a href="#" target="_blank">Shaligram Infotech</a>*@
+                    </div>
+                    <!-- /footer -->
+                </div>
+                <!-- /content area -->
+            </div>
+            <!-- /main content -->
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/CommonJs")
+        @Scripts.Render("~/bundles/angular")
+        <script src="~/Scripts/ng-ckeditor.js"></script>
+        @Scripts.Render("~/bundles/AdminJs")
+        @Scripts.Render("~/bundles/appConfig")
+        @Scripts.Render("~/bundles/AdminControllers")
+        <script src="~/Scripts/admin/js/plugins/visualization/echarts/echarts.js"></script>
+        <script type="text/javascript" src="~/Scripts/admin/js/charts/google/googleJSapi.js"></script>*@
+
+
+    @Scripts.Render("~/bundles/jquery?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    <script src="~/Scripts/admin/js/core/app.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-modalmanager.js"></script>
+    <script src="~/Scripts/bootstrap-modal.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <script src="~/Scripts/bootbox.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-dragdrop.min.js"></script>
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/angular-local-storage.js"></script>
+    <script src="~/Scripts/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular-datatables.min.js"></script>
+    <script src="~/Scripts/angular-ui-switch.min.js"></script>
+    <script src="~/Scripts/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular-star-rating/main.js"></script>
+    <script src="~/Scripts/ng-ckeditor.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    @Scripts.Render("~/bundles/appConfig?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    @Scripts.Render("~/bundles/AdminControllers?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
+    <script src="~/Scripts/admin/js/plugins/visualization/echarts/echarts.js"></script>
+    <script type="text/javascript" src="~/Scripts/admin/js/charts/google/googleJSapi.js"></script>
+    <script src="~/Scripts/jquery.cookiesdirective.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="~/Scripts/textAngular.min.js"></script>
+    @*<script src="~/Scripts/canvas2image.js"></script>*@
+
+    <div class="modal fade" id="Reloadlookup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Cordoba</h4>
+                </div>
+                <div class="wthbox">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">System Updates</h3>
+                        </div>
+                        <div class="panel panel-body">
+                            <div class="row">
+                                <b>
+                                    There have been updated to the system. You will be redirect to login page.<br />
+                                    <span style="color:red;"> Note:  All unsaved changes will be lost.</span>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="javascript: window.location.reload(false);">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+
+        ApplicationVersion = '@Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"])';
+
+        // Cookie setting script wrapper
+        var cookieScripts = function () {
+            // Internal javascript called
+            // Loading external javascript file
+            $.cookiesDirective.loadScript({
+                uri: 'external.js',
+                appendTo: 'eantics'
+            });
+        }
+
+        /* Call cookiesDirective, overriding any default params
+
+			*** These are the defaults ***
+				explicitConsent: true,
+				position: 'top',
+				duration: 10,
+				limit: 0,
+				message: null,
+				cookieScripts: null,
+				privacyPolicyUri: 'privacy.html',
+				scriptWrapper: function(){},
+				fontFamily: 'helvetica',
+				fontColor: '#FFFFFF',
+				fontSize: '13px',
+				backgroundColor: '#000000',
+				backgroundOpacity: '80',
+				linkColor: '#CA0000'
+
+		*/
+
+        $.cookiesDirective({
+            privacyPolicyUri: 'myprivacypolicy.html',
+            explicitConsent: false,
+            position: 'bottom',
+            scriptWrapper: cookieScripts,
+            cookieScripts: 'Google Analytics, My Stats Ultimate ',
+            backgroundColor: '#263238',
+            linkColor: '#ffffff'
+        });
+
+
+        $(".dropdown-toggle").dropdown();
+
+
+        /// Versioning Code
+
+
+    });
+
+    function UnderMaintenance() {
+        alert('this page is under maintenance!');
+    }
+
+
+</script>

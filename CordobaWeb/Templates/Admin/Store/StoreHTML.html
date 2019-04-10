@@ -1,0 +1,235 @@
+﻿<!--<script src="https://superal.github.io/canvas2image/canvas2image.js"></script>-->
+
+
+<div ng-controller="StoreHTMLController">
+    <!--<a ng-click="ExportStoreHTMLPDF()">Generate image</a>
+    <a id='Generatepdf' ng-hide="true">Generate pdf</a>
+    <div>
+
+        <div>
+            Select Year &nbsp; <select class="" data-ng-model="selectedyear" name="Years" ng-options="x.id as x.name for x in Years" ng-change="GetMonthData(selectedyear)"></select>
+        </div>
+        <div>
+            Select Month &nbsp; <select class="" data-ng-model="selectedmonth" name="Months" ng-init="GetMonthData(selectedyear)" ng-change="GetChartData(selectedyear,selectedmonth)" ng-options="m.id as m.name for m in Months"></select>
+        </div>
+    </div>-->
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Generate PPT</h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li><a><i class="icon-home2 position-left"></i> Home</a></li>
+                <li class="active">Generate PPT</li>
+
+
+            </ul>
+            <ul class="breadcrumb-elements">
+                <li> <button type="button" class="btn btn-success btn-md" data-placement="top" data-toggle="tooltip" title="Export Store" ng-click="ExportStoreHTMLPDF()"> Generate Store PPT<i class="icon-arrow-right14 position-right"></i></button></li>
+                <li ng-hide="true"> <a id='Generatepdf' ng-hide="true">Generate ppt</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="drop" style="padding:0 20px 20px 20px;">
+        <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label"> Select Year</label> <select data-ng-model="selectedyear" class="form-control" name="Years" ng-options="x.id as x.name for x in Years" ng-change="GetMonthData(selectedyear)"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Select Month </label><select data-ng-model="selectedmonth" class="form-control" name="Months" ng-init="GetMonthData(selectedyear)" ng-change="GetChartData(selectedyear,selectedmonth)" ng-options="m.id as m.name for m in Months"></select>
+                <!--a ng-click="printpage()">click to print</a>-->
+            </div>
+        </div>
+    </div>
+    <div id="pdf" class="page-header-content">
+
+        <!-- Nightingale roses width hidden labels -->
+        <div class="panel" id="heading">
+            <div class="panel-body" style="height: 456px !important;">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img src="../../../Content/admin/images/logo/cordoba-logo.png" alt="Cordoba Rewards">
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <!--<img ng-src="{{storelogo}}" alt="Store Logo" />-->
+                        <img ng-src="../../Content/admin/images/Storelogo/{{StoreId}}.png" style="height:78px; width:230px" alt="Store Logo" />
+                    </div>
+                </div>
+                <div style="margin-top:30px;">
+                    <h2 style="margin-bottom:0;">Review Meeting</h2>
+                    <h2>{{monthname}} {{selectedyear}}</h2>
+                </div>
+                <img src="/Content/admin/images/logo/homepdfimage.png" style="max-width:100%" alt="" />
+            </div>
+        </div>
+
+        <div class="panel" id="storeimage" style="height:643px !important;">
+            <div class="panel-body">
+                <img ng-src="../../Content/admin/images/Storescreen/{{StoreId}}.png" alt="Store Screen" style="height:621px;width:100%;" />
+            </div>
+        </div>
+        <!--<div class="row" >
+            <div class="col-sm-12" style="height:539px !important;">
+                <div class="col-sm-6" id="storesummary" style="height:539px !important;">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Store Summary</h5>
+                            Participant: ({{StoreHTMLSummary.StoreHTMLStoreSummary[0].value + StoreHTMLSummary.StoreHTMLStoreSummary[1].value}})<br />
+                            Active: ({{StoreHTMLSummary.StoreHTMLStoreSummary[0].value}})<br />
+                            Not Active: ({{StoreHTMLSummary.StoreHTMLStoreSummary[1].value}})<br />
+                            <div class="heading-elements">
+                            </div>
+                        </div>
+                        <div class="panel-body" ng-class="{'fixHeight':StoreHTMLSummary.StoreHTMLStoreSummary.length==0}">
+                            <h1 ng-if="StoreHTMLSummary.StoreHTMLStoreSummary.length==0"><br />No Storesummary Available to Display</h1>
+                            <div class="chart-container" ng-if="StoreHTMLSummary.StoreHTMLStoreSummary.length>0">
+                                <div class="chart has-fixed-height" id="StoreHTMLStoreSummary"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" id="pointsremaining" style="height:539px !important;">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Points Remaining:({{StoreHTMLSummary.PointsRemaining[0].value}})</h5>
+                            <div class="heading-elements">
+                            </div>
+                        </div>
+                        <div class="panel-body" ng-class="{'fixHeight':StoreHTMLSummary.PointsRemaining.length==0}">
+                            <h1 ng-if="StoreHTMLSummary.PointsRemaining.length==0"><br />No PointsRemaining Available to Display</h1>
+                            <div class="chart-container" ng-if="StoreHTMLSummary.PointsRemaining.length>0">
+                                <div class="chart" id="PointsRemaining" style="min-height:447px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" id="participantsloadedbymonth" style="height:496px !important; margin-top:510px;">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Participants loaded by Month</h5>
+                        <div class="heading-elements">
+                        </div>
+                    </div>
+                    <div class="panel-body" ng-class="{'fixHeight':ParticipantsLoadedByMonthname.length==0 && ParticipantsLoadedByMonthvalue.length==0}">
+                        <h1 ng-if="ParticipantsLoadedByMonthname.length==0 && ParticipantsLoadedByMonthvalue.length==0"><br />No PointsRemaining Available to Display</h1>
+                        <div class="chart-container" ng-show="ParticipantsLoadedByMonthname.length>0 && ParticipantsLoadedByMonthvalue.length>0">
+                            <div style="float:left;">
+                            </div>
+                            <div class="chart has-fixed-height" id="ParticipantsLoadedByMonth"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" style="height:476px !important; margin-top:100px;">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Points loaded by Month</h5>
+                        <div class="heading-elements">
+                        </div>
+                    </div>
+                    <div class="panel-body" ng-class="{'fixHeight':StoreHTMLSummary.PointsLoadedByMonth.length==0 && StoreHTMLSummary.PointsLoadedByMonthPoints.length==0}">
+                        <h1 ng-if="StoreHTMLSummary.PointsLoadedByMonth.length==0 && StoreHTMLSummary.PointsLoadedByMonthPoints.length==0"><br />No Points Available to Display</h1>
+                        <div class="chart-container" ng-show="StoreHTMLSummary.PointsLoadedByMonth.length>0 && StoreHTMLSummary.PointsLoadedByMonthPoints.length>0">
+                            <div class="chart has-fixed-height" id="PointsLoadedByMonth"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" style="height:780px !important;">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Points Redeemed by Month</h5>
+                        <div class="heading-elements">
+                        </div>
+                    </div>
+                    <div class="panel-body" ng-class="{'fixHeight':StoreHTMLSummary.PointsRedeemedByMonth.length==0 && StoreHTMLSummary.PointsRedeemedByMonthPoints.length==0}">
+                        <h1 ng-if="StoreHTMLSummary.PointsRedeemedByMonth.length==0 && StoreHTMLSummary.PointsRedeemedByMonthPoints.length==0"><br />No Points Available to Display</h1>
+                        <div class="chart-container" ng-show="StoreHTMLSummary.PointsRedeemedByMonth.length>0 && StoreHTMLSummary.PointsRedeemedByMonthPoints.length>0">
+                            <div class="chart has-fixed-height" id="PointsRedeemedByMonth"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" style="height:500px !important">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Top Points Holders</h5>
+                        <div class="heading-elements">
+                        </div>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Full Name</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Points</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Activated</th>
+                                <th class="text-center">Date Added</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="Item in StoreHTMLSummary.TopPointsHolders">
+                            <td ng-bind="Item.FullName"></td>
+                            <td ng-bind="Item.Email"></td>
+                            <td ng-bind="Item.Points"></td>
+                            <td ng-bind="Item.Status"></td>
+                            <td ng-bind="Item.Activated"></td>
+                            <td ng-bind="Item.DateAdded | date:GlobalDateFormat"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12" style="height:496px !important">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Order Placed By Type loaded by Month</h5>
+                        <div class="heading-elements">
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h1 ng-if="StoreHTMLSummary.OrdersPlacedByTypeName.length==0 && StoreHTMLSummary.OrdersPlacedByTypeOrderCount.length==0"><br />No Order Placed Available to Display</h1>
+                        <div ng-show="StoreHTMLSummary.OrdersPlacedByTypeName.length>0 && StoreHTMLSummary.OrdersPlacedByTypeOrderCount.length>0">
+                            <div class="chart-container">
+                                <div class=" chart has-fixed-height" id="OrdersPlacedByType"></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>
+
+<!--<div id="img-out" style="width:1323px;height:4988px;"></div>-->
+<div id="img-out" style=""></div>
+<div id="img-capture" style="vertical-align:middle">
+    <img id="imgCapture" alt="" style="display:none;width:1283px;height:458px;" />
+</div>
+
+<div id="img-outstoreimage" style=""></div>
+<div id="img-capturestoreimage" style="vertical-align:middle">
+    <img id="imgCapturestoreimage" alt="" style="display:none;width:1283px;height:458px;" />
+</div>
+
+<div id="img-outStoreSummary" style=""></div>
+<div id="img-captureStoreSummary" style="vertical-align:middle">
+    <img id="imgCaptureStoreSummary" alt="" style="display:none;width:560px;height:400px;" />
+</div>
+<div id="img-outPointsRemaining" style=""></div>
+<div id="img-capturePointsRemaining" style="vertical-align:middle">
+    <img id="imgCapturePointsRemaining" alt="" style="display:none;width:560px;height:400px;" />
+</div>
+<div id="img-outParticipantsLoadedByMonth" style=""></div>
+<div id="img-captureParticipantsLoadedByMonth" style="vertical-align:middle">
+    <img id="imgCaptureParticipantsLoadedByMonth" alt="" style="display:none;height:496px;" />
+</div>

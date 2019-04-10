@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE2E67AC-8175-424F-BD98-4AFB554B8C84}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CordobaModels</RootNamespace>
+    <AssemblyName>CordobaModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\EnumGenerator.generated.cs" />
+    <Compile Include="Common\Security.cs" />
+    <Compile Include="Common\SystemEnum.cs" />
+    <Compile Include="Common\Utility.cs" />
+    <Compile Include="Edmx\Cordoba.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cordoba.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Cordoba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cordoba.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Cordoba.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cordoba.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DBMethods.cs" />
+    <Compile Include="Edmx\tblCompanyLayout.cs">
+      <DependentUpon>Cordoba.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ActivityEntity.cs" />
+    <Compile Include="Entities\AddressEntity.cs" />
+    <Compile Include="Entities\AppSetting.cs" />
+    <Compile Include="Entities\BannerAttributeEntity.cs" />
+    <Compile Include="Entities\BannerEntity.cs" />
+    <Compile Include="Entities\BestSellerEntity.cs" />
+    <Compile Include="Entities\CartEntity.cs" />
+    <Compile Include="Entities\CategoryDescriptionList.cs" />
+    <Compile Include="Entities\CategoryEntity.cs" />
+    <Compile Include="Entities\CategoryPopularEntity.cs" />
+    <Compile Include="Entities\CategoryStoreEntity.cs" />
+    <Compile Include="Entities\CompanyLayoutEntity.cs" />
+    <Compile Include="Entities\ContactUsEntity.cs" />
+    <Compile Include="Entities\CountryEntity.cs" />
+    <Compile Include="Entities\CurrencyEntity.cs" />
+    <Compile Include="Entities\CustomerDepartmentEntity.cs" />
+    <Compile Include="Entities\CustomerEntity.cs" />
+    <Compile Include="Entities\CustomerGroupEntity.cs" />
+    <Compile Include="Entities\CustomerImageEntity.cs" />
+    <Compile Include="Entities\CustomerOrderEntity.cs" />
+    <Compile Include="Entities\DashboardSummaryEntity.cs" />
+    <Compile Include="Entities\EmailNotification.cs" />
+    <Compile Include="Entities\HotSpecialProductEntity.cs" />
+    <Compile Include="Entities\ImportCustomerEmailEntity.cs" />
+    <Compile Include="Entities\ImportedPointEmailEntity.cs" />
+    <Compile Include="Entities\ImportProductCatalogueEntity.cs" />
+    <Compile Include="Entities\LanguageEntity.cs" />
+    <Compile Include="Entities\ManufacturersEntity.cs" />
+    <Compile Include="Entities\ManufacturersStoreEntity.cs" />
+    <Compile Include="Entities\CatalogueEntity.cs" />
+    <Compile Include="Entities\OrderDetailCountEntity.cs" />
+    <Compile Include="Entities\OrderEntity.cs" />
+    <Compile Include="Entities\OrderHistoryEntity.cs" />
+    <Compile Include="Entities\OrderProductEntity.cs" />
+    <Compile Include="Entities\OrderStatusEntity.cs" />
+    <Compile Include="Entities\PlaceOrderEntity.cs" />
+    <Compile Include="Entities\PointsAuditEntity.cs" />
+    <Compile Include="Entities\ProductDescriptionList.cs" />
+    <Compile Include="Entities\ProductEntity.cs" />
+    <Compile Include="Entities\ReportCategoryEntity.cs" />
+    <Compile Include="Entities\ReportEntity.cs" />
+    <Compile Include="Entities\RewardEntity.cs" />
+    <Compile Include="Entities\RewardTypeEntity.cs" />
+    <Compile Include="Entities\RewardUserDetailsEntity.cs" />
+    <Compile Include="Entities\RewardUserEntity.cs" />
+    <Compile Include="Entities\StoreChartEntity.cs" />
+    <Compile Include="Entities\StoreDescriptionEntity.cs" />
+    <Compile Include="Entities\StoreEntity.cs" />
+    <Compile Include="Entities\StoreHTMLEntity.cs" />
+    <Compile Include="Entities\StoreImageEntity.cs" />
+    <Compile Include="Entities\StoreTermsEntity.cs" />
+    <Compile Include="Entities\SupplierEntity.cs" />
+    <Compile Include="Entities\TestEntity.cs" />
+    <Compile Include="Entities\TransactionListEntity.cs" />
+    <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Entities\wishlistEntity.cs" />
+    <Compile Include="Entities\ZoneEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\GenericRepository.cs" />
+    <Compile Include="Utility\SQLParamBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Edmx\Cordoba.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Cordoba.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Edmx\Cordoba.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Cordoba.edmx</DependentUpon>
+      <LastGenOutput>Cordoba.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Edmx\Cordoba.edmx.diagram">
+      <DependentUpon>Cordoba.edmx</DependentUpon>
+    </None>
+    <None Include="Edmx\Cordoba.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Cordoba.edmx</DependentUpon>
+      <LastGenOutput>Cordoba.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

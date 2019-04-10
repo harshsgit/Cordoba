@@ -1,0 +1,156 @@
+﻿<style>
+    .pagination {
+        float: right;
+    }
+
+    .filterProductDiv {
+        float: left;
+        margin-top: 10px;
+    }
+
+    .searchByPointsContent {
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+        .searchByPointsContent ul li {
+            font-weight: bold;
+        }
+
+    [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        left: -9999px;
+    }
+
+        .form-control:focus, .btn-empty, [type="checkbox"]:checked:focus + label:before, [type="checkbox"]:not(:checked):focus + label:before, .submit_btn {
+            border-color: inherit;
+        }
+
+    /*.searchByPointsContent ul li span {
+                text-align: center;
+            }*/
+</style>
+<div class="catagories_slider productlist" ng-controller="CategoryListController">
+    <div class="container">
+        <div class="col-md-3">
+            <div class="letest-product catagories" > <!--ng-if="SelectedSubCategory==-3"-->
+                <h3>Search by Points</h3>
+                <div class="searchByPointsContent">
+                    <ul>
+                        <li ng-repeat="SearchByPoint in SearchByPointsEnum">
+                            <input type="checkbox" class="cursor-pointer ng-pristine ng-valid ng-touched" ng-checked="SearchByPoint.Checked" ng-model="SearchByPoint.Checked" ng-change="SearchFilterByArray()"><span>{{'  '+SearchByPoint.Name}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="letest-product catagories">
+                <h3>Categories</h3>
+                <div class="content mCustomScrollbar">
+                    <ul>
+                        <li ng-class="SelectedCategoryId==category.Category_Id ? 'active cursor-pointer' : 'cursor-pointer' " ng-if="category.parent_Id==0" ng-repeat="category in CategoryList">
+                            <a href="" class="cursor-pointer" ng-bind-html="category.name" ng-click="GetCategory(category.Category_Id)"></a>
+                            <ul class="sub-catagory">
+                                <li ng-class="SelectedSubCategory==SubCategory.Category_Id? 'active cursor-pointer' : 'cursor-pointer' " ng-if="SubCategory.parent_Id>0  && SelectedCategoryId==category.Category_Id && SubCategory.parent_Id==category.Category_Id" ng-repeat="SubCategory in CategoryList | filter:{ 'parent_Id' : category.Category_Id } | orderBy : 'name'"><a href="" class="cursor-pointer" ng-click="GetSubCategory(SubCategory.Category_Id,1)" ng-bind-html="SubCategory.name | limitTo:16" title="{{SubCategory.name}}"></a><!--unique:'name'|--></li>
+                            </ul> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" ng-if="SelectedCategoryId>0 && !(SelectedSubCategory>0)">
+            <div class="mt-30">
+                <h3 class="heading" ng-bind-html="SelectedCategory.name"></h3>
+                <div class="col-sm-3" ng-if="category.parent_Id==SelectedCategoryId" ng-repeat="category in CategoryList | filter:{ parent_Id: category.Category_Id } ">
+                    <div class="col-product text-center">
+                        <div class="background-bg" ng-click="GetSubCategory(category.Category_Id,1)">
+                            <img ng-src="{{category.image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Img">
+                        </div>
+                        <a href="" ng-click="GetSubCategory(category.Category_Id,1)" ng-bind-html="category.name | limitTo:20" title="{{category.name}}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" ng-if="(SelectedCategoryId>0 && SelectedSubCategory>0)|| (SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)">
+            <div class="mt-30">
+                <h3 ng-if="(SelectedCategoryId>0 && SelectedSubCategory>0)" class="heading" ng-bind-html="SelectedCategory.name"></h3>
+                <h3 ng-if="(SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)" class="heading" ng-bind-html="TitleHeader"></h3>
+                <!--<div class="pull-left">
+                    <br />
+                    <div class="filterProductDiv form-group pull-left" ng-if="SelectedSubCategory==-3 && ProductList.length>0">
+                        <div>
+                            <label class="rn_pad control-label mt-5">
+                                Sort By
+                            </label>
+                            &nbsp;&nbsp;
+                            <div class="pull-right">
+                                <select ng-options="SortByObject.Id as SortByObject.Name  for SortByObject in SortByEnum"
+                                        class="form-control" ng-model="SortById" ng-change="SortBy(SortById)" name="NameSort"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>-->
+                <div class="filterProductDiv col-sm-6 form-group pull-left" ng-if="ProductList.length>0"> <!--"SelectedSubCategory==-3"-->
+                    <div>
+                        <label class="col-sm-4 rn_pad control-label mt-5">
+                            Sort By
+                        </label>
+                        <div class="pull-left col-sm-8">
+                            <select ng-options="SortByObject.Id as SortByObject.Name  for SortByObject in SortByEnum"
+                                    class="form-control" ng-model="SortById" ng-change="SortBy(SortById)" name="NameSort"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <ul ng-show="((SelectedCategoryId>0 && SelectedSubCategory>0)|| (SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)) && totalRecords>0 " pagination total-items="totalRecords" items-per-page="20" max-size="maxSize" ng-model="SelectedPageIndex" ng-click="GoToPage(SelectedPageIndex)" ng-init="set()">></ul>
+                </div>
+                
+                <div class="col-sm-12">
+                    <div class="col-sm-3" ng-repeat="product in ProductList">
+                        <div class="col-product text-center">
+                            <div class="background-bg" ng-controller="AddProductToCartController">
+                                <img ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Img" data-action="zoom">
+                                <div class="cart-btn" ng-controller="AddProductToCartController">
+                                    <input type="button" name="cart_btn" class="add_cart" ng-click="AddProductToCart(product,$event)" value="ADD TO CART">
+                                </div>
+                            </div>
+                            <a href="" class="cursor-pointer" ui-sref="LayoutProductDetail({ProductId:product.product_id})" title="{{product.name}}" ng-bind-html="product.name"></a>
+                            <p ng-bind="product.Model" title="{{product.Model}}"></p>
+                            <table style="width:100%">
+                                <tr>
+                                    <td>
+                                        <span ng-bind="(product.points | number:0)+' Points'">
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-right cursor-pointer">
+                                            <a ng-if="product.IsProductInWishlist!=true" href="" title="Move to wishlist" class="cursor-pointer remove-item pull-right"><i class="fa fa-heart-o pull-right" ng-click="AddtoWishList(product)"></i></a>
+                                            <a ng-if="product.IsProductInWishlist==true" href="" title="Remove from wishlist" class="cursor-pointer remove-item pull-right"><i class="fa fa-heart pull-right" ng-click="RemoveFromWishList(product)"></i></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--<span ng-bind="(product.points | number:0)+' Points'">
+                            </span>
+                            <span ng-bind="(product.points | number:0)+' Points'"></span>-->
+                            <!--<span class="pull-right cursor-pointer">
+                                <a ng-if="Item.IsProductInWishlist!=true" href="" title="Move to wishlist" class="cursor-pointer remove-item pull-right"><i class="fa fa-heart-o pull-right" ng-click="AddtoWishList(Item)"></i></a>
+                                <a ng-if="product.IsProductInWishlist==true" href="" title="Remove from wishlist" class="cursor-pointer remove-item pull-right"><i class="fa fa-heart pull-right" ng-click="RemoveFromWishList(product)"></i></a>
+                            </span>-->
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    <ul ng-show="((SelectedCategoryId>0 && SelectedSubCategory>0)|| (SelectedCategoryId==-1) || (SelectedCategoryId==-2) || (SelectedCategoryId==-3)) && totalRecords>0 " pagination total-items="totalRecords" items-per-page="20" max-size="maxSize" ng-model="SelectedPageIndex" ng-click="GoToPage(SelectedPageIndex)" ng-init="set()">></ul>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.mCustomScrollbar.defaults.theme = 'dark-thick';
+        $('.content').mCustomScrollbar();
+    });
+
+</script>

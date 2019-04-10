@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CordobaModelStoreContainer" CdmEntityContainer="CordobaEntities3">
+    <EntitySetMapping Name="tblCompanyLayouts">
+      <EntityTypeMapping TypeName="CordobaModel.tblCompanyLayout">
+        <MappingFragment StoreEntitySet="tblCompanyLayout">
+          <ScalarProperty Name="CompanyLayoutId" ColumnName="CompanyLayoutId" />
+          <ScalarProperty Name="HostName" ColumnName="HostName" />
+          <ScalarProperty Name="LayoutName" ColumnName="LayoutName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

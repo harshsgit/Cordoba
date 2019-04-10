@@ -1,0 +1,425 @@
+﻿<div ng-controller="AddOrUpdateStoreController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage store.</li>
+                </ul>
+
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <li>
+                        <button type="submit" ng-click="InsertUpdateStore(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+
+
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <div role="tabpanel" class="form-horizontal" id="messages" style="margin-top:5px">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.StoreURL.$error.required">Store url is required.</li>
+                                                <li ng-show="form.StoreName.$error.required">Store name is required.</li>
+                                                <li ng-show="form.StoreOwner.$error.required">Store owner is required.</li>
+                                                <li ng-show="form.CkWelcomeMessage.$error.required">Welcome message is required.</li>
+                                                <li ng-show="form.StoreAddress.$error.required">Address is required.</li>
+                                                <li ng-show="form.Email.$error.required || form.Email.$error.email">Email address is Required! OR Email address is not valid.</li>
+                                                <li ng-show="form.Telephone.$error.required">Telephone is required.</li>
+                                                <li ng-show="form.MetaTitle.$error.required">Meta Title is required.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a data-target="#GenaralTab" role="tab" data-toggle="tab">General</a></li>
+                                    <li role="presentation"><a data-target="#StoreTab" role="tab" data-toggle="tab">Store</a></li>
+                                    <li role="presentation"><a data-target="#LocalTab" role="tab" data-toggle="tab">Local</a></li>
+                                    <li role="presentation" ng-if="store_id>0"><a data-target="#ImageTab" role="tab" data-toggle="tab">Advertisement</a></li>
+                                    <li role="presentation" ng-if="store_id>0"><a data-target="#Catalouge" role="tab" data-toggle="tab">Catalouge</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="GenaralTab">
+                                        <!--General Tab-->
+                                        <div class="col-md-12">
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label mandatoryField">Store URL</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" name="StoreURL" maxlength="100" placeholder="Enter Store Url" ng-model="StoreObj.url" required="required">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label ">Allow import point for store admin</label>
+                                                <div class="col-lg-9">
+                                                    <select name="Is_ImportPoint" id="input-ImportPoint" ng-model="StoreObj.Is_ImportPoint" ng-options="Is_ImportPoint.ID as Is_ImportPoint.Name  for Is_ImportPoint in Is_ImportPointList"
+                                                            class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label ">Login required to access store</label>
+                                                <div class="col-lg-9">
+                                                    <select name="Is_ImportPoint" id="input-ImportPoint" ng-model="StoreObj.Is_AccessStore" ng-options="Is_AccessStore.ID as Is_AccessStore.Name  for Is_AccessStore in Is_AccessStoreList"
+                                                            class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label mandatoryField">Store Name</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" name="StoreName" maxlength="200" placeholder="Enter Store Name" ng-model="StoreObj.name" required="required">
+                                                </div>
+                                            </div>
+                                            <!--<div class="form-group">
+                <label class="col-lg-2 control-label mandatoryField">Store Owner</label>
+                <div class="col-lg-9">
+                    <input type="text" class="form-control" name="StoreOwner" maxlength="200" placeholder="Enter Store Owner" ng-model="StoreObj.title" required="required">
+                </div>
+            </div>-->
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label mandatoryField">Welcome Message</label>
+                                                <div class="col-lg-9">
+                                                    <!--<textarea ckeditor="" name="CkWelcomeMessage" id="CkWelcomeMessage" rows="4" cols="4" ng-model="StoreObj.description" required="required"></textarea>-->
+                                                    <div text-angular="text-angular" name="CkWelcomeMessage" id="CkWelcomeMessage" rows="4" cols="4" ng-model="StoreObj.description"></div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Store Terms and Conditions</label>
+                                                <div class="col-lg-9">
+                                                    <!--<textarea ckeditor="" name="CkStoreTermCondition" id="CkStoreTermCondition" rows="4" cols="4" ng-model="StoreObj.terms"></textarea>-->
+                                                    <div text-angular="text-angular" name="CkStoreTermCondition" id="CkStoreTermCondition" rows="4" cols="4" ng-model="StoreObj.terms"></div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="form-group">
+                <label class="col-lg-2 control-label mandatoryField"> Address</label>
+                <div class="col-lg-9">
+                    <textarea type="text" class="form-control" name="StoreAddress" maxlength="2000" placeholder="Enter Store Address" ng-model="StoreObj.address" required="required"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label mandatoryField">E-mail</label>
+                <div class="col-lg-9">
+                    <input type="email" class="form-control" validate-email name="Email" maxlength="50" placeholder="Enter Store Email" ng-model="StoreObj.email" required="required" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label mandatoryField">Telephone</label>
+                <div class="col-lg-9">
+                    <input type="text" class="form-control" name="Telephone" maxlength="50" placeholder="Enter Telephone" ng-model="StoreObj.telephone" required="required" />
+                </div>
+            </div>-->
+                                            <div class="form-group" ng-if="store_id>0">
+                                                <label class="col-lg-2 control-label">Logo</label>
+                                                <div class="col-lg-5">
+                                                    <img class="pull-left" src="{{StoreObj.logo}}" ng-if="StoreObj.logo != undefined" style="max-height:150px" />
+                                                    <img class="pull-left" src="../../../Content/Images/Manufacturer/no_image-100x100.png" ng-if="StoreObj.logo == undefined" style="max-height:150px">
+                                                    <!--<input type="hidden" name="image" ng-model="StoreObj.logo" id="input-image">-->
+                                                    <div class="col-sm-4">
+                                                        <input type="file" id="Image" ng-disabled="store_id==0" class="upload" file-model="fileUpload">
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <br />
+                                                        <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="uploadStoreLogo()" value="Upload">
+                                                        <!--<label class="control-label" ng-show="store_id==0">Upload functionality will be available in Edit Mode</label>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End General Tab-->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="StoreTab">
+                                        <div class="tab-pane fade active in" id="tab-data">
+                                            <!--Store Tab-->
+                                            <!--General Tab-->
+                                            <div class="col-md-12">
+                                                <!--<div class="form-group">
+                    <label class="col-lg-2 control-label mandatoryField">Meta Title</label>
+                    <div class="col-lg-9">
+                        <input type="text" class="form-control" name="MetaTitle" maxlength="200" placeholder="Enter Meta Title" ng-model="StoreObj.meta_title" required="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"> Meta Tag Description</label>
+                    <div class="col-lg-9">
+                        <textarea type="text" class="form-control" name="MetaTagDescription" maxlength="2000" placeholder="Enter Meta Tag Description" ng-model="StoreObj.meta_description"></textarea>
+                    </div>
+                </div>-->
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">Css Overrides</label>
+                                                    <div class="col-lg-9">
+                                                        <textarea type="text" class="form-control" rows="20" name="Cssoverrides" ng-model="StoreObj.css_overrides"></textarea>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="form-group">
+                    <label class="col-lg-2 control-label">Meta Tag Keywords</label>
+                    <div class="col-lg-9">
+                        <textarea type="text" class="form-control" name="MetaTagKeywords" maxlength="2000" placeholder="Meta Tag Keywords" ng-model="StoreObj.MetaTagDescription"></textarea>
+                    </div>
+                </div>-->
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">Template</label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control cursor-pointer" name="TemplateId" ng-model="StoreObj.template" ng-options="option.TemplateId as option.TemplateName for option in TemplateList"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">Banner</label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control cursor-pointer" name="BannerId" ng-model="StoreObj.banner_id" ng-options="option.banner_id as option.name for option in BannerList"></select>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="form-group">
+                    <label class="col-lg-2 control-label">Default Layout</label>
+                    <div class="col-lg-9">
+                        <select class="form-control cursor-pointer" name="LayoutId" ng-model="StoreObj.layout" ng-options="option.LayoutName as option.LayoutName for option in LayoutList"></select>
+                    </div>
+                </div>-->
+                                            </div>
+                                            <!--End Store Tab-->
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="LocalTab">
+                                        <div class="tab-pane fade active in" id="tab-data">
+                                            <!--Local Tab-->
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Country</label>
+                                                <div class="col-lg-9">
+                                                    <select class="form-control cursor-pointer" ng-change="GetZoneListByCountry(StoreObj.country_id)" name="Country" ng-model="StoreObj.country_id" ng-options="option.country_id as option.name for option in CountryList">
+                                                        <option value=""> --- Please Select --- </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Region/State</label>
+                                                <div class="col-lg-9">
+                                                    <select ng-options="Region.name as Region.name  for Region in RegionStateList"
+                                                            class="form-control" ng-model="StoreObj.county" name="AddressRegion_LIst">
+                                                        <option value=""> --- Please Select --- </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Language</label>
+                                                <div class="col-lg-9">
+                                                    <select class="form-control cursor-pointer" name="Language" ng-model="StoreObj.language" ng-options="option.code as option.name for option in LanguageList"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Currency</label>
+                                                <div class="col-lg-9">
+                                                    <select class="form-control cursor-pointer" name="Currency" ng-model="StoreObj.currency" ng-options="option.code as option.title for option in CurrencyList"></select>
+                                                </div>
+                                            </div>
+                                            <!--End Local Tab-->
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="ImageTab">
+                                        <!--General Tab-->
+                                        <div class="col-md-12">
+                                            <h4 class="heading">Theme 1</h4>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Beside Categories Image </label>
+                                                <div class="col-sm-2">
+                                                    <div ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 1 }">
+                                                        <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!=''" ng-src="{{AdvImg.Image}}" alt="Img" style="max-height:150px; max-width:150px" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <input type="file" id="Image1Layout1" ng-disabled="store_id==0" class="upload" file-model="fileUpload">
+
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="UploadImage(store_id,1,'Image1Layout1',0)" value="Upload"> <span>&nbsp;Mandatory Size 670 x 250   (width X height in pixels)</span>
+                                                    <label class="control-label" ng-show="store_id==0">Upload functionality will be available in Edit Mode</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Below Products Image1 </label>
+                                                <div class="col-sm-2">
+                                                    <div ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 2 }">
+                                                        <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!=''" ng-src="{{AdvImg.Image}}" alt="Img" style="max-height:150px; max-width:150px" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="file" id="Image2Layout1" ng-disabled="store_id==0" class="upload" file-model="fileUpload">
+
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="UploadImage(store_id,2,'Image2Layout1',0)" value="Upload"> <span>&nbsp;Mandatory Size 557 x 533  (width X height in pixels)</span>
+                                                    <label class="control-label" ng-show="store_id==0">Upload functionality will be available in Edit Mode</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Below Products Image2 </label>
+                                                <div class="col-sm-2">
+                                                    <div ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 3 }">
+                                                        <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!=''" ng-src="{{AdvImg.Image}}" alt="Img" style="max-height:150px; max-width:150px" />
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="file" id="Image3Layout1" ng-disabled="store_id==0" class="upload" file-model="fileUpload">
+
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="UploadImage(store_id,3,'Image3Layout1',0)" value="Upload"> <span>&nbsp;Mandatory Size 557 x 533  (width X height in pixels)</span>
+                                                    <label class="control-label" ng-show="store_id==0">Upload functionality will be available in Edit Mode</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <h4 class="heading">Theme 2</h4>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Beside special offers</label>
+                                                <div class="col-sm-2">
+                                                    <div ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 4 }">
+                                                        <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!=''" ng-src="{{AdvImg.Image}}" alt="Img" style="max-height:150px; max-width:150px" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="file" id="Image1Layout2" ng-disabled="store_id==0" class="upload" file-model="fileUpload">
+
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="UploadImage(store_id,4,'Image1Layout2',1)" value="Upload"> <span>&nbsp;Mandatory Size 450 x 470   (width X height in pixels)</span>
+                                                    <label class="control-label" ng-show="store_id==0">Upload functionality will be available in Edit Mode</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Below Products Image1 </label>
+                                                <div class="col-sm-2">
+                                                    <div ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 5 }">
+                                                        <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!=''" ng-src="{{AdvImg.Image}}" alt="Img" style="max-height:150px; max-width:150px" />
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="file" id="Image2Layout2" ng-disabled="store_id==0" class="upload" file-model="fileUpload">
+
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <input type="button" class="btn btn-info" ng-disabled="store_id==0" ng-click="UploadImage(store_id,5,'Image2Layout2',1)" value="Upload"> <span>&nbsp;Mandatory Size 850 x 350  (width X height in pixels)</span>
+                                                    <label class="control-label" ng-show="store_id==0">Upload functionality will be available in Edit Mode</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--End General Tab-->
+                                    </div>
+
+
+                                    <div role="tabpanel" class="tab-pane" id="Catalouge">
+                                        <!--General Tab-->
+                                        <div class="col-md-12">
+
+                                            <div class="form-group">
+                                                <label class="col-md-1 control-label">Catalouge:</label>
+                                                <div class="col-md-12">
+                                                    <div class="well well-sm" style="height:500px; overflow: auto;">
+                                                        <div class="col-sm-6 checkbox" ng-repeat="Item in CatalougeListObj">
+                                                            <label>
+                                                                <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" ng-change="toggleAll($index)"><label>&nbsp;&nbsp;{{Item.name}}</label>
+                                                                {{Item.Name}}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-1 control-label">Products:</label>
+                                                <!--<label class="col-md-1 control-label pull-left">Category</label>-->
+                                                <div class="col-md-12">
+                                                    <select class="form-control cursor-pointer" name="CategoryId" ng-options="option.Category_Id as option.name for option in categoryListObj" ng-model="StoreObj.category_id" ng-change="getProductByCategory(StoreObj.category_id , store_id)"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <div class="col-md-12">
+                                                    <div class="col-md-5">
+                                                        <div class="well well-sm" style="height:200px; overflow: auto; font-size: 11px">
+                                                            <div class="col-sm-12 checkbox" ng-repeat="Item in IncludedProductListObj | orderBy: 'name' ">
+                                                                <label>
+                                                                    <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected">
+                                                                    {{Item.name}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span class="col-md-2 pull-left">
+                                                        <button type="button" class="btn btn-info cursor-pointer mt-10 col-md-5" ng-click="ExcludeProduct('remove')"><span class="glyphicon glyphicon-backward"></span></button>
+                                                        <button type="button" class="btn btn-info cursor-pointer mt-10 mb-10 col-md-5 ml-15 pull-right" ng-click="ExcludeProduct('add')"><span class="glyphicon glyphicon-forward"></span></button>
+
+                                                    </span>
+                                                    <div class="col-md-5">
+                                                        <div class="well well-sm" style="height: 200px; overflow: auto; font-size: 11px">
+                                                            <div class="col-sm-12 checkbox" ng-repeat="Item in ExcludedProductListObj | orderBy: 'name'">
+                                                                <label>
+                                                                    <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected">
+                                                                    {{Item.name}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--End General Tab-->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+
+
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+

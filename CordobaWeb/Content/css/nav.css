@@ -1,0 +1,48 @@
+
+.menu a { text-decoration: none !important; outline:none !important }
+
+.toggleMenu { display:  none; background: url(/Content/images/menu-icon.png) center center no-repeat; height:44px; width:50px; color: #fff;  outline:none !important }
+.menu { list-style: none; *zoom: 1;  }
+.menu:before, .menu:after { content: " "; display: table; }
+.menu:after { clear: both; }
+.menu ul { list-style: none; width:200px; }
+
+.menu a.navlink { height:44px; padding:12px 17px 0 17px; font-size:14px; color:#fff; }
+.menu li { position: relative; }
+.menu li.top li a.parent{ padding-right:20px !important; background-image:none;}
+.menu li.top a.navlink:hover, .menu li.top:hover a.navlink{ background-color:#c1d72d; color:#222;}
+
+.menu > li { float: left;  }
+
+.menu > li > a { display: block; }
+.menu li ul { position: absolute; left: -9999px; }
+.menu > li.hover > ul { left: 0; }
+.menu li li.hover ul { left: 100%; top: 0; }
+.menu li li a { padding:7px 10px; height:auto;  color:#222; display: block; background:#c1d72d; position: relative; z-index:100; border-bottom: 1px solid #abbf23; }
+.menu li li a:hover{ background:#d6e85b !important;}
+
+.menu li.current { background-image:url(/Content/images/navar.png); background-position: center bottom; background-repeat:no-repeat;}
+
+@media screen and (max-width: 767px) {
+.active { display: block;}
+.menu{ border-top:1px solid #0e5a85;}
+.menu ul{border-bottom:1px solid #00324e;}
+.menu > li { float: none;}
+.menu li.hover .parent{background:#c1d72d url(/Content/images/upArrow.png) right no-repeat; }
+.menu a.navlink { /*border-bottom:1px solid #00324e;*/ padding:13px 15px 0 15px; }
+.menu li.top{ background-image:none; padding-right:0px;}
+
+.menu > li > .parent { background: url(/Content/images/downArrow.png) right no-repeat;  }
+.menu li.hover .parent{background:#c1d72d url(/Content/images/upArrow.png) right no-repeat; color:#222;}
+.menu > li > .parent:hover { background: url(/Content/images/downArrow2.png) right no-repeat;  }
+.menu li.hover .parent:hover{background:#c1d72d url(/Content/images/upArrow.png) right no-repeat; color:#222;}
+
+
+.menu > li > .parent { background-position: center right;}
+.menu ul { display: block; width: 100%;}
+.menu > li.hover > ul, .menu li li.hover ul { position: static;}
+.menu a.navlink{ padding:11px 10px 0 10px; }
+.menu li li a { padding:7px 10px 7px 25px;  background:#c1d72d; border-bottom: 0px solid #004165;  }
+.menu li li li a { padding:7px 10px 7px 35px;}
+
+}

@@ -1,0 +1,18 @@
+﻿a:hover, a:focus, header .nav li.active a, header .nav li a:hover, header .nav li a:focus, .banner-slider a.bx-prev:before, .banner-slider a.bx-next:before, .deals a.bx-prev:before, .deals a.bx-next:before, .best-block a.bx-prev:before, .best-block a.bx-next:before, .latest-product .bx-controls-direction a, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .category-list ul li a:hover, .product-block p span, .product-block a:hover, .product-block a:focus, header .nav li .dropdown-menu > li > a:hover, header .nav li .dropdown-menu > li > a:focus, .seller-desc span, .login_page h2, .icon-text h4, .secondary [type="checkbox"]:not(:checked) + label:after, .secondary [type="checkbox"]:checked + label:after, .cart-block .badge, .product-detail h3, .remove-item, .delivery-address a, .chckout-add a, .slider-nav a.bx-prev:before, .slider-nav a.bx-next:before {
+    color:#003399;
+ }
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover, .btn-empty, .address-block:hover .add-address a, .address-block:focus .add-address a {
+    color:#003399;
+    border-color:#003399;
+}
+.block-heading h4, .address-block:hover .add-address, .address-block:hover .add-address a i, .address-block:focus .add-address a i, .secondary [type="checkbox"]:checked:focus + label:before, .secondary [type="checkbox"]:not(:checked):focus + label:before {
+    border-color:#003399;
+}
+.btn-default, .showDesc, #back-to-top, .copyright, .btn-empty:hover, .btn-empty:focus, #back-to-top:hover, .my-account, .btn-default:hover, .btn-default:focus, .edit-profile, .update-profile, .search-icon, .banner-slider .bx-controls-direction a:hover, .banner-slider .bx-controls-direction a:focus {
+    background-color:#003399;
+}
+.mCS-dark-thick.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color:#003399 !important;
+}
+﻿
+

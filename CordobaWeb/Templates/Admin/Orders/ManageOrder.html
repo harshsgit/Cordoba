@@ -1,0 +1,625 @@
+﻿<div ng-controller="ManageOrderController">
+    <!--<form name="form" id="form" class="form-horizontal" novalidate>-->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to manage orders.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-header-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a data-target="#customersection" role="tab" data-toggle="tab"><b>Customer Details</b></a></li>
+                                <li role="presentation"><a data-target="#Productssection" role="tab" data-toggle="tab"><b>Products</b></a></li>
+                                <li role="presentation"><a data-target="#Paymentsection" role="tab" data-toggle="tab"><b>Payment Details</b></a></li>
+                                <li role="presentation"><a data-target="#Shippingsection" role="tab" data-toggle="tab"><b>Shipping Details</b></a></li>
+                                <li role="presentation"><a data-target="#totalssection" role="tab" data-toggle="tab"><b>Total</b></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="customersection">
+                                    <!--customersection Tab-->
+                                    <form name="CustomerForm" id="CustomerForm" class="form-horizontal" novalidate>
+
+                                        <div role="tabpanel" class="form-horizontal" id="messages">
+                                            <div class="alert alert-danger alert-dismissible validationErrors" ng-show="CustomerForm.$submitted && !CustomerForm.$valid">
+                                                <ul ng-show="validationErrors">
+                                                    <li ng-repeat="error in validationErrors">{{error}}</li>
+                                                </ul>
+                                                <ul ng-show="CustomerForm.$submitted && (!CustomerForm.$valid)">
+                                                    <li ng-show="CustomerForm.FirstName.$error.required">FirstName is required.</li>
+                                                    <li ng-show="CustomerForm.LastName.$error.required">Last Name is required.</li>
+                                                    <li ng-show="CustomerForm.Email.$error.required">Email is required.</li>
+                                                    <li ng-show="CustomerForm.Telephone.$error.required">Telephone is required.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Store</label>
+                                            <div class="col-lg-10">
+
+                                                <select class="form-control" ng-options="storelist.store_id as storelist.name  for storelist in StoreList" ng-model="selectedStore" ng-change="GetCustomersByStore(selectedStore)">
+                                                    <option value="" ng-if="!selectedStore">---Please select---</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Currency</label>
+                                            <div class="col-lg-10">
+
+                                                <select class="form-control" ng-options="currencylist.currency_id as currencylist.title  for currencylist in CurrencyList" ng-model="selctedCurrency"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Customer</label>
+                                            <div class="col-lg-10">
+                                                <!--<input type="text" class="form-control" ng-model="OrderDetails.customer" />-->
+                                                <select ng-options="customerlist.customer_id as customerlist.WholeName  for customerlist in CustomerList" ng-model="selectedCustomer" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Customer Group</label>
+                                            <div class="col-lg-10">
+
+                                                <select ng-options="customergroup.customer_group_id as customergroup.name  for customergroup in CustomerGroupList" ng-model="selectedCustomerGroup" class="form-control">
+                                                    <option value="" ng-if="!selectedCustomerGroup">---Please Select---</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">First Name</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.firstname" required="required" name="FirstName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Last Name</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.lastname" required="required" name="LastName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">E-Mail</label>
+                                            <div class="col-lg-10">
+                                                <input type="email" class="form-control" ng-model="OrderDetails.email" required="required" name="Email" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Telephone</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.telephone" required="required" name="Telephone" />
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Fax</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.fax" />
+                                            </div>
+                                        </div>-->
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-10 text-right">
+                                                <!--<a><i class="glyphicon glyphicon-refresh"></i></a>
+                                                &nbsp;-->
+                                                <input type="submit" class="btn btn-primary" value="Save" ng-click="UpdateOrder_CutomerDetails(CustomerForm)" />
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <!--End customersection Tab-->
+                                </div>
+                                <div id="Productssection" class="tab-pane" role="tabpanel">
+                                    <table class="table  table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td>Product</td>
+                                                <td>Model</td>
+                                                <td>Quantity</td>
+                                                <td>Unit Price</td>
+                                                <td>Total</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="product in Products">
+                                                <td>{{product.name}}</td>
+                                                <td>{{product.model}}</td>
+                                                <td class="text-right">{{product.quantity}}</td>
+                                                <td class="text-right">{{product.price | number : 2}}</td>
+                                                <td class="text-right">{{product.total | number : 2}}</td>
+                                            </tr>
+                                            <tr ng-if="Products.length>0">
+                                                <td colspan="4" class="text-right">{{subtotal_title}}</td>
+                                                <td class="text-right">{{subtotal_value}}</td>
+                                            </tr>
+                                            <tr ng-if="Products.length>0">
+                                                <td class="text-right" colspan="4">{{total_title}}</td>
+                                                <td class="text-right">{{total_value}}</td>
+                                            </tr>
+                                            <tr ng-if="Products.length==0 || Products=='' || Products==null">
+                                                <td colspan="5">
+                                                    No Records Found.
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--<br />
+                                    <br />
+                                    <div class="tabbable">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active"><a data-target="#addProductsSection" role="tab" data-toggle="tab">Products</a></li>
+                                            <li role="presentation"><a data-target="#addVoucherSection" role="tab" data-toggle="tab">Vouchers</a></li>
+                                        </ul>
+                                        <br />
+                                        <div class="tab-content">
+                                            <div id="addProductsSection" class="tab-pane active" role="tabpanel">
+                                                <h3>Add Product(s)</h3>
+                                                <hr />
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Choose Product</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Quantity</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="number" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-2"></div>
+                                                        <div class="col-lg-10 text-right">
+                                                            <input type="button" value="Add Product" class="btn btn-primary" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="addVoucherSection" class="tab-pane" role="tabpanel">
+                                                <h3>Add Voucher(s)</h3>
+                                                <hr />
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right mandatoryField">Recipient's Name</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right mandatoryField">Recipient's Email</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right mandatoryField">Senders Name</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right mandatoryField">Senders Email</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right mandatoryField">Gift Certificate Theme</label>
+                                                        <div class="col-lg-10">
+                                                            <select class="form-control">
+                                                                <option>data 1</option>
+                                                                <option>data 1</option>
+                                                                <option>data 1</option>
+                                                                <option>data 1</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right">Message</label>
+                                                        <div class="col-lg-10">
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 control-label text-right mandatoryField">Amount</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="number" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-2"></div>
+                                                        <div class="col-lg-10 text-right">
+                                                            <input type="button" value="Add Vouncher" class="btn btn-primary" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                                <div id="Paymentsection" class="tab-pane" role="tabpanel">
+                                    <form name="PaymentForm" id="PaymentForm" class="form-horizontal" novalidate>
+                                        <div role="tabpanel" class="form-horizontal" id="messages">
+                                            <div class="alert alert-danger alert-dismissible validationErrors" ng-show="PaymentForm.$submitted && !PaymentForm.$valid">
+                                                <ul ng-show="validationErrors">
+                                                    <li ng-repeat="error in validationErrors">{{error}}</li>
+                                                </ul>
+                                                <ul ng-show="PaymentForm.$submitted && (!PaymentForm.$valid)">
+                                                    <li ng-show="PaymentForm.payment_firstname.$error.required">Payment: FirstName is required.</li>
+                                                    <li ng-show="PaymentForm.payment_lastname.$error.required">Payment: LastName is required.</li>
+                                                    <li ng-show="PaymentForm.payment_address_1.$error.required">Payment: Address 1 is required.</li>
+                                                    <li ng-show="PaymentForm.payment_city.$error.required">Payment: City is required.</li>
+                                                    <li ng-show="PaymentForm.payment_postcode.$error.required">Payment: PostCode is required.</li>
+                                                    <li ng-show="PaymentForm.PaymentCountry.$error.required">Payment: Country is required.</li>
+                                                    <li ng-show="PaymentForm.RegionStatePayment.$error.required || selectedPaymentZone==''">Payment: Region State is required.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Choose Address</label>
+                                            <div class=" col-lg-10">
+                                                <select ng-options="address.address_id as address.address for address in AddressListPayment" ng-model="selectedPaymentAddressId" class="form-control">
+                                                    <option value="" ng-if="!selectedPaymentAddressId">---Please Select---</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">First Name</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_firstname" name="payment_firstname" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Last Name</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_lastname" name="payment_lastname" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Company</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_company" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Address 1</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_address_1" name="payment_address_1" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Address 2</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_address_2" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">City</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_city" name="payment_city" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Postcode</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.payment_postcode" name="payment_postcode" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Country</label>
+                                            <div class=" col-lg-10">
+                                                <select ng-options="conutry.country_id as conutry.name for conutry in CountryList" ng-model="selectedPaymentCountry" class="form-control" ng-change="GetZoneListByCountryPayment(selectedPaymentCountry)" name="PaymentCountry" required="">
+                                                    <option value="" ng-if="!selectedPaymentCountry">---Please Select---</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Region / State</label>
+                                            <div class=" col-lg-10">
+
+                                                <select ng-options="zone.zone_id as zone.name for zone in RegionStateListPayment" ng-model="selectedPaymentZone" class="form-control" name="RegionStatePayment" required="required">
+                                                    <!--<option value="" ng-if="!selectedPaymentZone">---Please Select---</option>-->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-10 text-right">
+                                                <!--<a><i class="glyphicon glyphicon-refresh"></i></a>
+                                                &nbsp;-->
+                                                <input type="submit" class="btn btn-primary" value="Save" ng-click="UpdateOrder_PaymentDetails(PaymentForm)" />
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div id="Shippingsection" role="tabpanel" class="tab-pane">
+                                    <form name="ShippingForm" id="ShippingForm" class="form-horizontal" novalidate>
+                                        <div role="tabpanel" class="form-horizontal" id="messages">
+                                            <div class="alert alert-danger alert-dismissible validationErrors" ng-show="ShippingForm.$submitted && !ShippingForm.$valid">
+                                                <ul ng-show="validationErrors">
+                                                    <li ng-repeat="error in validationErrors">{{error}}</li>
+                                                </ul>
+                                                <ul ng-show="ShippingForm.$submitted && (!ShippingForm.$valid)">
+                                                    <li ng-show="ShippingForm.shipping_firstname.$error.required">Shipping: First Name is required.</li>
+                                                    <li ng-show="ShippingForm.shipping_lastname.$error.required">Shipping: Last Name is required.</li>
+                                                    <li ng-show="ShippingForm.shipping_address_1.$error.required">Shipping: Address 1 is required.</li>
+                                                    <li ng-show="ShippingForm.shipping_city.$error.required">Shipping: City is required.</li>
+                                                    <li ng-show="ShippingForm.shipping_postcode.$error.required">Shipping: PostCode is required.</li>
+                                                    <li ng-show="ShippingForm.ShippingCountry.$error.required">Shipping: Country is required.</li>
+                                                    <!--<li ng-show="ShippingForm.RegionStateShipping.$error.required || selectedShippingZone==''" ">Shipping: Region State is required.</li>-->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Choose Address</label>
+                                            <div class=" col-lg-10">
+                                                <select ng-options="address.address_id as address.address for address in AddressListShipping" ng-model="selectedAddressShippingId" class="form-control">
+                                                    <option value="" ng-if="!selectedAddressShippingId">---Please Select---</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">First Name</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_firstname" name="shipping_firstname" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Last Name</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_lastname" name="shipping_lastname" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Company</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_company" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Address 1</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_address_1" name="shipping_address_1" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right">Address 2</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_address_2" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">City</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_city" name="shipping_city" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Postcode</label>
+                                            <div class=" col-lg-10">
+                                                <input type="text" class="form-control" ng-model="OrderDetails.shipping_postcode" name="shipping_postcode" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Country</label>
+                                            <div class=" col-lg-10">
+
+                                                <select ng-options="conutry.country_id as conutry.name for conutry in CountryList" ng-model="selectedShippingCountry" class="form-control" name="ShippingCountry" required="">
+                                                    <option value="" ng-if="!selectedShippingCountry">---Please Select---</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">
+                                            <label class="col-lg-2 control-label text-right mandatoryField">Region / State</label>
+                                            <div class=" col-lg-10">
+                                                <select ng-options="zone.zone_id as zone.name for zone in RegionStateListShipping" ng-model="selectedShippingZone" class="form-control" name="RegionStateShipping" required="required">
+
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-10 text-right">
+                                                <!--<a><i class="glyphicon glyphicon-refresh"></i></a>
+                                                &nbsp;-->
+                                                <input type="submit" class="btn btn-primary" value="Save" ng-click="UpdateOrder_ShippingDetails(ShippingForm)" />
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div id="totalssection" class="tab-pane" role="tabpanel">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Model</th>
+                                                <th>Quantity</th>
+                                                <th>Unit Price</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="product in Products">
+                                                <td>{{product.name}}</td>
+                                                <td>{{product.model}}</td>
+                                                <td class="text-right">{{product.quantity}}</td>
+                                                <td class="text-right">{{product.price | number : 0}}</td>
+                                                <td class="text-right">{{product.total | number : 0}}</td>
+                                            </tr>
+                                            <tr ng-if="Products.length>0">
+                                                <td colspan="4" class="text-right">{{subtotal_title}}</td>
+                                                <td class="text-right">{{subtotal_value}}</td>
+                                            </tr>
+                                            <tr ng-if="Products.length>0">
+                                                <td class="text-right" colspan="4">{{total_title}}</td>
+                                                <td class="text-right">{{total_value}}</td>
+                                            </tr>
+                                            <tr ng-if="Products.length==0 || Products=='' || Products==null">
+                                                <td colspan="5">
+                                                    No Records Found.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <br />
+                                    <h3>Order Details</h3>
+                                    <hr />
+                                    <br />
+                                    <div class="row">
+                                        <form name="OrderDetailForm" id="OrderDetailForm" class="form-horizontal" novalidate>
+                                            <label class="col-lg-2 mandatoryField">Order Date</label>
+                                            <div class="col-lg-2">
+                                                <div class="input-group myDatePicker date">
+                                                    <input type="text" class="form-control" name="OrderDate" ng-model="OrderDetails.date_added" date="MM/dd/yyyy" required="required" />
+                                                    <span class="input-group-addon cursor-pointer">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <input type="submit" class="btn btn-primary" value="Save" ng-click="UpdateOrderDate(OrderDetailForm)" />
+
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="text-warning" ng-show="OrderDetailForm.$submitted && !OrderDetailForm.$valid">
+                                                    <ul ng-show="OrderDetailForm.OrderDate.$error.required">
+                                                        <li ng-show="OrderDetailForm.OrderDate.$error.required">Order Date is required.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!--<input type="button" class="btn btn-primary col-lg-1" value="Apply" style="margin-left: -16px;height: 33px;" />-->
+                                        </form>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label class="col-lg-2 mandatoryField">Shipping Method</label>
+                                        <div class="col-lg-10">
+                                            <label class="control-label">{{OrderDetails.shipping_method}}</label>
+                                        </div>
+                                        <!--<input type="button" class="btn btn-primary col-lg-1" value="Apply" style="margin-left: -16px;height: 33px;" />-->
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label class="col-lg-2 mandatoryField">Payment Method</label>
+                                        <div class="col-lg-10">
+                                            <label class="control-label">{{OrderDetails.payment_method}}</label>
+                                        </div>
+                                        <!--<input type="button" class="btn btn-primary col-lg-1" value="Apply" style="margin-left: -16px;height: 33px;" />-->
+                                    </div>
+                                    <!--<div class="row">
+                                        <label class="col-lg-2">Coupon</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <input type="button" class="btn btn-primary col-lg-1" value="Apply" style="margin-left: -16px;height: 33px;" />
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label class="col-lg-2">Voucher</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <input type="button" class="btn btn-primary col-lg-1" value="Apply" style="margin-left: -16px;height: 33px;" />
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label class="col-lg-2 ">Reward</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <input type="button" class="btn btn-primary col-lg-1" value="Apply" style="margin-left: -16px;height: 33px;" />
+                                    </div>-->
+                                    <br />
+                                    <div class="row">
+                                        <label class="col-lg-2">Order Status</label>
+                                        <div class="col-lg-10">
+                                            <!--<select ng-options="orderstatus. as orderstatus.Name for orderstatus in  OrderStatusList" ng-model="OrderHistory.order_status_id" class="form-control"></select>-->
+                                            <select ng-options="orderstatus.order_status_id as orderstatus.name for orderstatus in OrderStatusList | orderBy:'name'" ng-model="selectedOrderStatus" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label class="col-lg-2">Comment</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control" ng-model="OrderDetails.comment"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <!--<div class="row">
+                                        <label class="col-lg-2">Affiliate</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />-->
+                                    <div class="row">
+                                        <div class="col-lg-2"></div>
+                                        <div class="col-lg-10 text-right">
+                                            <input type="submit" class="btn btn-primary" value="Save" ng-click="UpdateOrder_TotalDetails()" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</form>-->
+</div>
+<script type="text/javascript">
+    $('.myDatePicker').bootstrapDP({
+        autoclose: true,
+        format: 'mm/dd/yyyy'
+    });
+</script>

@@ -1,0 +1,47 @@
+﻿<div ng-controller="OrderHistoryController">
+    <section class="my-account">
+        <div class="container">
+            <ul>
+                <li>
+                    <a href="#" ui-sref="EditProfile"><span data-hover="Personal&nbsp;Info">Personal Info</span></a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="ChangePassword"><span data-hover="Change&nbsp;Password">Change Password</span></a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="AddressBook"><span data-hover="Address&nbsp;Book">Address Book</span></a>
+                </li>
+                <li class="active">
+                    <a href="#" ui-sref="OrderHistory"><span data-hover="Order&nbsp;History">Order History</span></a>
+                </li>
+                <li>
+                    <a href="#" ui-sref="PointsAudit"><span data-hover="Audit&nbsp;Points">Audit Points</span></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="container">
+        <div class="account-block reward-points">
+            <div class="col-sm-12 table-responsive">
+                <table class="table table-hover" id="tblOrderHistory">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Status</th>
+                        <th>Date</th>
+                        <th>No of Products</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="Item in OrderHisotry">
+                        <td ng-bind="'#'+Item.order_id"></td>
+                        <td ng-bind="Item.OrderStatusName"></td>
+                        <td ng-bind="Item.date_added | date:GlobalDateFormat"></td>
+                        <td ng-bind="Item.TotalQtyInOrder"></td>
+                        <td ng-bind="Item.OrderTotalText"></td>
+                        <td><a class="view-detail cursor-pointer" href="" ui-sref="OrderDetail({OrderId:Item.order_id})"><i class="fa fa-eye"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,115 @@
+﻿<div ng-controller="StoreReportController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{PageTitle}}</span> </h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup Store Report.</li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="page-header-content">
+
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-date-start">Date Start</label>
+                                <div class="input-group myDatePicker date">
+                                    <input type="text" id="filter_date_start" name="filter_date_start" ng-model="TransactionItemReportObj.DateStart" class="form-control" placeholder="MM/DD/YYYY">
+                                    <span class="input-group-addon cursor-pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-date-end">Date End</label>
+                                <div class="input-group myDatePicker date">
+                                    <input type="text" id="filter_date_End" name="filter_date_End" ng-model="TransactionItemReportObj.DateEnd" class="form-control" placeholder="MM/DD/YYYY">
+                                    <span class="input-group-addon cursor-pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-status">Store</label>
+                                <select ng-options="store.store_id as store.name  for store in StoreList"
+                                        class="form-control" ng-model="TransactionItemReportObj.store_id" name="store_List" ng-disabled="store_id != 0">
+                                    <option value=""> --- Please Select --- </option>
+                                </select>
+                            </div>
+                            <button ng-click="GetTransactionItemReportList()" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <br />
+                    <table id="tblStoreReport" class="table table-bordered table-striped datatable-responsive" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Points</th>
+                                <th>Status</th>
+                                <th>Activated</th>
+                                <th>Date Added</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <!-- Basic bar chart -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                Store Analytics
+                                <span style="float: right;margin-right: 35px;font-size: small;">
+                                    <select ng-model="ChartFiltertype" class="form-control" ng-options="chartfilter.id as chartfilter.name for chartfilter in ChartFilterTypeEnum"></select>
+                                </span>
+                            </h5>
+
+                            <div class="heading-elements">
+          
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="chart-container">
+                                <div class="chart has-fixed-height" id="StoreByYear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

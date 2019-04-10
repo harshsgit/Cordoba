@@ -1,0 +1,47 @@
+﻿
+<div class="catagories_slider productlist" ng-controller="ProductListLayoutController">
+    <div class="container">
+        <div class="col-md-3">
+            <div class="letest-product catagories">
+                <h3>CATEGORIES</h3>
+                <div class="content mCustomScrollbar">
+                    <ul>
+                        <li ng-class="SelectedCategory.parent_Id==category.Category_Id? 'active' : '' " ng-if="category.parent_Id==0" ng-repeat="category in CategoryList">
+                            <a href="#" ng-bind-html="category.name" ui-sref="LayoutCategory({CategoryId:category.Category_Id})"></a>
+                            <ul class="sub-catagory">
+                                <li ng-class="SelectedCategoryId==SubCategory.Category_Id? 'active' : '' " ng-if="(category.Category_Id==SubCategory.parent_Id)" ng-repeat="SubCategory in CategoryList | filter:{ parent_Id: ParentCategoryId }">
+                                    <a href="#" ui-sref="LayoutProducts({CategoryId:SubCategory.Category_Id})">{{SubCategory.name}}</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mt-30">
+                <h3 class="heading" ng-bind="SelectedCategory.name"></h3>
+                <div class="col-sm-3" ng-repeat="product in ProductList">
+                    <div class="col-product text-center">
+                        <div class="background-bg">
+                            <img class="product-img" ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product" />
+                            <div class="cart-btn" ng-controller="AddProductToCartController">
+                                <input type="button" name="cart_btn" ng-click="AddProductToCart(product,$event)" class="add_cart" value="ADD TO CART">
+                            </div>
+                        </div>
+                        <a href="#" ui-sref="LayoutProductDetail({ProductId:product.product_id})">{{product.name}}</a>
+                        <p ng-bind="product.Model"></p>
+                        <span ng-bind="product.Price"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".content, #aboutScroll").mCustomScrollbar();
+    });
+</script>

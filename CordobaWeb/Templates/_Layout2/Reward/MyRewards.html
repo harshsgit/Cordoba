@@ -1,0 +1,65 @@
+﻿<div class="container" ng-controller="RewardController">
+    <div class="my-account mt-30">
+        <div class="col-sm-12">
+            <div class="points ">
+                <h3 ng-bind="PageTitle"></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 text-center table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-default">
+                <tr>
+                    <th>Customer</th>
+                    <th>Medal</th>
+                    <th>Comment</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="Item in MyRewardList">
+                    <td ng-bind="Item.Customer"></td>
+                    <td ng-bind="Item.Medal"></td>
+                    <td ng-bind="Item.comment"></td>
+                    <td ng-bind="Item.reward_given_date | date:GlobalDateFormat"></td>
+                </tr>
+                <tr ng-if="!(MyRewardList.length>0)">
+                    <td colspan="4">No records found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="my-account mt-30">
+        <div class="col-sm-12">
+            <div class="points ">
+                <h3>All Awards</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 text-center table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-default">
+                <tr>
+                    <th>Title</th>
+                    <th>Closing Date</th>
+                    <th>Total ( Customer already Participate )</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="Item in AllRewards">
+                    <td ng-bind="Item.Title"></td>
+                    <td ng-bind="Item.end_date | date:GlobalDateFormat"></td>
+                    <td ng-bind="Item.Participate"></td>
+                    <td>
+                        <a ui-sref="CustomerRewardDetail({reward_id:Item.id,rewardname:Item.Title})" data-placement="top" data-toggle="tooltip" title="View"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a ui-sref="AddReward({rewardId:Item.id,type:Item.reward_type_id})" data-placement="top" data-toggle="tooltip" title="Give Award"><i class="glyphicon glyphicon-gift"></i></a>
+                    </td>
+                </tr>
+                <tr ng-if="!(AllRewards.length>0)">
+                    <td colspan="4">No records found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

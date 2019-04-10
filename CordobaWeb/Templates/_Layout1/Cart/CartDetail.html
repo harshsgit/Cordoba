@@ -1,0 +1,93 @@
+﻿<div ng-controller="CartDetailController">
+    <section class="my-account">
+        <div class="container">
+            <ul>
+                <li>
+                    <p class="bag-desc" ng-if="CartItemList.length>0"> You have {{CartItemList.length}} items in your Shopping Bag</p>
+                    <p class="bag-desc" ng-if="!(CartItemList.length>0)">Your Shopping Bag is Empty.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="container cart-desc">
+        <div class="col-sm-8">
+            <div class="account-block">
+                <div ng-class="Item.IsOutOfStock=='true'? 'cart-detail out-of-stock' : 'cart-detail' " class="cart-detail out-of-stock" ng-repeat="Item in CartItemList">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="media-object" ng-src="{{Item.ProductImage}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Image">
+                                    <div class="stock-img"></div>
+                                </div>
+                                <div class="media-body">
+                                    <a ui-sref="LayoutProductDetail({ProductId:Item.product_id})" class="media-heading" ng-bind="Item.name"></a>
+                                    <p class="model-no"><span>Modal Number:</span> {{Item.model}}</p>
+                                    <div class="price mt-10 ">
+                                        <p ><span>Quantity:</span></p>
+                                        <div class="input-group col-sm-2">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger btn-number" ng-click="DecreaseQuantity(Item)">
+                                                    <span class="glyphicon glyphicon-minus"></span>
+                                                </button>
+                                            </span>
+                                            <label class="form-control ItemQuantity" ng-bind="Item.quantity"></label>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-success btn-number" ng-click="IncreaseQuantity(Item)">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <p ng-if="Item.IsOutOfStock=='false'" class="stock-desc">Out of Stock</p>
+                                    <label ng-if="Item.IsOutOfStock=='false'" class="stock-label"><i class="fa fa-warning"></i>This item will not be included in order</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <p class="product-price">
+                            <span>Points: {{Item.points | number : 2}}</span>
+                                <br />
+                                <span ng-if="Item.quantity>1">Subtotal: {{Item.totalpoints | number : 2}}</span>
+                            </p>                            
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="remove-product">
+                                <button class="remove-item" ng-click="RemoveProductFromCart(Item)"><i class="fa fa-trash-o"></i> Remove Item</button>
+                                <button class="remove-item" ng-if="Item.IsProductInWishlist!=true" ng-click="AddtoWishList(Item)">
+                                    <i ng-class="Item.IsProductInWishlist==true? 'fa fa-heart' : 'fa fa-heart-o' "></i> Move to Wishlist
+                                </button>
+                                <button class="remove-item" ng-if="Item.IsProductInWishlist==true" ng-click="AddtoWishList(Item)" disabled="disabled">
+                                    <i ng-class="Item.IsProductInWishlist==true? 'fa fa-heart' : 'fa fa-heart-o' "></i>Added to Wishlist
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-detail" ng-if="IsEmptyShoppingCart==1">
+                    <img class="cursor-pointer" src="../../../Content/layout1/images/EmptyShoppingCart.png" ui-sref="Home" alt="Empty Cart" />
+                </div>
+                <div class="payment-summary">
+                    <button class="remove-item pull-right" ui-sref="Home"><i class="fa fa-arrow-left"></i> Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" ng-if="TotalItems>0">
+            <div class="account-block">
+                <h4 class="payment-heading">Payment Summary</h4>
+                <div class="payment-summary">
+                    <p>Subtotal:</p>
+                    <p ng-bind="(AllItemSubtotalPoints | number : 0)+' Points'"></p>
+                </div>
+                <div class="payment-summary last">
+                    <span>Order Total:</span>
+                    <span ng-bind="(AllItemTotalPoints | number : 0)+' Points'"></span>
+                </div>
+                <div class="checkout-block">            
+                    <a href="" ng-click="Checkout()" class="btn btn-empty cursor-pointer">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

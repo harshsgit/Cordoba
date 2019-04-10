@@ -1,0 +1,149 @@
+﻿<div ng-controller="AddOrUpdateUserController">
+    <form name="form" id="form" class="form-horizontal" novalidate>
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4> <a href="" ui-sref="Home"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><a href="" ui-sref="Home">Home</a> -</span> {{PageTitle}}</h4>
+                </div>
+                <div class="heading-elements">
+                    <div class="heading-btn-group">
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li>  This page allows you to manage User.</li>
+                </ul>
+                <div class="text-right">
+
+                </div>
+                <ul class="breadcrumb-elements">
+                    <li>
+                        <button type="button" ng-click="Cancel()" class="btn btn-default cursor-pointer"><i class="icon-arrow-left13 position-left"></i>Cancel </button> &nbsp;
+                    </li>
+                    <li>
+                        <button type="submit" ng-click="SaveUser(form)" class="btn btn-success cursor-pointer">Submit <i class="icon-arrow-right14 position-right"></i></button>&nbsp;
+                    </li>
+                    <li ng-if="IsEditMode==true">
+                        <button type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title="Delete Manufacturer" ng-click="DeleteUser(UserObj)"><i class="glyphicon glyphicon-trash position-left"></i> Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-header-content">
+            <!-- Centered forms -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <div role="tabpanel" class="form-horizontal" id="messages">
+                                        <div class="alert alert-danger alert-dismissible validationErrors" ng-show="form.$submitted && !form.$valid">
+                                            <ul ng-show="validationErrors">
+                                                <li ng-repeat="error in validationErrors">{{error}}</li>
+                                            </ul>
+                                            <ul ng-show="form.$submitted && (!form.$valid)">
+                                                <li ng-show="form.UserName.$error.required">User name is required.</li>
+                                                <li ng-show="form.FirstName.$error.required">First name is required.</li>
+                                                <li ng-show="form.LastName.$error.required">Last name is required.</li>
+                                                <li ng-show="form.Password.$error.required">Password is required.</li>
+                                                <li ng-show="form.confirm_password.$error.required">Confirm Password is required.</li>
+                                                <li ng-show="form.Email.$error.email">Email address is not valid.</li>
+                                                <li ng-show="form.confirm_password.$error.passwordVerify">Password and Confirm Password must be same.</li>                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-1">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">User Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="UserName" maxlength="50" placeholder="Enter User Name" ng-model="UserObj.username" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">User Group</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control cursor-pointer" name="UserGroupId" ng-model="UserObj.user_group_id" ng-options="option.UserGroupId as option.UserGroupName for option in UserGroupList"></select>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">First Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="FirstName" maxlength="2000" placeholder="Enter First Name" ng-model="UserObj.firstname" required="required">
+                                        </div>
+                                    </div>  
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Last Name</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" name="LastName" maxlength="2000" placeholder="Enter Last Name" ng-model="UserObj.lastname" required="required">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Email</label>
+                                        <div class="col-lg-8">
+                                            <input type="email" class="form-control" name="Email" maxlength="80" placeholder="Enter Email" ng-model="UserObj.email">
+                                        </div>
+                                    </div>  
+                                    <!--<div class="form-group">
+                                        <label class="col-lg-3 control-label">Image</label>
+                                        <div class="col-lg-9">
+                                            <input type="file" class="file-styled">
+                                            <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+                                        </div>
+                                    </div>-->                               
+                                    <!--<div class="form-group">
+                                        <label class="col-lg-3 control-label">Image</label>
+                                        <div class="col-lg-5">
+                                            <img src="../../../Content/Images/Manufacturer/no_image-100x100.png" />
+                                        </div>
+                                    </div>-->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Password</label>
+                                        <div class="col-lg-8">
+                                            <input type="password" class="form-control" name="Password" maxlength="100" placeholder="Enter Password" ng-model="UserObj.password" required="required">
+                                        </div>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label mandatoryField">Confirm Password</label>
+                                        <div class="col-lg-8">
+                                            <input ng-model="UserObj.password_verify" class="form-control" type="password" name='confirm_password' placeholder='Confirm Password' data-password-verify="UserObj.password" required="required">
+                                        </div>
+                                    </div> 
+                                   
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Status</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control cursor-pointer" name="StatusId" ng-model="UserObj.status" ng-options="option.StatusId as option.StatusName for option in UserStatus"></select>
+                                        </div>
+                                    </div> 
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /form centered -->
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+

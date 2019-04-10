@@ -1,0 +1,109 @@
+﻿
+    <div class="container" ng-controller="OrderDetailController">
+    <div class="order-detail mt-30">
+        <div class="col-sm-12">
+            <div class="points">
+                <h4>Your Orders</h4>
+                <p ng-bind="'Payment of '+ OrderdetailObj.totalpoints +' points has been received.'"></p>
+            </div>
+        </div>
+
+
+        <div class="col-sm-8">
+            <div class="orders">
+                <div class="order-headings">
+                    <div class="order-title">
+                        <p>Order ID:</p> <span ng-bind="'#'+ OrderdetailObj.order_id"> #{{}} </span>
+                    </div>
+                    <div class="order-title">
+                        <p>Order placed Date:</p> <span ng-bind="OrderdetailObj.date_added | date:GlobalDateFormat"></span>
+                    </div>
+                    <div class="order-title">
+                        <p>Payment Method:</p> <span>Points Based Deduction </span>
+                    </div>
+                </div>
+                <div class="order-desc" ng-repeat="Item in OrderdetailObj.orderProductEntity">
+                    <div class="col-md-7 col-sm-8">
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" ng-src="{{Item.ProductImage}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product">
+                            </div>
+                            <div class="media-body">
+                                <a href="" class="media-heading" ng-bind="Item.name"></a>
+                                <p class="model-no"><span>Modal Number: </span> <span ng-bind="Item.model"></span></p>
+                                <p class="model-no"><span>Quantity: </span> <span ng-bind="Item.quantity"></span></p>
+                                <p class="model-no"><span>Comment:</span> <span ng-bind="Item.comment"></span> </p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-4">
+                        <p class="product-price"><span>Points:</span> <span ng-bind="(Item.points | number :0) +' points'"></span></p>
+                        <p class="product-price" ng-if="Item.quantity>1"><span>Subtotal: </span><span ng-bind="(Item.total | number :0) +' points'"></span></p>
+                    </div>
+                    <div class="cart-detail" ng-if="OrderdetailObj.order_status_id == OrderStatusEnum.Processing || OrderdetailObj.order_status_id == OrderStatusEnum.Shipped || OrderdetailObj.order_status_id == OrderStatusEnum.Delivered">
+                        <ul class="order-status">
+                            <li ng-class="(OrderdetailObj.order_status_id == OrderStatusEnum.Processing || OrderdetailObj.order_status_id == OrderStatusEnum.Shipped || OrderdetailObj.order_status_id == OrderStatusEnum.Delivered) ? 'completed' : ''">
+                                <i class="fa fa-check"></i>
+                                <span>Order Received</span>
+                            </li>
+                            <li ng-class="(OrderdetailObj.order_status_id == OrderStatusEnum.Shipped || OrderdetailObj.order_status_id == OrderStatusEnum.Delivered) ? 'completed' : ''">
+                                <i class="fa fa-check"></i>
+                                <span>Shipped</span>
+                            </li>
+                            <li ng-class="(OrderdetailObj.order_status_id == OrderStatusEnum.Delivered) ? 'completed' : ''">
+                                <i class="fa fa-check"></i>
+                                <span>Delivered</span>
+                            </li>
+                        </ul>   
+                     </div>                      
+                    </div>
+            </div>
+
+            
+        
+
+        </div>
+        <div class="col-sm-4">
+            <div class="orders">
+                <div class="address">
+                    <div class="addess-heading">
+                        <h2>Delivery Address</h2>
+                    </div>
+
+                    <div class="addess-desc mt-20">
+                        <h4 ng-bind="OrderdetailObj.payment_firstname +' '+OrderdetailObj.payment_lastname"></h4>
+                        <p>
+                            <span ng-if="OrderdetailObj.shipping_address_1!='' && OrderdetailObj.shipping_address_1!=null" ng-bind="OrderdetailObj.shipping_address_1 +' ,'"></span>
+                            <span ng-if="OrderdetailObj.shipping_address_2!='' && OrderdetailObj.shipping_address_2!=null" ng-bind="OrderdetailObj.shipping_address_2 +' ,'"></span>
+                            <span ng-if="OrderdetailObj.shipping_city!='' && OrderdetailObj.shipping_city!=null" ng-bind="OrderdetailObj.shipping_city +' ,'"></span>
+                            <span ng-if="OrderdetailObj.shipping_country!='' && OrderdetailObj.shipping_country!=null" ng-bind="OrderdetailObj.shipping_country"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="orders">
+                <div class="address">
+                    <div class="addess-heading">
+                        <h2>Payment Summary</h2>
+                    </div>
+
+                    <div class="payment-summary mt-20" ng-repeat="Item in OrderdetailObj.orderProductEntity">
+                        <p ng-bind-html="'- '+Item.name"></p>
+                        <p ng-bind="(Item.totalpoints | number :0)+' Points'"></p>
+                       
+                    </div>
+                    <div class="payment-summary total">
+                        <span>Order Total:</span>
+                        <span ng-bind="(OrderdetailObj.totalpoints | number :0) +' Points'"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,92 @@
+﻿<div ng-controller="CartDetailController">
+    <section class="my-account">
+        <div class="container">
+            <ul>
+                <li>
+                    <p class="bag-desc">{{AllItemTotalPoints}} Points will be deducted from your account.</p>
+
+               
+                </li>
+                <p class="bag-desc pull-right">Available Points : {{CustomerDetail.points}} Points</p>
+            </ul>
+
+        </div>
+    </section>
+    <section class="container cart-desc">
+        <div class="col-sm-8">
+            <div class="account-block">
+                <div class="cart-detail" ng-repeat="Item in CartItemList">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-8">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="media-object" ng-src="{{Item.ProductImage}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Image">
+                                    <div class="stock-img"></div>
+                                </div>
+                                <div class="media-body">
+                                    <a ui-sref="LayoutProductDetail({ProductId:Item.product_id})" class="media-heading" ng-bind="Item.name"></a>
+                                    <p class="model-no"><span>Modal Number:</span>{{Item.model}}</p>
+                                    <p class="model-no"><span>Quantity:</span> {{Item.quantity}}</p>                              
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-4">
+                            <p class="product-price"><span>Points:</span> {{Item.points}}</p>
+                            <p class="product-price" ng-if="Item.quantity>1">Subtotal: {{Item.totalpoints}}</p>
+                        </div>
+                    </div>
+                </div>           
+            </div>
+        </div>
+        <div class="col-sm-4 order-desc">
+            <div class="account-block delivery-detail">
+                <h4 class="payment-heading">Delivery Address</h4>
+                <div class="delivery-address">
+                    <a href="" ui-sref="AddressBook">Add New</a>
+                </div>
+                <div class="payment-summary">
+                    <span>{{CustomerDetail.firstname}} {{CustomerDetail.lastname}}</span>
+                    <p>{{SelectedCustomerAddress.company}}<br /> {{SelectedCustomerAddress.address_1}} {{SelectedCustomerAddress.address_2}},{{SelectedCustomerAddress.postcode}},{{SelectedCustomerAddress.city}},{{SelectedCustomerAddress.county}}</p>
+                    <span style="color:red;" ng-show="ValidateAddress">Please add Address1 and Postcode for selected address.</span>
+                </div>
+            </div>
+            <div class="chckout-add">
+                <a href="" class="cursor-pointer" ng-click="NavigateAddressSlide(SelectedCustomerAddress.SelectedIndex,1)"><i class="fa fa-angle-left"></i></a>
+                <p>{{SelectedCustomerAddress.company}},{{SelectedCustomerAddress.address_1}} {{SelectedCustomerAddress.address_2}},{{SelectedCustomerAddress.postcode}},{{SelectedCustomerAddress.city}}</p>
+                <a href="" ng-click="NavigateAddressSlide(SelectedCustomerAddress.SelectedIndex,1)" ><i class="fa fa-angle-right"></i></a>
+            </div>
+            <div class="account-block comment">
+                <h4 class="payment-heading">Comment</h4>
+                <div class="payment-summary">
+                    <textarea class="form-control" ng-model="PlaceOrderObj.Comment" placeholder="Write your comment here..."></textarea>
+                </div>
+            </div>
+            <div class="account-block comment">
+                <div class="chekbox-main checkbox secondary">
+                    <input type="checkbox" id="checkbox" ng-model="TermAndCondition">
+                    <label for="checkbox">Please accept Terms &amp; Conditions</label>
+                    <button class="cursor-pointer pr-10 btn-link" ng-click="OpenTermsCondition()">Terms &amp; Conditions</button>
+                </div>
+                <br /><span style="color:red;" ng-show="validationmsg">Please select Terms &amp; Conditions</span>
+            </div>
+
+            <div class="account-block">
+                <h4 class="payment-heading">Payment Summary</h4>
+                <div class="payment-summary">
+                    <ul>
+                        <li ng-repeat="Item in CartItemList"><p ng-bind-html="'- '+Item.name"></p>
+                            <p ng-bind="Item.totalpoints +' Points'"></p>
+                        </li>                      
+                    </ul>                
+                </div>
+                <div class="payment-summary last">
+                    <span>Order Total:</span>
+                    <span ng-bind="AllItemTotalPoints +' Points'"></span>
+                </div>
+                <div class="checkout-block">                    
+                    <a ng-click="PlaceOrder()" class="btn btn-empty">Place Order</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

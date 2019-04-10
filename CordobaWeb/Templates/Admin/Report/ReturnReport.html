@@ -1,0 +1,119 @@
+﻿<div ng-controller="ReturnReportController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{PageTitle}}</span> </h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup Return report.</li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="page-header-content">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Returns List</h3>
+            </div>
+            <div class="panel-body">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-status">Store</label>
+                                <select ng-model="ReturnReportObj.StoreId" ng-options=" store.store_id as store.name for store in StoreList"
+                                        class="form-control" name="store" ng-disabled="StoreId != 0">
+                                    <option value="">All</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-date-start">Date Start</label>
+                                <div class="input-group myDatePicker date">
+                                    <input type="text" class="form-control" ng-model="ReturnReportObj.DateStart" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon cursor-pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        
+                          
+                        </div>
+                        <div class="col-sm-6">
+                                <!--<div class="form-group">
+                                    <label class="control-label" for="input-group">Group By</label>
+                                    <select ng-options="Group.id as Group.name  for Group in GroupBy"
+                                            class="form-control" 
+                                            ng-model="ReturnReportObj.GroupById" 
+                                            name="filter_group">
+                                
+                                    </select>
+                                </div>-->
+                                                              
+                                <div class="form-group">
+                                    <label class="control-label" for="input-status">Return Status</label>
+
+                                    <select ng-options="Status.id as Status.name  for Status in ReturnStatus"
+                                            class="form-control"
+                                            ng-model="ReturnReportObj.StatusId"
+                                            id="input-status"
+                                            name="filter_order_status_id">
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-date-end">Date End</label>
+                                <div class="input-group myDatePicker date">
+                                    <input type="text" class="form-control" ng-model="ReturnReportObj.DateEnd" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon cursor-pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                               
+                            <button type="button" id="button-filter" ng-click="GetReturnList()" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>
+                            </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <br />
+                    <table class="table table-bordered table-striped datatable-responsive"  id="tblReturnReport" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Date Start</th>
+                                <th>Date End</th>
+                                <th>No. Returns</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

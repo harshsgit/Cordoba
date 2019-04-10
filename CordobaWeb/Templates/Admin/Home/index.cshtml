@@ -1,0 +1,295 @@
+﻿<!-- /core JS files -->
+<!-- Theme JS files -->
+@*<script src="~/Scripts/admin/js/plugins/visualization/echarts/echarts.js"></script>
+    <script src="~/Scripts/admin/js/charts/echarts/pies_donuts.js"></script>*@
+
+<!-- /theme JS files -->
+<div ng-controller="DashboardController">
+    @*<button class="btn btn-success form-control" onclick="downloadPNG()">Make Image</button>*@
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4>
+                    @*<i class="icon-arrow-left52 position-left"></i>*@
+                    <span class="text-semibold">Home</span> - Dashboard
+                </h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+                    @*<a href="#" class="btn btn-link btn-float has-text"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                        <a href="#" class="btn btn-link btn-float has-text"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                        <a href="#" class="btn btn-link btn-float has-text"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>*@
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li><a><i class="icon-home2 position-left"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+                <li><button type="button" class="btn btn-success btn-md" data-placement="top" data-toggle="tooltip" title="Print Dashboard" ng-click="printDiv();"> Print Dashboard<i class="icon-arrow-right14 position-left"></i></button></li>
+            </ul>
+            <ul class="breadcrumb-elements"></ul>
+        </div>
+    </div>
+
+    <div class="page-header-content">
+        <div class="row">
+            <!-- Quick stats boxes -->
+
+            <div class="col-lg-3">
+                <!-- Members online -->
+                <div class="panel bg-teal-400">
+                    <div class="panel-body">
+                        <div class="heading-elements">
+                            @*<span class="heading-text badge bg-teal-800">+53,6%</span>*@
+                        </div>
+                        @*<h3 class="no-margin"> 10.4K </h3>*@
+                        <h3 class="no-margin">
+                            {{DashboardSummary.DashboardHeaderSummary.TotalOrders}}
+                        </h3>
+                        Total Orders
+                        <div class="text-muted text-size-small">
+                        </div>
+                    </div>
+                    @*<div class="container-fluid">
+                            <div id="members-online"></div>
+                        </div>*@
+                </div>
+                <!-- /members online -->
+            </div>
+            <div class="col-lg-3">
+                <!-- Current server load -->
+                <div class="panel bg-pink-400">
+                    <div class="panel-body">
+                        <div class="heading-elements">
+                        </div>
+                        @*<h3 class="no-margin">10.1k</h3>*@
+                        <h3 class="no-margin">{{DashboardSummary.DashboardHeaderSummary.TotalCustomers}}</h3>
+                        Total Customers
+                        <div class="text-muted text-size-small"></div>
+                    </div>
+                    <div id="server-load"></div>
+                </div>
+                <!-- /current server load -->
+            </div>
+            <div class="col-lg-3">
+                <!-- Today's revenue -->
+                <div class="panel bg-blue-400">
+                    <div class="panel-body">
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action=""></a></li>
+                            </ul>
+                        </div>
+                        @*<h3 class="no-margin">1k</h3>*@
+                        <h3 class="no-margin">{{DashboardSummary.DashboardHeaderSummary.TotalSuppliers}}</h3>
+                        Total Supplier
+                        <div class="text-muted text-size-small"></div>
+                    </div>
+                    <div id="today-revenue"></div>
+                </div>
+                <!-- /today's revenue -->
+            </div>
+            <div class="col-lg-3">
+                <!-- Today's revenue -->
+                <div class="panel bg-danger-400">
+                    <div class="panel-body">
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action=""></a></li>
+                            </ul>
+                        </div>
+                        @*<h3 class="no-margin">$18,390</h3>*@
+                        <h3 class="no-margin">{{DashboardSummary.DashboardHeaderSummary.TotalSales}}</h3>
+                        Total Sales (in points)
+                        <div class="text-muted text-size-small"></div>
+                    </div>
+                    <div id="today-revenue"></div>
+                </div>
+                <!-- /today's revenue -->
+            </div>
+
+            <!-- /quick stats boxes -->
+
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Nightingale roses width hidden labels -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Order Summary(Current Year)</h5>
+                        <div class="heading-elements">
+                            @*<ul class="icons-list">
+                                    <li><a data-action="collapse"></a></li>
+                                    <li><a data-action="reload"></a></li>
+                                    <li><a data-action="close"></a></li>
+                                </ul>*@
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart-container">
+                            <div class="chart has-fixed-height" id="OrderSummary"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /nightingale roses width hidden labels -->
+
+
+
+            </div>
+            <div class="col-lg-6">
+                <!-- Basic bar chart -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            Sales Analytics
+                            <span style="float: right;margin-right: 35px;font-size: small;">
+                                <select ng-model="ChartFiltertype" class="form-control" ng-change="GetDashboardSummaryCharts(ChartOrFunctionTypeEnum.All)" ng-options="chartfilter.id as chartfilter.name for chartfilter in ChartFilterTypeEnum"></select>
+                            </span>
+                        </h5>
+
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                @*<li><a data-action="collapse"></a></li>
+                                    <li><a data-action="reload"></a></li>
+                                    <li><a data-action="close"></a></li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart-container">
+                            <div class="chart has-fixed-height" id="SalesAnalytics"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <!-- - Top 5 stores Selling -->
+            <div class="col-lg-6">
+
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Top 5 Selling Stores</h5>
+                        <div class="heading-elements">
+                            @*<ul class="icons-list">
+                                    <li><a data-action="collapse"></a></li>
+                                    <li><a data-action="reload"></a></li>
+                                    <li><a data-action="close"></a></li>
+                                </ul>*@
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart-container">
+                            <div class="chart has-fixed-height" id="Top5Sales_Chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- - Top 5 stores Selling -->
+            <div class="col-lg-6">
+                <!-- Top 5 Customer -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Top 5 Customers</h5>
+                        <div class="heading-elements">
+                            @*<ul class="icons-list">
+                                    <li><a data-action="collapse"></a></li>
+                                    <li><a data-action="reload"></a></li>
+                                    <li><a data-action="close"></a></li>
+                                </ul>*@
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart-container">
+                            <div class="chart has-fixed-height" id="Top5Customer_Chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- - Top 5 stores Selling -->
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-sx-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><i class="fa fa-calendar"></i> Recent Activity</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="activity in activityList">
+                            <a ng-if="activity.activity_type==1 || activity.activity_type==4" ui-sref="ManageCustomer({CustomerId: {{activity.entitykey}} })">{{activity.activity_text}}</a>
+                            <a ng-if="activity.activity_type==2" ui-sref="Orders({OrderId: {{activity.entitykey}} })">{{activity.activity_text}}</a>
+                            {{activity.activity_value}} {{activity.comments!=''?activity.comments:''}}.
+                            <br>
+                            <small class="text-muted"><i class="fa fa-clock-o"></i> {{activity.date_added | date:GlobalDateFormat +'  h:mm a'}}</small>
+                        </li>
+                        @*<li class="list-group-item">
+                                <a>Liam Guinan</a> purchased  ROBERTS ECO PLAY DAB FM RDS DIGITAL RADIO BLACK.<br>
+                                <small class="text-muted"><i class="fa fa-clock-o"></i> 03/05/2017 09:20:36</small>
+                            </li>
+                            <li class="list-group-item">
+                                <a>Liam Guinan</a> purchased  TAG HEUER WAY1413.BA0920 AQUARACER LADIES WATCH.<br>
+                                <small class="text-muted"><i class="fa fa-clock-o"></i> 03/05/2017 09:20:10</small>
+                            </li>
+                            <li class="list-group-item">
+                                <a>Liam Guinan</a> purchased  KINDLE 80250901 FIRE HDX 8.9 WIFI 16GB BLACK.<br>
+                                <small class="text-muted"><i class="fa fa-clock-o"></i> 03/05/2017 09:05:38</small>
+                            </li>
+                            <li class="list-group-item">
+                                <a>Liam Guinan</a> purchased  KINDLE 80250901 FIRE HDX 8.9 WIFI 16GB BLACK.<br>
+                                <small class="text-muted"><i class="fa fa-clock-o"></i> 03/05/2017 08:28:03</small>
+                            </li>*@
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-sx-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><i class="fa fa-shopping-cart"></i> Latest Orders</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td class="text-center">Order ID</td>
+                                    <td>Customer</td>
+                                    <td>Status</td>
+                                    <td>Date Added</td>
+                                    <td class="text-center">Total</td>
+                                    <td class="text-center">Action</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="order in Orders">
+                                    <td class="text-center" ng-bind="order.order_id"></td>
+                                    <td ng-bind="order.customer"></td>
+                                    <td ng-bind="order.OrderStatusName"></td>
+                                    <td ng-bind="order.date_added | date:GlobalDateFormat"></td>
+                                    <td class="text-center" ng-bind="(order.total | number:0) + ' Points'"></td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-success" ui-sref="Orders({OrderId:order.order_id})" target="_blank" title="view Order details"><span>View</span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

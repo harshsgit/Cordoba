@@ -1,0 +1,70 @@
+﻿<div ng-controller="ProductViewedReportController">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">{{PageTitle}}</span> </h4>
+            </div>
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li>  This page allows you to lookup products viewed report</li>
+            </ul>
+            
+
+        </div>
+    </div>
+    <div class="page-header-content">
+        <div class="panel panel-default">
+            <!--<div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Products Viewed List</h3>
+            </div>-->
+            <div class="panel-body">
+                <div class="panel-body">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-status">Store</label>
+                                    <select ng-options="Store.store_id as Store.name  for Store in StoreList | orderBy:'store_id'" ng-change="GetProductViewedList()"
+                                            class="form-control" ng-model="selectedStore_id" name="Store" ng-disabled="StoreId != 0">
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                                <!--<button ng-click="GetProductViewedList()" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <br />
+                        <table id="tblProductViewed" class="table table-bordered table-striped datatable-responsive" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Model</th>
+                                    <th>Viewed	</th>
+                                    <th>Percent</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
