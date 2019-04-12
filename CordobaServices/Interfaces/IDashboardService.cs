@@ -11,8 +11,8 @@ namespace CordobaServices.Interfaces
     {
         List<OrderEntity> GetLatestOrderDetailsDashboard(int storeId);
 
-        DashboardSummaryEntity GetDashboardTopHeaderFields(int storeId);
+        DashboardSummaryEntity GetDashboardTopHeaderFields(int storeId, long? UserId);
 
-        DashboardSummaryEntity GetDashboardSummaryCharts(int storeId, int ChartFiltertype, int ChartOrFunctionTypeEnum);
+        DashboardSummaryEntity GetDashboardSummaryCharts(int storeId, int ChartFiltertype, int ChartOrFunctionTypeEnum, long? UserId);
     }
 }

@@ -32,13 +32,13 @@ namespace CordobaAPI.API
 
 
         [HttpPost]
-        public TableParameter<CustomerEntity> GetCustomerList(int PageIndex, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int storeId, TableParameter<CustomerEntity> tableParameter)
+        public TableParameter<CustomerEntity> GetCustomerList(int PageIndex, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int storeId, TableParameter<CustomerEntity> tableParameter, long? UserId)
         {
             try
             {
                 tableParameter.PageIndex = PageIndex;
                 string sortColumn = tableParameter.SortColumn.Desc ? tableParameter.SortColumn.Column + " desc" : tableParameter.SortColumn.Column + " asc";
-                var result = _CustomerService.GetCustomerList(sortColumn, tableParameter, customerName, email, customer_group_id, status, approved, ip, date_added, storeId).ToList();
+                var result = _CustomerService.GetCustomerList(sortColumn, tableParameter, customerName, email, customer_group_id, status, approved, ip, date_added, storeId, UserId).ToList();
                 int totalRecords = 0;
                 if (result != null && result.Count > 0)
                 {
@@ -61,7 +61,7 @@ namespace CordobaAPI.API
 
 
         [HttpPost]
-        public HttpResponseMessage CustomerExportToExcel(int PageIndex, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int storeId, object tableParameter)
+        public HttpResponseMessage CustomerExportToExcel(int PageIndex, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int storeId, long? UserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -79,7 +79,7 @@ namespace CordobaAPI.API
             DateTime date = DateTime.Now.Date;
             string str = string.Concat("Customers_export", date.ToString("ddMMyyyy"), ".xls");
 
-            DataSet ds = _CustomerService.CustomerExportToExcel(sortColumn, tableParameter, customerName, email, customer_group_id, status, approved, ip, date_added, storeId);
+            DataSet ds = _CustomerService.CustomerExportToExcel(sortColumn, tableParameter, customerName, email, customer_group_id, status, approved, ip, date_added, storeId, UserId);
 
             if (ds != null && ds.Tables.Count > 0)
             {

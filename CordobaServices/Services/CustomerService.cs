@@ -23,7 +23,7 @@ namespace CordobaServices.Services
 
         private GenericRepository<CustomerEntity> CustomerEntityGenericRepository = new GenericRepository<CustomerEntity>();
 
-        public List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId)
+        public List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId,long? UserId)
         {
             try
             {
@@ -39,7 +39,8 @@ namespace CordobaServices.Services
                 var paramDate_added = new SqlParameter { ParameterName = "date_added", DbType = DbType.DateTime, Value = date_added ?? (object)DBNull.Value };
                 var paramstatus = new SqlParameter { ParameterName = "status", DbType = DbType.Int32, Value = status ?? (object)DBNull.Value };
                 var paramStoreId = new SqlParameter { ParameterName = "storeId", DbType = DbType.Int32, Value = storeId ?? (object)DBNull.Value };
-                var CustomerList = CustomerEntityGenericRepository.ExecuteSQL<CustomerEntity>("EXEC GetCustomerList", paramOrderBy, paramPageSize, paramPageIndex, paramCustomerName, paramEmail, paramCustomer_group_id, paramApproved, paramIp, paramDate_added, paramstatus, paramStoreId).ToList<CustomerEntity>().ToList();
+                var paramUserId = new SqlParameter { ParameterName = "UserId", DbType = DbType.Int32, Value = UserId ?? (object)DBNull.Value };
+                var CustomerList = CustomerEntityGenericRepository.ExecuteSQL<CustomerEntity>("EXEC GetCustomerList", paramOrderBy, paramPageSize, paramPageIndex, paramCustomerName, paramEmail, paramCustomer_group_id, paramApproved, paramIp, paramDate_added, paramstatus, paramStoreId, paramUserId).ToList<CustomerEntity>().ToList();
                 return CustomerList;
             }
             catch (Exception ex)
@@ -49,7 +50,7 @@ namespace CordobaServices.Services
             }
         }
 
-        public DataSet CustomerExportToExcel(string sortColumn, object filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId)
+        public DataSet CustomerExportToExcel(string sortColumn, object filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId, long? UserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -70,6 +71,7 @@ namespace CordobaServices.Services
                 cmd.Parameters.Add(new SqlParameter("@date_added", date_added ?? (object)DBNull.Value));
                 cmd.Parameters.Add(new SqlParameter("@status", status ?? (object)DBNull.Value));
                 cmd.Parameters.Add(new SqlParameter("@storeId", storeId ?? (object)DBNull.Value));
+                cmd.Parameters.Add(new SqlParameter("@UserId", UserId ?? (object)DBNull.Value));
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand = cmd;
                 adapter.Fill(ds, "data");

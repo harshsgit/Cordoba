@@ -22,6 +22,12 @@ namespace CordobaWeb
 
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
+            string url = HttpContext.Current.Request.Url.AbsoluteUri;
+            if (url.IndexOf("http://afl-rewards.co.uk") > -1 || url.IndexOf("http://www.afl-rewards.co.uk") > -1)
+            {
+                Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"]
+            + HttpContext.Current.Request.RawUrl);
+            }
             //string[] MVC_URL = new string[] { "/", "/Home/GetAdminUserDetail", "/Home/GetStoreDetail", "/Home/GetAdminUserDetail", "/Admin/Login", "/Home/accessdenied" };
             //var RquestedUrl = Convert.ToString(Request.Url.AbsolutePath);
             //var aa=!((Array.IndexOf(MVC_URL, RquestedUrl) >= 0));
@@ -35,9 +41,9 @@ namespace CordobaWeb
             //    var Scheme = Convert.ToString(Request.Url.Scheme);
 
             //    Response.Redirect(Scheme + "://" + Authority + "/#/" + PathAndQuery);
-                
+
             //}
-                
+
         }
    
     }

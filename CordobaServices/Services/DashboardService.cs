@@ -24,14 +24,15 @@ namespace CordobaServices.Services
             return orders;
         }
 
-        public DashboardSummaryEntity GetDashboardTopHeaderFields(int storeId)
+        public DashboardSummaryEntity GetDashboardTopHeaderFields(int storeId, long? UserId)
         {
             var paramStoreId = new SqlParameter { ParameterName = "storeId", DbType = DbType.Int32, Value = storeId };
-            var dashboardHeaderFields = objGenericRepository.ExecuteSQL<DashboardSummaryEntity>("GetDashboardTopHeaderFields", paramStoreId).SingleOrDefault();
+            var paramUserId = new SqlParameter { ParameterName = "UserId", DbType = DbType.Int32, Value = UserId };
+            var dashboardHeaderFields = objGenericRepository.ExecuteSQL<DashboardSummaryEntity>("GetDashboardTopHeaderFields", paramStoreId, paramUserId).SingleOrDefault();
             return dashboardHeaderFields;
         }
 
-        public DashboardSummaryEntity GetDashboardSummaryCharts(int storeId, int ChartFiltertype, int ChartOrFunctionTypeEnum)
+        public DashboardSummaryEntity GetDashboardSummaryCharts(int storeId, int ChartFiltertype, int ChartOrFunctionTypeEnum, long? UserId)
         {
            
             DashboardSummaryEntity objDashboardSummaryEntity = new DashboardSummaryEntity();
@@ -39,11 +40,11 @@ namespace CordobaServices.Services
             {
                      
                 case 0:
-                          var objDashboardOrderSummary = objGenericRepository.ExecuteSQL<DashboardOrderSummary>("GetDashboardOrderSummary_Chart", new SqlParameter("storeId", storeId)).ToList();
+                          var objDashboardOrderSummary = objGenericRepository.ExecuteSQL<DashboardOrderSummary>("GetDashboardOrderSummary_Chart", new SqlParameter("storeId", storeId), new SqlParameter("UserId", UserId)).ToList();
 
-                          var objDashboardSalesAnalytics = objGenericRepository.ExecuteSQL<DashboardSalesAnalytics>("GetDashboardSalesAnalytics_Chart", new SqlParameter("storeId", storeId), new SqlParameter("ChartFiltertype", ChartFiltertype)).ToList();
+                          var objDashboardSalesAnalytics = objGenericRepository.ExecuteSQL<DashboardSalesAnalytics>("GetDashboardSalesAnalytics_Chart", new SqlParameter("storeId", storeId), new SqlParameter("ChartFiltertype", ChartFiltertype), new SqlParameter("UserId", UserId)).ToList();
 
-                          var objDashboardTopSellStore = objGenericRepository.ExecuteSQL<DashboardTopSellStore>("GetDashboardTop5_SellStore_Chart", new SqlParameter("storeId", storeId)).ToList();
+                          var objDashboardTopSellStore = objGenericRepository.ExecuteSQL<DashboardTopSellStore>("GetDashboardTop5_SellStore_Chart", new SqlParameter("storeId", storeId), new SqlParameter("UserId", UserId)).ToList();
 
                           var objDashboardTopPurchaseProduct = objGenericRepository.ExecuteSQL<DashboardTopPurchaseProduct>("GetDashboardTop5_PurchaseProduct_Chart", new SqlParameter("storeId", storeId)).ToList();
 

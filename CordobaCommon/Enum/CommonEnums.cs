@@ -10,7 +10,7 @@ namespace CordobaCommon.Enum
     {
         public enum ChartOrFunctionTypeEnum
         {
-            All = 0  
+            All = 0
            ,
             OrderSummary = 1
                 ,

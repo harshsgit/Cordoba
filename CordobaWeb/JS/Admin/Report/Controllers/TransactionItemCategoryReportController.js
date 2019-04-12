@@ -192,7 +192,7 @@
         }
 
         $http({
-            url: configurationService.basePath + 'api/Reportapi/TransactionItemCategoryReportExportToExcel?PageIndex=' + 1 + "&DateStart=" + $scope.TransactionItemCategoryReportObj.DateStart + "&DateEnd=" + $scope.TransactionItemCategoryReportObj.DateEnd + "&StoreId=" + ($scope.TransactionItemCategoryReportObj.store_id == null ? 0 : $scope.TransactionItemCategoryReportObj.store_id),
+            url: configurationService.basePath + 'api/Reportapi/TransactionItemCategoryReportExportToExcel?PageIndex=' + 1 + "&DateStart=" + $scope.TransactionItemCategoryReportObj.DateStart + "&DateEnd=" + $scope.TransactionItemCategoryReportObj.DateEnd + "&StoreId=" + ($scope.TransactionItemCategoryReportObj.store_id == null ? 0 : $scope.TransactionItemCategoryReportObj.store_id + '&LoggedInUserId=' + $scope.LoggedInUserId),
             method: "POST",
             'dataSrc': 'aaData',
             "dataType": 'json',

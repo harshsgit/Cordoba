@@ -11,7 +11,7 @@ namespace CordobaServices.Interfaces
 {
     public interface ICustomerService
     {
-        List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> tableParameter, string customerName, string email, int? customer_group_id,int? status, int? approved, string ip, DateTime? date_added , int? storeId);
+        List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> tableParameter, string customerName, string email, int? customer_group_id,int? status, int? approved, string ip, DateTime? date_added , int? storeId, long? UserId);
         
         CustomerEntity GetCustomerById(int StoreId, int LoggedInUserId, int customer_id);
 
@@ -33,7 +33,7 @@ namespace CordobaServices.Interfaces
 
         CustomerEntity SendCustomerPassword(int customer_id, string NewPassword);
         
-        DataSet CustomerExportToExcel(string sortColumn, object filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId);
+        DataSet CustomerExportToExcel(string sortColumn, object filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId, long? UserId);
       
     }
 }

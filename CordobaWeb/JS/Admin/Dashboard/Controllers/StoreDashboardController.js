@@ -296,7 +296,8 @@
                                 }
                             },
                             data: $scope.DashboardSummary.DashboardSalesAnalyticsOrderCount
-                        },
+                        }
+                        ,
                         {
                             name: 'Customers',
                             type: 'bar',
@@ -527,7 +528,8 @@
     $scope.GetLatestOrderDetailsDashboard();
 
     $scope.GetDashboardTopHeaderFields = function () {
-        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardTopHeaderFields?storeId=" + $scope.storeId)
+        debugger;
+        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardTopHeaderFields?storeId=" + $scope.storeId + "&UserId=" + $scope.LoggedInUserId)
         .then(function (response) {
             if (response.data != null) {
                 $scope.DashboardSummary.DashboardHeaderSummary = response.data;
@@ -543,7 +545,7 @@
 
 
     $scope.GetDashboardSummaryCharts = function (ChartOrFunctionTypeEnum) {
-        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardSummaryCharts?storeId=" + $scope.storeId + "&ChartFiltertype=" + $scope.ChartFiltertype + "&ChartOrFunctionTypeEnum=" + ChartOrFunctionTypeEnum)
+        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardSummaryCharts?storeId=" + $scope.storeId + "&ChartFiltertype=" + $scope.ChartFiltertype + "&ChartOrFunctionTypeEnum=" + ChartOrFunctionTypeEnum + "&UserId=" + $scope.LoggedInUserId)
         .then(function (response) {
             if (response.data != null) {
                 if ($scope.ChartOrFunctionTypeEnum.All == ChartOrFunctionTypeEnum) {

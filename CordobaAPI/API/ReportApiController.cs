@@ -54,7 +54,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public TableParameter<ReportEntity> GetOrderReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int? GroupById, int? StatusId, int? StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
+        public TableParameter<ReportEntity> GetOrderReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int? GroupById, int? StatusId, int? StoreId, int? LoggedInUserId, TableParameter<ReportEntity> tableParameter)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, object tableParameter)
+        public HttpResponseMessage TransactionReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -157,7 +157,7 @@ namespace CordobaAPI.API
             DateTime date = DateTime.Now.Date;
             string str = string.Concat("TransactionReport_export", date.ToString("ddMMyyyy"), ".xls");
 
-            DataSet ds = _reportServices.TransactionReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId);
+            DataSet ds = _reportServices.TransactionReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId, LoggedInUserId);
 
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -235,7 +235,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionItemReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, object tableParameter)
+        public HttpResponseMessage TransactionItemReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -253,7 +253,7 @@ namespace CordobaAPI.API
             DateTime date = DateTime.Now.Date;
             string str = string.Concat("TransactionItemReport_export", date.ToString("ddMMyyyy"), ".xls");
 
-            DataSet ds = _reportServices.TransactionItemReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId);
+            DataSet ds = _reportServices.TransactionItemReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId, LoggedInUserId);
 
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -398,7 +398,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionItemCategoryReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, object tableParameter)
+        public HttpResponseMessage TransactionItemCategoryReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId,int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -416,7 +416,7 @@ namespace CordobaAPI.API
             DateTime date = DateTime.Now.Date;
             string str = string.Concat("TransactionItemCategoryReport_export", date.ToString("ddMMyyyy"), ".xls");
 
-            DataSet ds = _reportServices.TransactionItemCategoryReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId);
+            DataSet ds = _reportServices.TransactionItemCategoryReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId, LoggedInUserId);
 
             if (ds != null && ds.Tables.Count > 0)
             {

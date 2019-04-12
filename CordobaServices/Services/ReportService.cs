@@ -45,7 +45,7 @@ namespace CordobaServices.Services
             //return result;
         }
 
-        public IEnumerable<ReportEntity> GetOrderReportList(string sortColumn, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int? GroupById, int? StatusId, int? StoreId, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
+        public IEnumerable<ReportEntity> GetOrderReportList(string sortColumn, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int? GroupById, int? StatusId, int? StoreId, int? LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
         {
             try
             {
@@ -58,6 +58,7 @@ namespace CordobaServices.Services
                     ,new SqlParameter("GroupById", GroupById!=null ? GroupById:(object)DBNull.Value)
                     ,new SqlParameter("StatusId", StatusId!=null ? StatusId:(object)DBNull.Value)
                     ,new SqlParameter("store_id", StoreId!=null ? StoreId:(object)DBNull.Value)
+                    ,new SqlParameter("LoggedInUserId", LoggedInUserId!=null ? LoggedInUserId:(object)DBNull.Value)
                 };
 
 
@@ -84,7 +85,7 @@ namespace CordobaServices.Services
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("store_id", store_id!=null ? store_id:(object)DBNull.Value)
-                    //,new SqlParameter("LoggedInUserId", LoggedInUserId!=null ? LoggedInUserId:(object)DBNull.Value)
+                    ,new SqlParameter("LoggedInUserId", (object)LoggedInUserId ?? DBNull.Value)
                 };
 
 
@@ -123,7 +124,7 @@ namespace CordobaServices.Services
             //return result;
         }
 
-        public DataSet TransactionReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId)
+        public DataSet TransactionReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -139,7 +140,7 @@ namespace CordobaServices.Services
                 cmd.Parameters.Add(new SqlParameter("@DateStart", dateStart ?? (object)DBNull.Value));
                 cmd.Parameters.Add(new SqlParameter("@DateEnd", dateEnd));
                 cmd.Parameters.Add(new SqlParameter("@store_id", storeId?? (object)DBNull.Value));
-                
+                cmd.Parameters.Add(new SqlParameter("@LoggedInUserId", LoggedInUserId ?? (object)DBNull.Value)); 
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand = cmd;
                 adapter.Fill(ds, "data");
@@ -209,7 +210,7 @@ namespace CordobaServices.Services
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("store_id", store_id!=null ? store_id:(object)DBNull.Value)
-                    //,new SqlParameter("LoggedInUserId", LoggedInUserId!=null ? LoggedInUserId:(object)DBNull.Value)
+                    ,new SqlParameter("LoggedInUserId", (object)LoggedInUserId??DBNull.Value)
                 };
 
 
@@ -226,7 +227,7 @@ namespace CordobaServices.Services
         }
 
 
-        public DataSet TransactionItemReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId)
+        public DataSet TransactionItemReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId,int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -242,6 +243,7 @@ namespace CordobaServices.Services
                 cmd.Parameters.Add(new SqlParameter("@DateStart", dateStart ?? (object)DBNull.Value));
                 cmd.Parameters.Add(new SqlParameter("@DateEnd", dateEnd));
                 cmd.Parameters.Add(new SqlParameter("@store_id", storeId ?? (object)DBNull.Value));
+                cmd.Parameters.Add(new SqlParameter("@LoggedInUserId", LoggedInUserId ?? (object)DBNull.Value));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand = cmd;
@@ -275,7 +277,7 @@ namespace CordobaServices.Services
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("store_id", store_id!=null ? store_id:(object)DBNull.Value)
-                    //,new SqlParameter("LoggedInUserId", LoggedInUserId!=null ? LoggedInUserId:(object)DBNull.Value)
+                    ,new SqlParameter("LoggedInUserId", LoggedInUserId!=null ? LoggedInUserId:(object)DBNull.Value)
                 };
 
 
@@ -291,7 +293,7 @@ namespace CordobaServices.Services
             //return result;
         }
 
-        public DataSet TransactionItemCategoryReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId)
+        public DataSet TransactionItemCategoryReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -307,6 +309,7 @@ namespace CordobaServices.Services
                 cmd.Parameters.Add(new SqlParameter("@DateStart", dateStart ?? (object)DBNull.Value));
                 cmd.Parameters.Add(new SqlParameter("@DateEnd", dateEnd));
                 cmd.Parameters.Add(new SqlParameter("@store_id", storeId ?? (object)DBNull.Value));
+                cmd.Parameters.Add(new SqlParameter("@LoggedInUserId", LoggedInUserId ?? (object)DBNull.Value));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand = cmd;

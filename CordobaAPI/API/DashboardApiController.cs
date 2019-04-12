@@ -36,11 +36,11 @@ namespace CordobaAPI.API
         }
 
         [HttpGet]
-        public HttpResponseMessage GetDashboardTopHeaderFields(int storeId = 0)
+        public HttpResponseMessage GetDashboardTopHeaderFields(int storeId, long? UserId)
         {
             try
             {
-                var result = _dashboardService.GetDashboardTopHeaderFields(storeId);
+                var result = _dashboardService.GetDashboardTopHeaderFields(storeId, UserId);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -54,11 +54,11 @@ namespace CordobaAPI.API
         }
 
         [HttpGet]
-        public HttpResponseMessage GetDashboardSummaryCharts(int storeId, int ChartFiltertype, int ChartOrFunctionTypeEnum)
+        public HttpResponseMessage GetDashboardSummaryCharts(int storeId, int ChartFiltertype, int ChartOrFunctionTypeEnum, long? UserId)
         {
             try
             {
-                var result = _dashboardService.GetDashboardSummaryCharts(storeId, ChartFiltertype,ChartOrFunctionTypeEnum);
+                var result = _dashboardService.GetDashboardSummaryCharts(storeId, ChartFiltertype,ChartOrFunctionTypeEnum, UserId);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);

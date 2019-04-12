@@ -305,7 +305,8 @@
                                 }
                             },
                             data: $scope.DashboardSummary.DashboardSalesAnalyticsOrderCount
-                        },
+                        }
+                        ,
                         {
                             name: 'Customers',
                             type: 'bar',
@@ -530,7 +531,7 @@
     }
 
     $scope.GetDashboardTopHeaderFields = function () {
-        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardTopHeaderFields?storeId=" + $scope.store_id)
+        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardTopHeaderFields?storeId=" + $scope.store_id + "&UserId=" + $scope.LoggedInUserId)
             .then(function (response) {
 
                 if (response.data != null) {
@@ -545,14 +546,14 @@
     }
 
     $scope.GetDashboardSummaryCharts = function (ChartOrFunctionTypeEnum) {
-        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardSummaryCharts?storeId=" + $scope.store_id + "&ChartFiltertype=" + $scope.ChartFiltertype + "&ChartOrFunctionTypeEnum=" + ChartOrFunctionTypeEnum)
+        $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardSummaryCharts?storeId=" + $scope.store_id + "&ChartFiltertype=" + $scope.ChartFiltertype + "&ChartOrFunctionTypeEnum=" + ChartOrFunctionTypeEnum + "&UserId=" + $scope.LoggedInUserId)
             .then(function (response) {
                 if (response.data != null) {
 
                     if ($scope.ChartOrFunctionTypeEnum.All == ChartOrFunctionTypeEnum) {
                         $scope.DashboardSummary.DashboardOrderSummary = [];
                         $scope.DashboardSummary.DashboardOrderSummaryMonthName = [];
-
+                        debugger;
                         $scope.DashboardSummary.DashboardSalesAnalyticsOrderCount = [];
                         $scope.DashboardSummary.DashboardSalesAnalyticsCustomerCount = [];
                         $scope.DashboardSummary.DashboardSalesAnalyticsFilterValue = [];
