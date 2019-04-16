@@ -24,7 +24,7 @@ namespace CordobaServices.Interfaces
 
        List<StoreImageEntity> GetAdvertisementImageList(int StoreId);
 
-       StoreHTMLEntity GetStoreHTMLCharts(int StoreID, int Month, int Year);
+       StoreHTMLEntity GetStoreHTMLCharts(int StoreID, int Month, int Year, long? UserId);
 
        
     }

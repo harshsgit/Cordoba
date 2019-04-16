@@ -264,12 +264,12 @@ namespace CordobaAPI.API
             }
         }
 
-        public HttpResponseMessage GetStoreHTMLCharts(int StoreID, int Month, int Year)
+        public HttpResponseMessage GetStoreHTMLCharts(int StoreID, int Month, int Year, long? UserId)
         {
             //Spire Presentation DLL version 3.3.0
             try
             {
-                var result = _StoreServices.GetStoreHTMLCharts(StoreID, Month, Year);
+                var result = _StoreServices.GetStoreHTMLCharts(StoreID, Month, Year, UserId);
 
                 Presentation ppt = new Presentation();
                 ISlide slide = ppt.Slides[0];

@@ -165,7 +165,7 @@ namespace CordobaServices.Services
             }
         }
 
-        public StoreHTMLEntity GetStoreHTMLCharts(int StoreID, int Month, int Year)
+        public StoreHTMLEntity GetStoreHTMLCharts(int StoreID, int Month, int Year, long? UserId)
         {
             try
             {
@@ -174,40 +174,40 @@ namespace CordobaServices.Services
                 var objStoreImage = objGenericRepository.ExecuteSQL<StoreHTMLEntity>("GetStoreById", new SqlParameter("StoreID", StoreID)).FirstOrDefault();
                 objStoreHTMLEntity.logo = objStoreImage.logo;
 
-                var objStoreHTMLStoreSummary = objGenericRepository.ExecuteSQL<StoreSummary>("GetActiveInAciveCustomersByStore", new SqlParameter("StoreID", StoreID)).ToList();
+                var objStoreHTMLStoreSummary = objGenericRepository.ExecuteSQL<StoreSummary>("GetActiveInAciveCustomersByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.storeSummary = objStoreHTMLStoreSummary;
 
-                var objPointsRemaining = objGenericRepository.ExecuteSQL<PointsRemaining>("GetRemainingPointsByStore", new SqlParameter("StoreID", StoreID)).ToList();
+                var objPointsRemaining = objGenericRepository.ExecuteSQL<PointsRemaining>("GetRemainingPointsByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.pointsRemaining = objPointsRemaining;
 
                 var objParticipantsLoadedByMonth = objGenericRepository.ExecuteSQL<ParticipantsLoadedByMonth>("GetParticipantByMonthByStore", new SqlParameter("StoreID", StoreID),
                                                                                                                                               new SqlParameter("Month", Month),
-                                                                                                                                              new SqlParameter("Year", Year)).ToList();
+                                                                                                                                              new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
                     
                 objStoreHTMLEntity.participantsLoadedByMonth = objParticipantsLoadedByMonth;
 
                 var objPointsloadedbyMonth = objGenericRepository.ExecuteSQL<PointsLoadedByMonth>("GetPointsLoadedByMonthByStore", new SqlParameter("StoreID", StoreID),
                                                                                                                                    new SqlParameter("Month", Month),
-                                                                                                                                   new SqlParameter("Year", Year)).ToList(); 
+                                                                                                                                   new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList(); 
                 objStoreHTMLEntity.pointsLoadedByMonth = objPointsloadedbyMonth;
 
                 var objPointsRedeemedByMonth = objGenericRepository.ExecuteSQL<PointsRedeemedByMonth>("GetPointsRedeemedByMonthByStore", new SqlParameter("StoreID", StoreID),
                                                                                                                                          new SqlParameter("Month", Month),
-                                                                                                                                         new SqlParameter("Year", Year)).ToList();
+                                                                                                                                         new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.pointsRedeemedByMonth = objPointsRedeemedByMonth;
 
-                var objTopPointsHolders = objGenericRepository.ExecuteSQL<TopPointsHoldersByStore>("GetTOPPointsHoldersByStore", new SqlParameter("StoreID", StoreID)).ToList();
+                var objTopPointsHolders = objGenericRepository.ExecuteSQL<TopPointsHoldersByStore>("GetTOPPointsHoldersByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.topPointsHolders = objTopPointsHolders;
 
                 var objOrderPlacedByType = objGenericRepository.ExecuteSQL<OrderPlacedByTypeByStore>("GetOrderPlacedByTypeByStore", new SqlParameter("StoreID", StoreID),
                                                                                                                                   new SqlParameter("Month", Month),
-                                                                                                                                  new SqlParameter("Year", Year)).ToList();
+                                                                                                                                  new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.orderPlacedByType = objOrderPlacedByType;
 
-                var objVoucherOrderByType = objGenericRepository.ExecuteSQL<VoucherOrderByType>("GetVoucherOrderByType", new SqlParameter("StoreID", StoreID)).ToList();
+                var objVoucherOrderByType = objGenericRepository.ExecuteSQL<VoucherOrderByType>("GetVoucherOrderByType", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.voucherOrderByType = objVoucherOrderByType;
 
-                var objOrdersPlacedByTypeLastYear = objGenericRepository.ExecuteSQL<OrdersPlacedByTypeLastYear>("GetOrdersPlacedByTypeLast12Months", new SqlParameter("StoreID", StoreID)).ToList();
+                var objOrdersPlacedByTypeLastYear = objGenericRepository.ExecuteSQL<OrdersPlacedByTypeLastYear>("GetOrdersPlacedByTypeLast12Months", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.ordersPlacedByTypeLastYear = objOrdersPlacedByTypeLastYear;
 
                 return objStoreHTMLEntity;

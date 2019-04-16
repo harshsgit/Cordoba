@@ -5,6 +5,7 @@
 
     $scope.StoreId = $rootScope.storeId;
     $scope.StoreHTMLSummary = [];
+    $scope.LoggedInUserId = $rootScope.loggedInUserId;
 
     var currentTime = new Date();
     $scope.Years = [{ id: currentTime.getFullYear(), name: currentTime.getFullYear() }, { id: currentTime.getFullYear() - 1, name: currentTime.getFullYear() - 1 }];
@@ -902,7 +903,7 @@
     $scope.ExportStoreHTMLPDF = function () {
          
         $http({
-            url: configurationService.basePath + "api/StoreApi/GetStoreHTMLCharts?StoreID=" + $scope.StoreId + "&Month=" + $scope.selectedmonth + "&Year=" + $scope.selectedyear,
+            url: configurationService.basePath + "api/StoreApi/GetStoreHTMLCharts?StoreID=" + $scope.StoreId + "&Month=" + $scope.selectedmonth + "&Year=" + $scope.selectedyear + "&UserId=" + $scope.LoggedInUserId,
             method: "GET",
             //data: storeentity,
             async: false,

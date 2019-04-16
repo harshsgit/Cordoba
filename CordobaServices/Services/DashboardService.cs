@@ -46,9 +46,9 @@ namespace CordobaServices.Services
 
                           var objDashboardTopSellStore = objGenericRepository.ExecuteSQL<DashboardTopSellStore>("GetDashboardTop5_SellStore_Chart", new SqlParameter("storeId", storeId), new SqlParameter("UserId", UserId)).ToList();
 
-                          var objDashboardTopPurchaseProduct = objGenericRepository.ExecuteSQL<DashboardTopPurchaseProduct>("GetDashboardTop5_PurchaseProduct_Chart", new SqlParameter("storeId", storeId)).ToList();
+                          var objDashboardTopPurchaseProduct = objGenericRepository.ExecuteSQL<DashboardTopPurchaseProduct>("GetDashboardTop5_PurchaseProduct_Chart", new SqlParameter("storeId", storeId), new SqlParameter("UserId", UserId)).ToList();
 
-                          var objDashboardTopCustomer = objGenericRepository.ExecuteSQL<DashboardTopCustomer>("GetDashboardTop5_Customers_Chart", new SqlParameter("storeId", storeId)).ToList();
+                          var objDashboardTopCustomer = objGenericRepository.ExecuteSQL<DashboardTopCustomer>("GetDashboardTop5_Customers_Chart", new SqlParameter("storeId", storeId), new SqlParameter("UserId", UserId)).ToList();
 
                           objDashboardSummaryEntity.dashboardOrderSummary = objDashboardOrderSummary;
                           objDashboardSummaryEntity.dashboardSalesAnalytics = objDashboardSalesAnalytics;

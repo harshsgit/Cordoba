@@ -438,8 +438,9 @@
         GetCountryList();
         GetStoreList();
         GetCustomerGroupList();
-        $scope.GetCustomerById();
         GetCustomerDepartmentList();
+        $scope.GetCustomerById();
+        
         GetUserImage();
     }
 

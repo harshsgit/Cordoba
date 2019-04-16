@@ -23,7 +23,10 @@ namespace CordobaWeb
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {
             string url = HttpContext.Current.Request.Url.AbsoluteUri;
-            if (url.IndexOf("http://afl-rewards.co.uk") > -1 || url.IndexOf("http://www.afl-rewards.co.uk") > -1)
+            if (url.IndexOf("http://afl-rewards.co.uk") > -1 || url.IndexOf("http://www.afl-rewards.co.uk") > -1 ||
+                url.IndexOf("http://www.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://webapp6.cordobarewards.co.uk") >-1 ||
+                url.IndexOf("http://www.rigbycapital-rewards.com") > -1 || url.IndexOf("http://www.maxxiagrouprewards.co.uk/#/Home")> -1 
+                )
             {
                 Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"]
             + HttpContext.Current.Request.RawUrl);

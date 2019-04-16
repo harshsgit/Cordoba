@@ -60,7 +60,7 @@ namespace CordobaModels.Entities
         public string localhosturl { get; set; }
         public bool IsFromAdmin { get; set; }
         public int? Language { get; set; }
-        public bool is_department { get; set; }
+        public bool? is_department { get; set; }
     }
 }
 
