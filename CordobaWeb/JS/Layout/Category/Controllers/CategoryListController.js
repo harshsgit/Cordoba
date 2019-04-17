@@ -14,8 +14,8 @@
     $scope.SortById = 1;
 
     $scope.SortByEnum = [
-{ Id: 1, Name: 'High-Low' },
-{ Id: 2, Name: 'Low-High' },
+{ Id: 1, Name: 'Low-High' },
+{ Id: 2, Name: 'High-Low' },
 { Id: 3, Name: 'A-Z' },
 { Id: 4, Name: 'Z-A' },
     ];
