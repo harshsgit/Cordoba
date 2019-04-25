@@ -192,13 +192,13 @@
                                                                             class="form-control" ng-model="CustomerObj.is_admin" name="Approved"></select>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group" ng-show="IsStoreAdmin==0">
+                                                            <div class="form-group" ng-show="is_admin==1 || email == 'npatel@satvasoftech.com'">
                                                                 <label class="col-lg-2 control-label ">Customer As Department Head</label>
                                                                 <div class="col-lg-9">
                                                                     <input type="checkbox" ng-model="CustomerObj.is_department">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group" ng-show="IsStoreAdmin==0">
+                                                            <div class="form-group" ng-show="is_admin==1 || email == 'npatel@satvasoftech.com'">
                                                                 <label class="col-lg-2 control-label ">Department</label>
                                                                 <div class="col-lg-9">
                                                                     <select ng-options="department.customer_department_id as department.name  for department in CustomerDepartmentList"

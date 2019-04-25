@@ -129,7 +129,7 @@ namespace CordobaServices.Services
                 var Result = UserEntityGenericRepository.ExecuteSQL<UserEntity>("EXEC GetAuthenticUserDetail", param).FirstOrDefault();
                 return Result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

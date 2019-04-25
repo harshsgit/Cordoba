@@ -25,15 +25,24 @@ namespace CordobaWeb
             string url = HttpContext.Current.Request.Url.AbsoluteUri;
             if (url.IndexOf("http://afl-rewards.co.uk") > -1 || url.IndexOf("http://www.afl-rewards.co.uk") > -1 ||
                  //url.IndexOf("http://www.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://pbmakeadifferencethankyou.com") > -1
-                 url.IndexOf("http://webapp6.cordobarewards.co.uk") >-1
-                //url.IndexOf("http://www.rigbycapital-rewards.com") > -1 || url.IndexOf("http://rigbycapital-rewards.com") > -1 ||
-                //url.IndexOf("http://www.maxxiagrouprewards.co.uk")> -1 || url.IndexOf("http://maxxiagrouprewards.co.uk") >-1 ||
-                //url.IndexOf("http://www.money-sphererewards.co.uk") >-1 || url.IndexOf("http://money-sphererewards.co.uk") > -1 ||
-                //url.IndexOf("http://www.pbmakeadifferencethankyou.co.uk") > -1 || url.IndexOf("http://www.pbmakeadifferencethankyou.co.uk") > -1||
-                //url.IndexOf("http://grenkerewards.co.uk") > -1 || url.IndexOf("http://www.grenkerewards.co.uk") > -1 ||
-                //url.IndexOf("http://www.morechoicerewards.co.uk") > -1 || url.IndexOf("http://morechoicerewards.co.uk") > -1 ||
-                //url.IndexOf("http://www.kennet-rewards.co.uk") > -1 || url.IndexOf("http://kennet-rewards.co.uk") > -1 ||
+                 url.IndexOf("http://webapp6.cordobarewards.co.uk") > -1 ||
+                url.IndexOf("http://www.rigbycapital-rewards.com") > -1 || url.IndexOf("http://rigbycapital-rewards.com") > -1 ||
+                url.IndexOf("http://www.maxxiagrouprewards.co.uk") > -1 || url.IndexOf("http://maxxiagrouprewards.co.uk") > -1 ||
+                url.IndexOf("http://www.money-sphererewards.co.uk") > -1 || url.IndexOf("http://money-sphererewards.co.uk") > -1 ||
+                url.IndexOf("http://www.pbmakeadifferencethankyou.co.uk") > -1 || url.IndexOf("http://www.pbmakeadifferencethankyou.co.uk") > -1 ||
+                url.IndexOf("http://grenkerewards.co.uk") > -1 || url.IndexOf("http://www.grenkerewards.co.uk") > -1 ||
+                url.IndexOf("http://www.morechoicerewards.co.uk") > -1 || url.IndexOf("http://morechoicerewards.co.uk") > -1 ||
+                url.IndexOf("http://www.kennet-rewards.co.uk") > -1 || url.IndexOf("http://kennet-rewards.co.uk") > -1 ||
                 //url.IndexOf("http://fr.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://www.fr.pbmakeadifferencethankyou.com") > -1
+                url.IndexOf("http://www.vitrxrewards.co.uk") > -1 || url.IndexOf("http://vitrxrewards.co.uk") > -1 ||
+                url.IndexOf("http://www.jaycityrewards.co.uk") > -1 || url.IndexOf("http://jaycityrewards.co.uk") > -1 ||
+                url.IndexOf("http://www.xporewards.co.uk") > -1 || url.IndexOf("http://xporewards.co.uk") > -1 ||
+                url.IndexOf("http://www.ur-rewards.co.uk") > -1 || url.IndexOf("http://ur-rewards.co.uk") > -1 ||
+                url.IndexOf("http://www.clearwinnersclub.co.uk") > -1 || url.IndexOf("http://clearwinnersclub.co.uk") > -1 ||
+                url.IndexOf("http://www.annodatarewards.co.uk") > -1 || url.IndexOf("http://annodatarewards.co.uk") > -1 ||
+                url.IndexOf("http://www.cvdrewards.co.uk") > -1 || url.IndexOf("http://cvdrewards.co.uk") > -1 ||
+                url.IndexOf("http://www.econocomrewards.com") > -1 || url.IndexOf("http://econocomrewards.com") > -1 
+
                 )
             {
                 Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"]

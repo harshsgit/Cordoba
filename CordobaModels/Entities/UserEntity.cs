@@ -25,6 +25,7 @@ namespace CordobaModels.Entities
         public int Is_ImportPoint { get; set; }
         public int? customer_department_id { get; set; }
         public int? is_department { get; set; }
+        public int? is_admin { get; set; }
 
     }
 }

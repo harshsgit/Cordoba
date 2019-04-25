@@ -198,7 +198,7 @@ namespace CordobaServices.Services
                                                  , new SqlParameter("customer_department_id", customerEntity.customer_department_id.HasValue?customerEntity.customer_department_id.Value :(object)DBNull.Value)
                                                  , new SqlParameter("AddressXml", AddressXml ??  (object)DBNull.Value)
                                                  , new SqlParameter("PointsAuditXml", PointsAuditXml ??  (object)DBNull.Value)
-                                                 , new SqlParameter("is_department", customerEntity.is_department)
+                                                 , new SqlParameter("is_department", (object)customerEntity.is_department??DBNull.Value)
                                                 };
             int result = CustomerEntityGenericRepository.ExecuteSQL<int>("InsertUpdateCustomer", sqlParameter).FirstOrDefault();
             return result;
