@@ -41,8 +41,10 @@ namespace CordobaWeb
                 url.IndexOf("http://www.clearwinnersclub.co.uk") > -1 || url.IndexOf("http://clearwinnersclub.co.uk") > -1 ||
                 url.IndexOf("http://www.annodatarewards.co.uk") > -1 || url.IndexOf("http://annodatarewards.co.uk") > -1 ||
                 url.IndexOf("http://www.cvdrewards.co.uk") > -1 || url.IndexOf("http://cvdrewards.co.uk") > -1 ||
-                url.IndexOf("http://www.econocomrewards.com") > -1 || url.IndexOf("http://econocomrewards.com") > -1 
-
+                url.IndexOf("http://www.econocomrewards.com") > -1 || url.IndexOf("http://econocomrewards.com") > -1 ||
+                url.IndexOf("http://www.doosanbobcatrewards.co.uk") > -1 || url.IndexOf("http://doosanbobcatrewards.co.uk") > -1 ||
+                url.IndexOf("http://peac-rewards.com") > -1 || url.IndexOf("http://www.peac-rewards.com") > -1 ||
+                url.IndexOf("http://doosanbobcatrewards.irish") > -1 
                 )
             {
                 Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"]

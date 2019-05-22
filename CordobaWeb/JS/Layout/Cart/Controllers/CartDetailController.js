@@ -55,6 +55,7 @@
                             item.totalpoints = 0;
                         };
                     });
+                    debugger;
                   $scope.CartItemList = response.data;
                   $scope.TotalItems = $scope.CartItemList.length;
                   $scope.AllItemSubtotalPoints = $scope.CartItemList[0].AllItemSubtotalPoints;

@@ -26,7 +26,7 @@
                                 <li role="presentation" class="active"><a data-target="#customersection" role="tab" data-toggle="tab"><b>Customer Details</b></a></li>
                                 <li role="presentation"><a data-target="#Productssection" role="tab" data-toggle="tab"><b>Products</b></a></li>
                                 <li role="presentation"><a data-target="#Paymentsection" role="tab" data-toggle="tab"><b>Payment Details</b></a></li>
-                                <li role="presentation"><a data-target="#Shippingsection" role="tab" data-toggle="tab"><b>Shipping Details</b></a></li>
+                                <li ng-hide="IsStoreAdmin == 1" role="presentation"><a data-target="#Shippingsection" role="tab" data-toggle="tab"><b>Shipping Details</b></a></li>
                                 <li role="presentation"><a data-target="#totalssection" role="tab" data-toggle="tab"><b>Total</b></a></li>
                             </ul>
                             <div class="tab-content">
