@@ -5,7 +5,9 @@
     Tab();
     //#endregion
     $scope.customerpoint = 0;
+    
     $scope.StoreDetailInSession = StoreSessionDetail;
+    $rootScope.CustomerDetail.store_id = StoreSessionDetail.store_id;
     $rootScope.no_image_path = StoreSessionDetail.no_image_path;
     $scope.selectedlanguage = localStorageService.get("selectedlanguage");
     $scope.trustAsHtml = function (string) {
@@ -139,7 +141,7 @@
                                 UserDetail.cartgroup_id = response.data.cartgroup_id;
                                 UserDetail.TotalItemAdded = response.data.TotalItemAdded;
                                 UserDetail.store_id = response.data.store_id;
-
+                                
                                 localStorageService.set("loggedInUser", response.data);
                                 $rootScope.CustomerDetail = response.data;
                                 $scope.customerpoint = $rootScope.CustomerDetail.points;
@@ -277,6 +279,8 @@
         UserDetail.address_id = 0;
         UserDetail.cartgroup_id = 0;
         UserDetail.TotalItemAdded = 0;
+        
+        UserDetail.store_id = $rootScope.CustomerDetail.store_id;
         localStorageService.set("loggedInUser", UserDetail);
         $rootScope.CustomerDetail = UserDetail;
         $state.go('Home');

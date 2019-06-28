@@ -305,13 +305,16 @@
               .then(function (response) {
                   if (response.data > 0) {
                       notificationFactory.customSuccess("Customer Saved Successfully.");
-                      if ($scope.customer_id>0) {
+                      if ($scope.customer_id > 0) {
                           $state.go('Customer');
                       }
                       else {
                           $state.go('ManageCustomer', ({ 'CustomerId': response.data }));
                       }
-                    
+
+                  }
+                  else if (response.data == -5) {
+                      notificationFactory.customError("Customer exists with same store.");
                   }
               })
           .catch(function (response) {

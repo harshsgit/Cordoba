@@ -200,10 +200,10 @@
                                         <li><a href="" class="cursor-pointer" ui-sref="LayoutCategoryORProductList({CategoryId:-1})">Our Products</a></li>
                                         <li><a href="" class="cursor-pointer" ui-sref="ContactUs">Contact</a></li>
                                         <li>
-                                            <a ui-sref="MyReward" ng-if="CustomerDetail.customer_id>0 && CustomerDetail.store_id != 23 && CustomerDetail.store_id != 44
-                                           && CustomerDetail.store_id != 32 && CustomerDetail.store_id != 35 && CustomerDetail.store_id != 1082 && CustomerDetail.store_id != 1086 &&
-                                           CustomerDetail.store_id != 27 && CustomerDetail.store_id != 18 && CustomerDetail.store_id != 4 && CustomerDetail.store_id != 1080 &&
-                                           CustomerDetail.store_id != 1083 && CustomerDetail.store_id != 24">Recognition</a>
+                                            <a ui-sref="MyReward" ng-hide="CustomerDetail.store_id == 23 || CustomerDetail.store_id == 44
+                                           || CustomerDetail.store_id == 32 || CustomerDetail.store_id == 35 || CustomerDetail.store_id == 1082 || CustomerDetail.store_id == 1086 ||
+                                           CustomerDetail.store_id == 27 || CustomerDetail.store_id == 18 || CustomerDetail.store_id == 4 || CustomerDetail.store_id == 1080 ||
+                                           CustomerDetail.store_id == 1083 || CustomerDetail.store_id == 24 || CustomerDetail.store_id == 1091 || CustomerDetail.store_id == 1092">Recognition</a>
                                         </li>
                                     </ul>
                                 </div>
