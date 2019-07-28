@@ -1,16 +1,16 @@
 ﻿@*<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/5c46f2c151410568a107c432/default';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        s0.parentNode.insertBefore(s1, s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->*@
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5c46f2c151410568a107c432/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->*@
 <div>
     <div class="slider container">
         <div class="banner-slider" ng-controller="Dashboard_BannerController">
@@ -85,7 +85,12 @@
         <div class="letest-product off">
 
             <div class="col-sm-4" ng-controller="Dashboard_StoreImageController">
-                <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' " ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 4 }">
+                <a target="_blank" ng-if="StoreDetailInSession.store_id==1097" href="https://www.youtube.com/playlist?list=PLVQeUSyTnCvS1gI7lZJjJeggyN-hBzBV6">
+                    <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' " ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 4 }">
+                </a>
+                <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' && StoreDetailInSession.store_id!=1097 " ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 4 }">
+
+                @*<img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' " ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 4 }">*@
             </div>
             <div class="col-sm-8">
                 <div class="special-offers">
@@ -124,7 +129,10 @@
         <div class="row">
             <div class="col-sm-9 mt-30" ng-controller="Dashboard_StoreImageController">
                 <div class="new">
-                    <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' " ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 5 }">
+                    <a target="_blank" ng-if="StoreDetailInSession.store_id==1097" href="https://source2.smarttech.com/">
+                        <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' " ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 5 }">
+                    </a>
+                    <img ng-if="AdvImg.Image!=undefined && AdvImg.Image!='' && StoreDetailInSession.store_id!=1097" ng-src="{{AdvImg.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" class="offerbanner" alt="special-offers" ng-repeat="AdvImg in StoreAdvertisementImageList | filter: { ImageKey: 5 }">
                 </div>
             </div>
             <div class="col-sm-3" ng-controller="Dashboard_HotDealsController">
