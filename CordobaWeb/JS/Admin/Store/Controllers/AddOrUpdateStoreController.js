@@ -24,6 +24,10 @@
                       , { 'TemplateId':'1', 'TemplateName': 'Theme2' }
     ];
 
+    $scope.RegionList = [{ 'Id': 0, 'Name': 'UK' }, { 'Id': 1, 'Name': 'US/Canada' },
+        { 'Id': 2, 'Name': 'Ireland' }
+                            ];
+
     $scope.Is_ImportPointList = [{ ID: true, Name: 'Yes' }, { ID: false, Name: 'No' }];
 
     $scope.Is_AccessStoreList = [{ ID: true, Name: 'Yes' }, { ID: false, Name: 'No' }];
