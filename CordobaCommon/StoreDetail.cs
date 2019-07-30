@@ -51,5 +51,6 @@ namespace CordobaCommon
         public string css_file_name { get; set; }
         public string no_image_path { get; set; }
         public bool? Is_AccessStore { get; set; }
+        public string store_region { get; set; }
     }
 }

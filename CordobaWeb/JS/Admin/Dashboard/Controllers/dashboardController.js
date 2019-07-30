@@ -553,7 +553,7 @@
                     if ($scope.ChartOrFunctionTypeEnum.All == ChartOrFunctionTypeEnum) {
                         $scope.DashboardSummary.DashboardOrderSummary = [];
                         $scope.DashboardSummary.DashboardOrderSummaryMonthName = [];
-                        debugger;
+                        
                         $scope.DashboardSummary.DashboardSalesAnalyticsOrderCount = [];
                         $scope.DashboardSummary.DashboardSalesAnalyticsCustomerCount = [];
                         $scope.DashboardSummary.DashboardSalesAnalyticsFilterValue = [];

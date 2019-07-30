@@ -8,10 +8,10 @@
     $rootScope.IsStoreAdmin = AdminUserDetail.IsStoreAdmin;
     $rootScope.is_department = AdminUserDetail.is_department;
     $rootScope.email = AdminUserDetail.email;
-    debugger;
+    
     $rootScope.is_admin = AdminUserDetail.is_admin;
 
-    debugger;
+    
     $scope.GetStoreList = function () {
         $http.get(configurationService.basePath + "api/StoreApi/GetStoreList?StoreID=" + $rootScope.storeId + "&LoggedInUserId=" + $rootScope.loggedInUserId)
           .then(function (response) {

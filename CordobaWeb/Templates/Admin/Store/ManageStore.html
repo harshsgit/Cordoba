@@ -51,6 +51,8 @@
                                                 <li ng-show="form.Email.$error.required || form.Email.$error.email">Email address is Required! OR Email address is not valid.</li>
                                                 <li ng-show="form.Telephone.$error.required">Telephone is required.</li>
                                                 <li ng-show="form.MetaTitle.$error.required">Meta Title is required.</li>
+                                                <li ng-show="form.store_region.$error.required">Store region is required.</li>
+
                                             </ul>
                                         </div>
                                     </div>
@@ -86,10 +88,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-lg-2 control-label ">Select Region</label>
+                                                <label class="col-lg-2 control-label mandatoryField">Select Region</label>
                                                 <div class="col-lg-9">
-                                                    <select name="regionId" id="input-ImportPoint" ng-model="StoreObj.regionId" ng-options="region.Id as region.Name  for region in RegionList"
-                                                            class="form-control"></select>
+                                                    <select name="store_region" id="input-store_region" ng-model="StoreObj.store_region" ng-options="region.Id as region.Name  for region in RegionList"
+                                                            class="form-control" required="required"></select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -106,11 +108,11 @@
                                                 </div>
                                             </div>
                                             <!--<div class="form-group">
-        <label class="col-lg-2 control-label mandatoryField">Store Owner</label>
-        <div class="col-lg-9">
-            <input type="text" class="form-control" name="StoreOwner" maxlength="200" placeholder="Enter Store Owner" ng-model="StoreObj.title" required="required">
-        </div>
-    </div>-->
+                                                <label class="col-lg-2 control-label mandatoryField">Store Owner</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" name="StoreOwner" maxlength="200" placeholder="Enter Store Owner" ng-model="StoreObj.title" required="required">
+                                                </div>
+                                            </div>-->
                                             <div class="form-group">
                                                 <label class="col-lg-2 control-label mandatoryField">Welcome Message</label>
                                                 <div class="col-lg-9">
@@ -127,23 +129,23 @@
                                                 </div>
                                             </div>
                                             <!--<div class="form-group">
-        <label class="col-lg-2 control-label mandatoryField"> Address</label>
-        <div class="col-lg-9">
-            <textarea type="text" class="form-control" name="StoreAddress" maxlength="2000" placeholder="Enter Store Address" ng-model="StoreObj.address" required="required"></textarea>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-2 control-label mandatoryField">E-mail</label>
-        <div class="col-lg-9">
-            <input type="email" class="form-control" validate-email name="Email" maxlength="50" placeholder="Enter Store Email" ng-model="StoreObj.email" required="required" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-2 control-label mandatoryField">Telephone</label>
-        <div class="col-lg-9">
-            <input type="text" class="form-control" name="Telephone" maxlength="50" placeholder="Enter Telephone" ng-model="StoreObj.telephone" required="required" />
-        </div>
-    </div>-->
+                                                <label class="col-lg-2 control-label mandatoryField"> Address</label>
+                                                <div class="col-lg-9">
+                                                    <textarea type="text" class="form-control" name="StoreAddress" maxlength="2000" placeholder="Enter Store Address" ng-model="StoreObj.address" required="required"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label mandatoryField">E-mail</label>
+                                                <div class="col-lg-9">
+                                                    <input type="email" class="form-control" validate-email name="Email" maxlength="50" placeholder="Enter Store Email" ng-model="StoreObj.email" required="required" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label mandatoryField">Telephone</label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" name="Telephone" maxlength="50" placeholder="Enter Telephone" ng-model="StoreObj.telephone" required="required" />
+                                                </div>
+                                            </div>-->
                                             <div class="form-group" ng-if="store_id>0">
                                                 <label class="col-lg-2 control-label">Logo</label>
                                                 <div class="col-lg-5">
@@ -169,17 +171,17 @@
                                             <!--General Tab-->
                                             <div class="col-md-12">
                                                 <!--<div class="form-group">
-                    <label class="col-lg-2 control-label mandatoryField">Meta Title</label>
-                    <div class="col-lg-9">
-                        <input type="text" class="form-control" name="MetaTitle" maxlength="200" placeholder="Enter Meta Title" ng-model="StoreObj.meta_title" required="required">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label"> Meta Tag Description</label>
-                    <div class="col-lg-9">
-                        <textarea type="text" class="form-control" name="MetaTagDescription" maxlength="2000" placeholder="Enter Meta Tag Description" ng-model="StoreObj.meta_description"></textarea>
-                    </div>
-                </div>-->
+                                                    <label class="col-lg-2 control-label mandatoryField">Meta Title</label>
+                                                    <div class="col-lg-9">
+                                                        <input type="text" class="form-control" name="MetaTitle" maxlength="200" placeholder="Enter Meta Title" ng-model="StoreObj.meta_title" required="required">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label"> Meta Tag Description</label>
+                                                    <div class="col-lg-9">
+                                                        <textarea type="text" class="form-control" name="MetaTagDescription" maxlength="2000" placeholder="Enter Meta Tag Description" ng-model="StoreObj.meta_description"></textarea>
+                                                    </div>
+                                                </div>-->
 
                                                 <div class="form-group">
                                                     <label class="col-lg-2 control-label">Css Overrides</label>
@@ -188,11 +190,11 @@
                                                     </div>
                                                 </div>
                                                 <!--<div class="form-group">
-                    <label class="col-lg-2 control-label">Meta Tag Keywords</label>
-                    <div class="col-lg-9">
-                        <textarea type="text" class="form-control" name="MetaTagKeywords" maxlength="2000" placeholder="Meta Tag Keywords" ng-model="StoreObj.MetaTagDescription"></textarea>
-                    </div>
-                </div>-->
+                                                    <label class="col-lg-2 control-label">Meta Tag Keywords</label>
+                                                    <div class="col-lg-9">
+                                                        <textarea type="text" class="form-control" name="MetaTagKeywords" maxlength="2000" placeholder="Meta Tag Keywords" ng-model="StoreObj.MetaTagDescription"></textarea>
+                                                    </div>
+                                                </div>-->
                                                 <div class="form-group">
                                                     <label class="col-lg-2 control-label">Template</label>
                                                     <div class="col-lg-9">
@@ -206,11 +208,11 @@
                                                     </div>
                                                 </div>
                                                 <!--<div class="form-group">
-                    <label class="col-lg-2 control-label">Default Layout</label>
-                    <div class="col-lg-9">
-                        <select class="form-control cursor-pointer" name="LayoutId" ng-model="StoreObj.layout" ng-options="option.LayoutName as option.LayoutName for option in LayoutList"></select>
-                    </div>
-                </div>-->
+                                                    <label class="col-lg-2 control-label">Default Layout</label>
+                                                    <div class="col-lg-9">
+                                                        <select class="form-control cursor-pointer" name="LayoutId" ng-model="StoreObj.layout" ng-options="option.LayoutName as option.LayoutName for option in LayoutList"></select>
+                                                    </div>
+                                                </div>-->
                                             </div>
                                             <!--End Store Tab-->
                                         </div>
@@ -407,7 +409,7 @@
                                         </div>
                                         <!--End General Tab-->
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>

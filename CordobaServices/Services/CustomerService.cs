@@ -11,6 +11,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -23,7 +24,7 @@ namespace CordobaServices.Services
 
         private GenericRepository<CustomerEntity> CustomerEntityGenericRepository = new GenericRepository<CustomerEntity>();
 
-        public List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId,long? UserId)
+        public List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId, long? UserId)
         {
             try
             {
@@ -183,7 +184,7 @@ namespace CordobaServices.Services
             string PointsAuditXml = Helpers.ConvertToXml<PointsAuditEntity>.GetXMLString(customerEntity.PointsAuditList);
 
             SqlParameter[] sqlParameter = new SqlParameter[] {
-                                                                                   
+
                                                    new SqlParameter("customer_id", customerEntity.customer_id)
                                                  , new SqlParameter("store_id", customerEntity.store_id ?? (object) DBNull.Value)
                                                  , new SqlParameter("firstname", customerEntity.firstname ??  DBNull.Value.ToString())
@@ -275,11 +276,11 @@ namespace CordobaServices.Services
             };
 
             var pointsXmlParam = new SqlParameter
-           {
-               ParameterName = "PointsXml",
-               DbType = DbType.String,
-               Value = PointsXml
-           };
+            {
+                ParameterName = "PointsXml",
+                DbType = DbType.String,
+                Value = PointsXml
+            };
 
             SqlParameter[] param = new SqlParameter[3];
             param[0] = new SqlParameter("StoreId", storeid);
@@ -375,9 +376,10 @@ namespace CordobaServices.Services
                     var strbody = CommonService.ReadTextFile(filepath);
                     if (strbody.Length > 0)
                     {
+                        listPasswordOfCustomer[i].StoreName = Regex.Replace(listPasswordOfCustomer[i].StoreName, "rewards", "", RegexOptions.IgnoreCase);
                         strbody = strbody.Replace("##CustomerName##", listPasswordOfCustomer[i].CustomerName);
                         strbody = strbody.Replace("##Password##", UserPassword);
-                        strbody = strbody.Replace("##StoreName##", listPasswordOfCustomer[i].StoreName);
+                        strbody = strbody.Replace("##StoreName##", !string.IsNullOrEmpty(listPasswordOfCustomer[i].StoreName) ? listPasswordOfCustomer[i].StoreName.ToUpper().TrimEnd() : "");
                         strbody = strbody.Replace("##StoreNameLink##", string.Format("<a href={0}>{1}</a>", listPasswordOfCustomer[i].URL, listPasswordOfCustomer[i].StoreName));
                     }
 
@@ -437,8 +439,8 @@ namespace CordobaServices.Services
         {
             try
             {
-                SqlParameter[] sqlParameter = new SqlParameter[] { 
-                    new SqlParameter("customer_id", customer_id)                   
+                SqlParameter[] sqlParameter = new SqlParameter[] {
+                    new SqlParameter("customer_id", customer_id)
                 };
                 var result = CustomerEntityGenericRepository.ExecuteSQL<int>("DeleteCustomerImage", sqlParameter).FirstOrDefault();
                 return result;
@@ -453,7 +455,7 @@ namespace CordobaServices.Services
         {
             try
             {
-                SqlParameter[] sqlParameter = new SqlParameter[] { 
+                SqlParameter[] sqlParameter = new SqlParameter[] {
                     new SqlParameter("customer_id", customer_id),
                     new SqlParameter("description", description),
                     new SqlParameter("points", points)
@@ -471,7 +473,7 @@ namespace CordobaServices.Services
         {
             try
             {
-                SqlParameter[] sqlParameter = new SqlParameter[] { 
+                SqlParameter[] sqlParameter = new SqlParameter[] {
                     new SqlParameter("customer_id", customer_id),
                     new SqlParameter("password", Security.Encrypt(NewPassword))
                 };

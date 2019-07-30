@@ -528,7 +528,7 @@
     $scope.GetLatestOrderDetailsDashboard();
 
     $scope.GetDashboardTopHeaderFields = function () {
-        debugger;
+        
         $http.get(configurationService.basePath + "api/DashboardApi/GetDashboardTopHeaderFields?storeId=" + $scope.storeId + "&UserId=" + $scope.LoggedInUserId)
         .then(function (response) {
             if (response.data != null) {
