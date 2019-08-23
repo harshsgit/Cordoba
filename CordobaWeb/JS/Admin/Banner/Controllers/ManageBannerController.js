@@ -85,13 +85,15 @@
     $scope.SaveBanner = function (form) {
         if (form.$valid) {
             $http.post(configurationService.basePath + "api/BannerApi/InsertUpdateBanner?banner_id=" + $scope.BannerId + "&name=" + $scope.BannerObj.name + "&status=" + $scope.BannerObj.status)
-          .then(function (response) {          
+                .then(function (response) {
+                    debugger;
               if ($scope.BannerId > 0) {
                   $state.go('Banner');
+                  toastr.success("Saved successfully.");
               }
               else {
                   $state.go('ManageBanner', { BannerId: response.data });
-                  toastr.success("Saved successfully.");
+                  
               }                        
           })
       .catch(function (response) {

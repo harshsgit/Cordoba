@@ -125,7 +125,7 @@
                                     <li ng-if="CustomerDetail.customer_id>0">
                                         <p class="hi-text ">You have {{CustomerDetail.points}} Points</p>
                                     </li>
-                                    <li ng-if="CustomerDetail.customer_id>0 && (StoreDetailInSession.store_id == 45 || StoreDetailInSession.store_id == 25 || StoreDetailInSession.store_id == 23 || StoreDetailInSession.store_id == 46 ||StoreDetailInSession.store_id == 47 ||StoreDetailInSession.store_id == 1080 )">
+                                    <li ng-if="CustomerDetail.customer_id>0 && (StoreDetailInSession.store_id == 45 || StoreDetailInSession.store_id == 23 || StoreDetailInSession.store_id == 46 ||StoreDetailInSession.store_id == 47 ||StoreDetailInSession.store_id == 1080 )">
                                         <select name="Language" id="input-Language" ng-model="selectedlanguage" ng-change="UpdateLanguageForCustomer(selectedlanguage)"
                                                 ng-options="Language.language_id as Language.name  for Language in LanguageList"
                                                 class="form-control">
@@ -205,7 +205,8 @@
                                            || CustomerDetail.store_id == 32 || CustomerDetail.store_id == 35 || CustomerDetail.store_id == 1082 || CustomerDetail.store_id == 1086 ||
                                            CustomerDetail.store_id == 27 || CustomerDetail.store_id == 18 || CustomerDetail.store_id == 4 || CustomerDetail.store_id == 1080 ||
                                            CustomerDetail.store_id == 1083 || CustomerDetail.store_id == 24 || CustomerDetail.store_id == 1091 || CustomerDetail.store_id == 1092 || CustomerDetail.store_id == 1096
-                                               || CustomerDetail.store_id == 40 || CustomerDetail.store_id == 33 || CustomerDetail.store_id==1097">Recognition</a>
+                                               || CustomerDetail.store_id == 40 || CustomerDetail.store_id == 33 || CustomerDetail.store_id==1097 ||
+                                              CustomerDetail.store_id == 25 ">Recognition</a>
                                         </li>
                                     </ul>
                                 </div>

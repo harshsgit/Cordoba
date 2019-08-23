@@ -54,5 +54,6 @@ namespace CordobaModels.Entities
         public bool? Is_ImportPoint { get; set; }
         public bool? Is_AccessStore { get; set; }
         public string store_region { get; set; }
+        public string categoryIdCsv { get; set; }
     }
 }

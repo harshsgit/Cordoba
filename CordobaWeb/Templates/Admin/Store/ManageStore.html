@@ -66,7 +66,7 @@
                                     <li role="presentation"><a data-target="#StoreTab" role="tab" data-toggle="tab">Store</a></li>
                                     <li role="presentation"><a data-target="#LocalTab" role="tab" data-toggle="tab">Local</a></li>
                                     <li role="presentation" ng-if="store_id>0"><a data-target="#ImageTab" role="tab" data-toggle="tab">Advertisement</a></li>
-                                    <li role="presentation" ng-if="store_id>0"><a data-target="#Catalouge" role="tab" data-toggle="tab">Catalouge</a></li>
+                                    <li role="presentation" ng-if="store_id>0"><a data-target="#Catalogue" role="tab" data-toggle="tab">Catalogue</a></li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -349,12 +349,12 @@
                                     </div>
 
 
-                                    <div role="tabpanel" class="tab-pane" id="Catalouge">
+                                    <div role="tabpanel" class="tab-pane" id="Catalogue">
                                         <!--General Tab-->
                                         <div class="col-md-12">
 
                                             <div class="form-group">
-                                                <label class="col-md-1 control-label">Catalouge:</label>
+                                                <label class="col-md-1 control-label">Catalogue:</label>
                                                 <div class="col-md-12">
                                                     <div class="well well-sm" style="height:500px; overflow: auto;">
                                                         <div class="col-sm-6 checkbox" ng-repeat="Item in CatalougeListObj">
@@ -368,7 +368,21 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-1 control-label">Products:</label>
+                                                <label class="col-md-1 control-label">Category:</label>
+                                                <div class="col-md-12">
+                                                    <div class="well well-sm" style="height:500px; overflow: auto;">
+                                                        <div class="col-sm-6 checkbox" ng-repeat="Item in CategoryListAdminStoreObj">
+                                                            <label>
+                                                                <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected"><label>&nbsp;&nbsp;{{Item.name}}</label>
+                                                                {{Item.Name}}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-2">Exclude products:</label>
                                                 <!--<label class="col-md-1 control-label pull-left">Category</label>-->
                                                 <div class="col-md-12">
                                                     <select class="form-control cursor-pointer" name="CategoryId" ng-options="option.Category_Id as option.name for option in categoryListObj" ng-model="StoreObj.category_id" ng-change="getProductByCategory(StoreObj.category_id , store_id)"></select>

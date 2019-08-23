@@ -179,11 +179,18 @@
         return CatalogueIdCSV;
     }
 
+    function GetSelectedCategoryListCSV(categoryObj) {
+        var categoryIdCsv = "";
+        var SelectedCategoryList = $filter('filter')(categoryObj, { IsSelected: true }, true);
+        categoryIdCsv = GetCSVFromJsonArray(SelectedCategoryList, "Category_Id");
+        return categoryIdCsv;
+    }
 
     $scope.InsertUpdateStore = function (form) {
         if (form.$valid) {
+            
             $scope.StoreObj.catalougeIdCsv = GetSelectedCatalogueListCSV($scope.CatalougeListObj);
-
+            $scope.StoreObj.categoryIdCsv = GetSelectedCategoryListCSV($scope.CategoryListAdminStoreObj);
             var StoreEntity = JSON.stringify($scope.StoreObj);
 
             $http.post(configurationService.basePath + "api/StoreApi/InsertUpdateStore?LoggedInUserId=" + $scope.LoggedInUserId, StoreEntity)
@@ -307,6 +314,22 @@
             });
     }
 
+    $scope.GetCategoryListForAdminStore = function () {
+        $http.get(configurationService.basePath + "api/CategoryApi/GetCategoryListForAdminStore?StoreId=" + $scope.store_id)
+            .then(function (response) {
+                
+                if (response.data.length > 0) {
+                    $scope.CategoryListAdminStoreObj = response.data;
+                }
+            })
+            .catch(function (response) {
+
+            })
+            .finally(function () {
+
+            });
+    }
+
 
     $scope.GetAdvertisementImageList = function () {
         $http.get(configurationService.basePath + "api/StoreApi/GetAdvertisementImageList?store_id=" + $scope.store_id)
@@ -343,7 +366,9 @@
     $scope.getProductByCategory = function (category_id, store_id) {
         $http.get(configurationService.basePath + "api/ProductApi/GetProductBycategoryForStore?category_id=" + category_id + "&store_id=" + store_id)
             .then(function (response) {
-                if (response.data.length > 0) {
+                debugger;
+                //if (response.data.length > 0)
+                {
                     $scope.productListObj = response.data;
                     $scope.IncludedProductListObj = $filter('filter')(response.data, { IsExcluded: false }, true);
                     $scope.ExcludedProductListObj = $filter('filter')(response.data, { IsExcluded: true }, true);
@@ -374,6 +399,7 @@
     }
 
     $scope.ExcludeProduct = function (operation) {
+        
         $scope.IsProductSelected = 0;
         if (operation == 'add') {
             var productIdCSV = GetSelectedProductListCSV($scope.IncludedProductListObj);
@@ -408,6 +434,7 @@
         $scope.GetBannerList();
         $scope.GetAdvertisementImageList();
         $scope.GetCatalougeList();
+        $scope.GetCategoryListForAdminStore();
         $scope.getCategoryListForStore();
 
     }

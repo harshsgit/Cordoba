@@ -82,6 +82,7 @@ namespace CordobaServices.Services
                                                  ,new SqlParameter("Is_ImportPoint", storeEntity.Is_ImportPoint ?? (object)DBNull.Value)
                                                  ,new SqlParameter("Is_AccessStore", storeEntity.Is_AccessStore ?? (object)DBNull.Value)
                                                  ,new SqlParameter("store_region", storeEntity.store_region ?? (object)DBNull.Value)
+                                                 ,new SqlParameter("categoryIdCsv", storeEntity.categoryIdCsv ?? DBNull.Value.ToString())
                                                 };
             int result = objGenericRepository.ExecuteSQL<int>("InsertUpdateStore", sqlParameter).FirstOrDefault();
             return result;

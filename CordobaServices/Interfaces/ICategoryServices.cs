@@ -35,5 +35,6 @@ namespace CordobaServices.Interfaces
 
         bool UpdateCategoryImage(int Category_Id, string fileName);
 
+        List<CategoryEntity> GetCategoryListForAdminStore(int StoreId);
     }
 }

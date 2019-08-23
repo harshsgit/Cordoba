@@ -35,12 +35,12 @@ namespace CordobaModels.Entities
         public string image { get; set; }
 
         public int? ReportCategoryId{ get; set; }
-        
-  
-      
-        
-        
-        
+
+        public bool? IsSelected { get; set; }
+
+
+
+
 
     }
 }
