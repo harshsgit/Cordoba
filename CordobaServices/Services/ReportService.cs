@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CordobaServices.Helpers;
-using System.Configuration; 
+using System.Configuration;
 
 namespace CordobaServices.Services
 {
@@ -24,7 +24,7 @@ namespace CordobaServices.Services
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("GroupById", GroupById!=null ? GroupById:(object)DBNull.Value)
@@ -52,7 +52,7 @@ namespace CordobaServices.Services
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("GroupById", GroupById!=null ? GroupById:(object)DBNull.Value)
@@ -81,7 +81,7 @@ namespace CordobaServices.Services
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("store_id", store_id!=null ? store_id:(object)DBNull.Value)
@@ -101,14 +101,14 @@ namespace CordobaServices.Services
             //return result;
         }
 
-        public IEnumerable<ReportEntity> GetCustomerBalanceReportList(string sortColumn,string storeids,DateTime? Date, TableParameter<ReportEntity> filter)
+        public IEnumerable<ReportEntity> GetCustomerBalanceReportList(string sortColumn, string storeids, DateTime? Date, TableParameter<ReportEntity> filter)
         {
             try
             {
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("storeids", !string.IsNullOrWhiteSpace(storeids) ? storeids:(object)DBNull.Value)
                     ,new SqlParameter("Date", Date!=null ? Date:(object)DBNull.Value)
                 };
@@ -139,8 +139,8 @@ namespace CordobaServices.Services
                 cmd.Parameters.Add(new SqlParameter("@PageIndex", 1));
                 cmd.Parameters.Add(new SqlParameter("@DateStart", dateStart ?? (object)DBNull.Value));
                 cmd.Parameters.Add(new SqlParameter("@DateEnd", dateEnd));
-                cmd.Parameters.Add(new SqlParameter("@store_id", storeId?? (object)DBNull.Value));
-                cmd.Parameters.Add(new SqlParameter("@LoggedInUserId", LoggedInUserId ?? (object)DBNull.Value)); 
+                cmd.Parameters.Add(new SqlParameter("@store_id", storeId ?? (object)DBNull.Value));
+                cmd.Parameters.Add(new SqlParameter("@LoggedInUserId", LoggedInUserId ?? (object)DBNull.Value));
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand = cmd;
                 adapter.Fill(ds, "data");
@@ -176,7 +176,7 @@ namespace CordobaServices.Services
                 cmd.Parameters.Add(new SqlParameter("@PageSize", 10000000));
                 cmd.Parameters.Add(new SqlParameter("@PageIndex", 1));
                 cmd.Parameters.Add(new SqlParameter("@StoreIDs", StoreIDs ?? (object)DBNull.Value));
-                cmd.Parameters.Add(new SqlParameter("@Date", Date?? (object)DBNull.Value));
+                cmd.Parameters.Add(new SqlParameter("@Date", Date ?? (object)DBNull.Value));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand = cmd;
@@ -206,7 +206,7 @@ namespace CordobaServices.Services
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("store_id", store_id!=null ? store_id:(object)DBNull.Value)
@@ -227,7 +227,7 @@ namespace CordobaServices.Services
         }
 
 
-        public DataSet TransactionItemReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId,int? LoggedInUserId)
+        public DataSet TransactionItemReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -273,7 +273,7 @@ namespace CordobaServices.Services
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
                     ,new SqlParameter("store_id", store_id!=null ? store_id:(object)DBNull.Value)
@@ -332,17 +332,19 @@ namespace CordobaServices.Services
 
         }
 
-        public IEnumerable<ReportEntity> GetStoreReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int store_id, TableParameter<ReportEntity> filter, string PageFrom = "")
+        public IEnumerable<ReportEntity> GetStoreReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, string store_id, TableParameter<ReportEntity> filter, string PageFrom = "")
         {
             try
             {
                 SqlParameter[] param = new SqlParameter[] {
                      new SqlParameter("OrderBy", sortColumn!=null ? sortColumn:(object)DBNull.Value)
                     ,new SqlParameter("PageSize",filter != null ? filter.iDisplayLength : 10)
-                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)                   
+                    ,new SqlParameter("PageIndex",filter != null ? filter.PageIndex : 1)
                     ,new SqlParameter("DateStart", DateStart!=null ? DateStart:(object)DBNull.Value)
                     ,new SqlParameter("DateEnd", DateEnd!=null ? DateEnd:(object)DBNull.Value)
-                    ,new SqlParameter("store_id", store_id )
+                    ,new SqlParameter("store_id", (object)store_id ?? DBNull.Value)
+                    
+
                     //,new SqlParameter("LoggedInUserId", LoggedInUserId!=null ? LoggedInUserId:(object)DBNull.Value)
                 };
 
@@ -385,6 +387,43 @@ namespace CordobaServices.Services
                 throw;
             }
         }
+        public DataSet StoreReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, string storeId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                DataSet ds = new DataSet();
+                con.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                cmd = new SqlCommand("GetStoreReportList", con);
+                cmd.Parameters.Add(new SqlParameter("@OrderBy", sortColumn));
+                cmd.Parameters.Add(new SqlParameter("@PageSize", 10000000));
+                cmd.Parameters.Add(new SqlParameter("@PageIndex", 1));
+                cmd.Parameters.Add(new SqlParameter("@DateStart", dateStart ?? (object)DBNull.Value));
+                cmd.Parameters.Add(new SqlParameter("@DateEnd", dateEnd));
+                cmd.Parameters.Add(new SqlParameter("@store_id", storeId ?? (object)DBNull.Value));
+                cmd.CommandType = CommandType.StoredProcedure;
+                adapter.SelectCommand = cmd;
+                adapter.Fill(ds, "data");
+                return ds;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                    cmd.Dispose();
+                }
+            }
+
+        }
+
 
     }
 }

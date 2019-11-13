@@ -104,14 +104,20 @@ namespace CordobaServices.Services
                 DbType = DbType.Int32,
                 Value = StoreId
             };
-
+            var paramStatus = new SqlParameter
+            {
+                ParameterName = "Status",
+                DbType = DbType.Boolean,
+                Value = catalogueEntity.status
+            };
             var paramLoggedInUserId = new SqlParameter
             {
                 ParameterName = "LoggedInUserIdId",
                 DbType = DbType.Int32,
                 Value = LoggedInUserId
             };
-            var result = objGenericRepository.ExecuteSQL<int>("InsertUpdateCatalogue", catalogueIdparam, nameparam, paramStoreId, paramLoggedInUserId).FirstOrDefault();
+           
+            var result = objGenericRepository.ExecuteSQL<int>("InsertUpdateCatalogue", catalogueIdparam, nameparam, paramStoreId, paramStatus, paramLoggedInUserId).FirstOrDefault();
             return result;
         }
 

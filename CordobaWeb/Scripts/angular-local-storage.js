@@ -2,7 +2,7 @@
  * An Angular module that gives you access to the browsers local storage
  * @version v0.2.3 - 2015-10-11
  * @link https://github.com/grevory/angular-local-storage
- * @author grevory <greg@gregpike.ca>
+ * @author grevory 
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 (function ( window, angular, undefined ) {

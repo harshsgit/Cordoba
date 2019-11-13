@@ -15,7 +15,7 @@
                 <li>  This page allows you to lookup Product Catalogues.</li>
             </ul>
             <ul class="breadcrumb-elements">
-                <li><button type="button" class="btn btn-primary btn-md" data-placement="top" data-toggle="tooltip" title="Add Category" ui-sref="ManageProductCatalogue"><i class="glyphicon glyphicon-plus-sign position-left"></i> Create</button></li>
+                <li><button type="button" class="btn btn-primary btn-md" data-placement="top" data-toggle="tooltip" title="Add Product Catalogue" ui-sref="ManageProductCatalogue"><i class="glyphicon glyphicon-plus-sign position-left"></i> Create</button></li>
             </ul>
         </div>
     </div>
@@ -26,12 +26,14 @@
                     <thead>
                         <tr>
                             <th>Catalogue Name</th>
+                            <th>Status</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="Item in CatalogueList">
                             <td ng-bind="Item.Name"></td>
+                            <td ng-bind="Item.status?'Enabled':'Disabled'"></td>
                             <td class="cursor-pointer text-center" ui-sref="ManageProductCatalogue({CatalogueId:Item.catalogue_Id})" data-placement="top" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit curso"></i></td>
                         </tr>
                     </tbody>

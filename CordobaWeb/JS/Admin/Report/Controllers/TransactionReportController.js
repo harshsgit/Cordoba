@@ -191,7 +191,6 @@
             },
             responseType: 'arraybuffer'
         }).success(function (data, status, headers, config) {
-
             var type = headers('Content-Type');
             var disposition = headers('Content-Disposition');
             if (disposition) {

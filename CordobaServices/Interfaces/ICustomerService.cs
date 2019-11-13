@@ -11,15 +11,15 @@ namespace CordobaServices.Interfaces
 {
     public interface ICustomerService
     {
-        List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> tableParameter, string customerName, string email, int? customer_group_id,int? status, int? approved, string ip, DateTime? date_added , int? storeId, long? UserId);
-        
+        List<CustomerEntity> GetCustomerList(string sortColumn, TableParameter<CustomerEntity> tableParameter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId, long? UserId);
+
         CustomerEntity GetCustomerById(int StoreId, int LoggedInUserId, int customer_id);
 
         int InsertUpdateCustomer(int LoggedInUserId, CustomerEntity customerEntity);
 
         int DeleteCustomer(int StoreId, int LoggedInUserId, int customer_id);
 
-        string CustomerImport(int store_id,int LoggedInUserId, int customer_group_id, DataTable CustomerTable, string UserPassword);
+        string CustomerImport(int store_id, int LoggedInUserId, int customer_group_id, DataTable CustomerTable, string UserPassword);
 
         List<PointsAuditEntity> PointsImporter(int store_id, int LoggedInUserId, bool IsSendEmail, DataTable PointsTable);
 
@@ -32,8 +32,11 @@ namespace CordobaServices.Interfaces
         int InsertPointAudit(int customer_id, string description, int points);
 
         CustomerEntity SendCustomerPassword(int customer_id, string NewPassword);
-        
+
         DataSet CustomerExportToExcel(string sortColumn, object filter, string customerName, string email, int? customer_group_id, int? status, int? approved, string ip, DateTime? date_added, int? storeId, long? UserId);
-      
+
+        List<PointReviewEntity> PointsImportOnPopup(int store_id, int LoggedInUserId, bool IsSendEmail, DataTable PointsTable);
+        List<auditPointTMP> GetauditPointTMP();
+        bool ImportPointFromTMP(string uniqueNo,int store, bool sendMail);
     }
 }

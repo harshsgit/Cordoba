@@ -45,7 +45,9 @@ namespace CordobaWeb
                 url.IndexOf("http://www.doosanbobcatrewards.co.uk") > -1 || url.IndexOf("http://doosanbobcatrewards.co.uk") > -1 ||
                 url.IndexOf("http://peac-rewards.com") > -1 || url.IndexOf("http://www.peac-rewards.com") > -1 ||
                 url.IndexOf("http://doosanbobcatrewards.irish") > -1 ||
-                url.IndexOf("http://smarttechrewards.co.uk") > -1 || url.IndexOf("http://www.smarttechrewards.co.uk") > -1
+                url.IndexOf("http://smarttechrewards.co.uk") > -1 || url.IndexOf("http://www.smarttechrewards.co.uk") > -1 ||
+                 url.IndexOf("http://asdonrewards.co.uk") > -1 || url.IndexOf("http://www.asdonrewards.co.uk") > -1 ||
+                 url.IndexOf("http://mafloyaltyscheme.co.uk") > -1 || url.IndexOf("http://www.mafloyaltyscheme.co.uk") > -1
                 )
             {
                 Response.Redirect("https://" + Request.ServerVariables["HTTP_HOST"]

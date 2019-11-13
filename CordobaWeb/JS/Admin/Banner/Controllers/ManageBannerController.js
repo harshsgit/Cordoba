@@ -86,7 +86,7 @@
         if (form.$valid) {
             $http.post(configurationService.basePath + "api/BannerApi/InsertUpdateBanner?banner_id=" + $scope.BannerId + "&name=" + $scope.BannerObj.name + "&status=" + $scope.BannerObj.status)
                 .then(function (response) {
-                    debugger;
+                    
               if ($scope.BannerId > 0) {
                   $state.go('Banner');
                   toastr.success("Saved successfully.");

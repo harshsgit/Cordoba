@@ -13,6 +13,7 @@ using System.Data;
 using System.IO;
 using System.Net.Http.Headers;
 using CordobaCommon;
+using System.Globalization;
 
 namespace CordobaAPI.API
 {
@@ -117,7 +118,7 @@ namespace CordobaAPI.API
             {
                 tableParameter.PageIndex = PageIndex;
                 string sortColumn = tableParameter.SortColumn.Desc ? tableParameter.SortColumn.Column + " desc" : tableParameter.SortColumn.Column + " asc";
-                var result = _reportServices.GetCustomerBalanceReportList(sortColumn, StoreIDs,Date, tableParameter).ToList();
+                var result = _reportServices.GetCustomerBalanceReportList(sortColumn, StoreIDs, Date, tableParameter).ToList();
 
                 int totalRecords = 0;
                 if (result != null && result.Count > 0)
@@ -324,7 +325,7 @@ namespace CordobaAPI.API
             DateTime date = DateTime.Now.Date;
             string str = string.Concat("CustomerBalanceReport_export", date.ToString("ddMMyyyy"), ".xls");
 
-            DataSet ds = _reportServices.CustomerBalanceReportExportToExcel(sortColumn, tableParameter, StoreIDs, Date );
+            DataSet ds = _reportServices.CustomerBalanceReportExportToExcel(sortColumn, tableParameter, StoreIDs, Date);
 
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -367,7 +368,7 @@ namespace CordobaAPI.API
             }
             return httpResponseMessage;
         }
-               
+
 
         [HttpPost]
         public TableParameter<ReportEntity> GetTransactionItemCategoryReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
@@ -398,7 +399,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionItemCategoryReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId,int? LoggedInUserId, object tableParameter)
+        public HttpResponseMessage TransactionItemCategoryReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -469,7 +470,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public TableParameter<ReportEntity> GetStoreReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, TableParameter<ReportEntity> tableParameter)
+        public TableParameter<ReportEntity> GetStoreReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, TableParameter<ReportEntity> tableParameter)
         {
             try
             {
@@ -514,6 +515,75 @@ namespace CordobaAPI.API
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage StoreReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, object tableParameter)
+        {
+            SortColumn sr;
+            string sortColumn;
+            if (tableParameter != null)
+            {
+                sr = (SortColumn)JsonConvert.DeserializeObject(tableParameter.ToString(), typeof(SortColumn));
+                sortColumn = sr.Desc ? sr.Column + " desc" : sr.Column + " asc";
+            }
+            else
+            {
+                sortColumn = "Date desc";
+            }
+
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            DateTime date = DateTime.Now.Date;
+            string str = string.Concat("StoreReport_export", date.ToString("ddMMyyyy"), ".xls");
+
+            DataSet ds = _reportServices.StoreReportExportToExcel(sortColumn, tableParameter, DateStart, DateEnd, StoreId);
+
+            if (ds != null && ds.Tables.Count > 0)
+            {
+
+                List<ColumnConfiguration> selectedColumn = new List<ColumnConfiguration>();
+                selectedColumn.Add(new ColumnConfiguration("firstname", "Customer Name"));
+                selectedColumn.Add(new ColumnConfiguration("store", "Store"));
+                selectedColumn.Add(new ColumnConfiguration("email", "Email"));
+                selectedColumn.Add(new ColumnConfiguration("points", "Points"));
+                selectedColumn.Add(new ColumnConfiguration("status", "Status"));
+                selectedColumn.Add(new ColumnConfiguration("activated", "Approved"));
+                selectedColumn.Add(new ColumnConfiguration("CustomerDate", "Date Added"));
+
+
+
+                if (!string.IsNullOrEmpty(sortColumn))
+                {
+                    ds.Tables[0].DefaultView.Sort = sortColumn;
+                }
+                DataTable dt = ds.Tables[0].DefaultView.ToTable(false, selectedColumn.Select(s => s.OriginalColumnName).ToArray());
+
+                ds.Tables.RemoveAt(0); // Delete Existing Table 
+                ds.Tables.Add(dt); // Add Modified Table
+                ds = CordobaCommon.GeneralMethods.ChangeDataSetColumnTitleAndReorder(ds, selectedColumn); // Rename Selected Columns
+
+            }
+
+            try
+            {
+                if (ds == null)
+                {
+                    return base.Request.CreateErrorResponse(HttpStatusCode.NotFound, "No records found.");
+                }
+                byte[] asByteArray = GeneralMethods.ExportToExcel(ds, "StoreReport");
+
+                HttpResponseMessage streamContent = new HttpResponseMessage(HttpStatusCode.OK);
+                Stream @null = Stream.Null;
+                streamContent.Content = new StreamContent(new MemoryStream(asByteArray));
+                streamContent.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                streamContent.Content.Headers.Add("content-disposition", string.Concat("attachment;  filename=\"", str, "\""));
+                httpResponseMessage = streamContent;
+
+            }
+            catch (Exception)
+            {
+                httpResponseMessage = base.Request.CreateResponse<bool>(HttpStatusCode.OK, false);
+            }
+            return httpResponseMessage;
+        }
 
     }
 }

@@ -17,8 +17,8 @@
             $scope.GetCustomerDetailObj = response.data;       
           })
       .catch(function (response) {
-
-      })
+            debugger;
+        })
       .finally(function () {
 
       });

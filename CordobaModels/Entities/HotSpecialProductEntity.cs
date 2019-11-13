@@ -24,6 +24,8 @@ namespace CordobaModels.Entities
         public bool? IsHotProduct { get; set; }
         public int? PrimaryKeyId { get; set; }
         public string store_name { get; set; }
-		
+        
+
+
     }
 }

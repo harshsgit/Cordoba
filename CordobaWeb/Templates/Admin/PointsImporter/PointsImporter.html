@@ -22,7 +22,7 @@
                                 Downlaod Template<i class="fa fa-cloud-download position-right"></i>
                             </a>
                         </button>
-                        <button type="button" ng-click="PointsImporter()" class="btn btn-success cursor-pointer">Import <i class="fa fa-cloud-upload position-right"></i></button>
+                        <button type="button" ng-click="PointsImportOnPopup()" class="btn btn-success cursor-pointer">Import <i class="fa fa-cloud-upload position-right"></i></button>
                     </li>
 
                 </ul>
@@ -65,28 +65,103 @@
             </div>
         </div>
     </form>
+    <!-- Modal -->
+    <div id="PointImportModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Customer Points Import</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="page-header-content">
+                        <div class="panel panel-flat">
+                    
+                            
+                            <div class="panel-heading">
+                                <div class="tableFixHead">
+                                    <table class="table table-bordered  table-striped datatable-responsive" datatable="ng" id="tblPointImport" dt-options="dtOptions" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Customer Email</th>
+                                            <th>Existing Points</th>
+                                            <th>New Points</th>
+                                            <th>Final Points</th>
+                                            <th>Note</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="Item in ReviewpointList" ng-class="{redColor: (Item.adjustmentPoints<0||Item.Note!=''),greenColor:Item.adjustmentPoints>=0&&Item.existingPoints>=0 && Item.Note==''}">
+                                            <td ng-bind="Item.emailAddress"></td>
+                                            <td ng-bind="Item.existingPoints"></td>
+                                            <td ng-bind="Item.Uploadpoints"></td>
+                                            <td ng-bind="Item.adjustmentPoints"></td>
+                                            <td ng-bind="Item.Note"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                           
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <b>Note:</b><span> Customers who are highlighted with green colour will be imported.</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer pt-5">
+                    <button type="button" class="btn btn-primary" ng-click="ImportPointsConfirm()">Confirm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 
 
-    <!-- Modal -->
+
 
 
 
 <script>
-    //$("#fileToUpload").change(function () {
-    //    var fileExtension = ['csv'];
-    //    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-    //        alert("Only formats are allowed : " + fileExtension.join(', '));
-    //    }
-    //});
+                    //$("#fileToUpload").change(function () {
+                    //    var fileExtension = ['csv'];
+                    //    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    //        alert("Only formats are allowed : " + fileExtension.join(', '));
+                    //    }
+                    //});
 
 
 </script>
 
 
 
+<style type="text/css">
+    .redColor {
+        color: red;
+    }
 
+    .greenColor {
+        color: green;
+    }
+    .tableFixHead {
+        overflow-y: auto;
+        height: 500px;
+    }
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+    #tblPointImport {
+        border-collapse: collapse;
+        width: 100%;
+    }
+</style>
 
 
 

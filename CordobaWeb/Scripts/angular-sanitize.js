@@ -34,7 +34,7 @@ var $sanitizeMinErr = angular.$$minErr('$sanitize');
  */
 
 /*
- * HTML Parser By Misko Hevery (misko@hevery.com)
+ * HTML Parser By Misko Hevery ()
  * based on:  HTML Parser By John Resig (ejohn.org)
  * Original code by Erik Arvidsson, Mozilla Public License
  * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
@@ -556,8 +556,6 @@ angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
              $scope.snippet =
                'Pretty text with some links:\n'+
                'http://angularjs.org/,\n'+
-               'mailto:us@somewhere.org,\n'+
-               'another@somewhere.org,\n'+
                'and one more: ftp://127.0.0.1/.';
              $scope.snippetWithTarget = 'http://angularjs.org/';
            }]);
@@ -598,15 +596,15 @@ angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
      <file name="protractor.js" type="protractor">
        it('should linkify the snippet with urls', function() {
          expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
-             toBe('Pretty text with some links: http://angularjs.org/, us@somewhere.org, ' +
-                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+             toBe('Pretty text with some links: http://angularjs.org/, ' +
+                  ' and one more: ftp://127.0.0.1/.');
          expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
        });
 
        it('should not linkify snippet without the linky filter', function() {
          expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText()).
-             toBe('Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, ' +
-                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+             toBe('Pretty text with some links: http://angularjs.org/, ' +
+                  ' and one more: ftp://127.0.0.1/.');
          expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
        });
 

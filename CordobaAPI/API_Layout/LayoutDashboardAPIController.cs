@@ -9,10 +9,11 @@ using CordobaServices.Services_Layout;
 using System.Web.Http.Hosting;
 using CordobaModels.Entities;
 using CordobaModels;
-
+using CordobaAPI.Auth;
 
 namespace CordobaAPI.API_Layout
 {
+
     public class LayoutDashboardAPIController : ApiController
     {
         public ILayoutDashboardServices _LayoutDashboardServices;
@@ -106,7 +107,7 @@ namespace CordobaAPI.API_Layout
         {
             try
             {
-                var result = _LayoutDashboardServices.GetHotDealsListByStoreId(StoreID,customer_id);
+                var result = _LayoutDashboardServices.GetHotDealsListByStoreId(StoreID, customer_id);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -150,9 +151,9 @@ namespace CordobaAPI.API_Layout
                 CustomerObj.password = Security.Encrypt(CustomerObj.password);
 
                 var result = _LayoutDashboardServices.CustomerLogin(CustomerObj);
-                if (result != null)
+                if (result != null && result.customer_id > 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                    result.JWTToken = JwtAuthManager.GenerateJWTToken(CustomerObj.email);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -186,7 +187,7 @@ namespace CordobaAPI.API_Layout
         }
 
         [HttpGet]
-        public HttpResponseMessage GetBestSellerListByStore(int StoreID,int customer_id)
+        public HttpResponseMessage GetBestSellerListByStore(int StoreID, int customer_id)
         {
             try
             {
@@ -246,6 +247,7 @@ namespace CordobaAPI.API_Layout
         }
 
         [HttpGet]
+        [JwtAuthentication]
         public HttpResponseMessage CustomerDetailLayout(int CustomerId, int StoreId)
         {
             try
@@ -284,6 +286,26 @@ namespace CordobaAPI.API_Layout
         }
 
         [HttpPost]
+        public HttpResponseMessage ForgotPasswordChange_Layout(int StoreId, CustomerEntity CustomerObj)
+        {
+            try
+            {
+                CustomerObj.password = Security.Encrypt(CustomerObj.password);
+                var result = _LayoutDashboardServices.SaveChangedPassword_Layout(StoreId, CustomerObj);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpPost]
+        [JwtAuthentication]
         public HttpResponseMessage SaveChangedPassword_Layout(int StoreId, CustomerEntity CustomerObj)
         {
             try
@@ -303,6 +325,7 @@ namespace CordobaAPI.API_Layout
         }
 
         [HttpGet]
+        [JwtAuthentication]
         public HttpResponseMessage GetCustomerAddressList_Layout(int StoreId, int customer_id)
         {
             try
@@ -433,9 +456,9 @@ namespace CordobaAPI.API_Layout
             try
             {
                 var result = _LayoutDashboardServices.ForgotPassword(CustomerObj);
-                
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
                 //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
             }
             catch (Exception)
@@ -452,11 +475,11 @@ namespace CordobaAPI.API_Layout
             try
             {
                 var result = _LayoutDashboardServices.VerifyOTP(CustomerObj);
-                
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw;
             }
@@ -467,7 +490,7 @@ namespace CordobaAPI.API_Layout
         {
             try
             {
-                var result = _LayoutDashboardServices.VerifyCustomerVisitedInfo(CustomerObj.email , CustomerObj.store_id);
+                var result = _LayoutDashboardServices.VerifyCustomerVisitedInfo(CustomerObj.email, CustomerObj.store_id);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -511,7 +534,7 @@ namespace CordobaAPI.API_Layout
         }
 
 
-         [HttpPost]
+        [HttpPost]
         public HttpResponseMessage UpdateLanguageForCustomer(int customerid, int? languageid)
         {
             try
@@ -525,7 +548,7 @@ namespace CordobaAPI.API_Layout
                 throw;
             }
         }
-        
+
 
         //[HttpPost]
         //public HttpResponseMessage ChangePassword(CustomerEntity CustomerObj)

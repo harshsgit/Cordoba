@@ -11,8 +11,7 @@ using CordobaModels.Entities;
 using System.Web;
 using System.Configuration;
 using System.IO;
-
-
+using CordobaAPI.Auth;
 
 namespace CordobaAPI.API
 {
@@ -111,6 +110,24 @@ namespace CordobaAPI.API
             {
                 var result = _ProductServices.InsertUpdateProduct(StoreId, LoggedInUserId, productEntity);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet]
+        [JwtAuthentication]
+        public HttpResponseMessage GetCustomerWishProductList(int StoreID, int CategoryId, int PageIndex, int Customer_Id = 0, string WhatAreYouLookingFor = "", string SearchByFilterId = "", int OrderById = 1)
+        {
+            try
+            {
+                var result = _ProductServices.GetProductListByCategoryAndStoreId(StoreID, CategoryId, PageIndex, Customer_Id, WhatAreYouLookingFor, SearchByFilterId, OrderById);
+                if (result != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
             }
             catch (Exception)
             {

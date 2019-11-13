@@ -5,7 +5,7 @@
     Tab();
     //#endregion
     $scope.customerpoint = 0;
-    
+
     $scope.StoreDetailInSession = StoreSessionDetail;
     $rootScope.CustomerDetail.store_id = StoreSessionDetail.store_id;
     $rootScope.no_image_path = StoreSessionDetail.no_image_path;
@@ -38,13 +38,15 @@
         if (UserDetail.customer_id > 0) {
             $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + UserDetail.customer_id + "&StoreId=" + $scope.StoreDetailInSession.store_id)
                 .then(function (response) {
-                     
+
                     $rootScope.CustomerDetail.points = response.data.points;
                     UserDetail.points = $rootScope.CustomerDetail.points;
                     $scope.customerpoint = $rootScope.CustomerDetail.points;
                 })
                 .catch(function (response) {
-
+                    if (response.status == 401) {
+                        $scope.Logout();
+                    }
                 })
                 .finally(function () {
 
@@ -89,7 +91,9 @@
     }
 
     //angular hack to html decode
-    $scope.WelcomeMsg = $scope.StoreDetailInSession.description.split('##ReadMore##');
+    if ($scope.StoreDetailInSession.description) {
+        $scope.WelcomeMsg = $scope.StoreDetailInSession.description.split('##ReadMore##');
+    }
     //var encoded = $scope.WelcomeMsg[0];
     //var old = $scope.WelcomeMsg[0].toString();
     ////"&lt;h1 style=&quot;font-size:40px;color:#3E53A4;font-weight:bold;line-height:50px;margin-bottom:20px&quot;&gt;\r\n	Welcome to the Make a Difference &amp;lsquo;thank you&amp;rsquo; store&lt;/h1&gt;\r\n&lt;p&gt;\r\n	The Pitney Bowes &amp;lsquo;thank you&amp;rsquo; site is the official mechanism for rewarding employees for excellence in what they do, and living the behaviours that support our Client, Team, Win philosophy.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Many team programmes are rewarded using this gift catalogue including the &lt;strong&gt;Make a Difference employee reward programme&lt;/strong&gt; outlined below:&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;img alt=&quot;Make a Difference Thank You&quot; height=&quot;140&quot; src=&quot;http://static.cordobarewards.co.uk/image/data/pitney-bowes/pitney-bowes-power.png&quot; width=&quot;140&quot; /&gt;&lt;/p&gt;\r\n&lt;div style=&quot;color:#4E4E4E;line-height:16px&quot;&gt;\r\n	&lt;p&gt;\r\n		Putting customers first is a company value that Make a Difference award winners bring to life. We all have the ability to deliver on this value. Whether you support internal customers or external customers, striving for excellence in everything you do will impact our customers and support our businesses growth.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Winners of this award are given points which can be accumulated and exchanged for a range of gifts.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		So, if you&amp;rsquo;ve received points, Pitney Bowes thanks you again for all your efforts and trusts you enjoy your shopping experience.&lt;/p&gt;\r\n&lt;/div&gt;"
@@ -128,8 +132,9 @@
 
             $http.post(configurationService.basePath + "API/LayoutDashboardAPI/CustomerLogin", $scope.CustomerObj)
                 .then(function (response) {
-
                     if (response.data != null) {
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.JWTToken;
+
                         switch (response.data.ErrorTypeId) {
                             case 0:
 
@@ -141,7 +146,6 @@
                                 UserDetail.cartgroup_id = response.data.cartgroup_id;
                                 UserDetail.TotalItemAdded = response.data.TotalItemAdded;
                                 UserDetail.store_id = response.data.store_id;
-                                
                                 localStorageService.set("loggedInUser", response.data);
                                 $rootScope.CustomerDetail = response.data;
                                 $scope.customerpoint = $rootScope.CustomerDetail.points;
@@ -150,20 +154,20 @@
 
                                 break;
                             case 1:
-                                toastr.error('Please enter correct email!');
+                                toastr.error('Please enter valid credentials!'); //Please enter correct email!
                                 $scope.CustomerObj.email = null;
                                 break;
                             case 2:
-                                toastr.error('Please enter correct password!');
+                                toastr.error('Please enter valid credentials!'); //Please enter correct password!
                                 $scope.CustomerObj.password = null;
                                 break;
                             case 3:
-                                toastr.error('Please enter correct email and password!');
+                                toastr.error('Please enter valid credentials!');//Please enter correct email and password!
                                 $scope.CustomerObj = null;
                                 break;
                         }
                     } else {
-                        toastr.error('Please enter correct email and password!');
+                        toastr.error('Please enter Valid Credentials');
                         //$scope.CustomerObj = null;
                     }
 
@@ -279,12 +283,17 @@
         UserDetail.address_id = 0;
         UserDetail.cartgroup_id = 0;
         UserDetail.TotalItemAdded = 0;
-        
+
         UserDetail.store_id = $rootScope.CustomerDetail.store_id;
+        UserDetail.JWTToken = '';
         localStorageService.set("loggedInUser", UserDetail);
         $rootScope.CustomerDetail = UserDetail;
+        $http.defaults.headers.common.Authorization = '';
+
         $state.go('Home');
         //$state.reload();
+
+
     }
 
     $scope.ForgotPassword = function (form) {
@@ -387,8 +396,7 @@
 
     $scope.ChangePassword = function (form) {
         if (form.$valid) {
-
-            $http.post(configurationService.basePath + "API/LayoutDashboardAPI/SaveChangedPassword_Layout?StoreId=" + $scope.StoreDetailInSession.store_id, $scope.otpObj)
+            $http.post(configurationService.basePath + "API/LayoutDashboardAPI/ForgotPasswordChange_Layout?StoreId=" + $scope.StoreDetailInSession.store_id, $scope.otpObj)
                 .then(function (response) {
                     if (response.data > 0) {
                         notificationFactory.customSuccess("Password changed Successfully.");
@@ -489,6 +497,8 @@
                 }
             }
         }
+
+
     });
 
     $interval(function () { CheckVersionNumber(); }, 3000);
@@ -505,6 +515,9 @@
 
         })
     };
+
+   
+    
 });
 
 

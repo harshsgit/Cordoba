@@ -14,7 +14,9 @@
             <ul class="breadcrumb">
                 <li>  This page allows you to lookup Store Report.</li>
             </ul>
-
+            <ul class="breadcrumb-elements">
+                <li> &nbsp;<button type="button" class="btn btn-success btn-md" data-placement="top" data-toggle="tooltip" title="Export Store Report" ng-click="StoreReportExportToExcel()"> Export<i class="icon-arrow-right14 position-right"></i></button></li>
+            </ul>
         </div>
     </div>
     <div class="page-header-content">
@@ -24,36 +26,68 @@
             <div class="panel-body">
                 <div class="well">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label" for="input-date-start">Date Start</label>
                                 <div class="input-group myDatePicker date">
-                                    <input type="text" id="filter_date_start" name="filter_date_start" ng-model="TransactionItemReportObj.DateStart" class="form-control" placeholder="MM/DD/YYYY">
+                                    <input type="text" id="filter_date_start" name="filter_date_start" ng-model="StoreReportObj.DateStart" class="form-control" placeholder="MM/DD/YYYY">
                                     <span class="input-group-addon cursor-pointer">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </div>
+
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label" for="input-date-end">Date End</label>
                                 <div class="input-group myDatePicker date">
-                                    <input type="text" id="filter_date_End" name="filter_date_End" ng-model="TransactionItemReportObj.DateEnd" class="form-control" placeholder="MM/DD/YYYY">
+                                    <input type="text" id="filter_date_End" name="filter_date_End" ng-model="StoreReportObj.DateEnd" class="form-control" placeholder="MM/DD/YYYY">
                                     <span class="input-group-addon cursor-pointer">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </div>
+
                         </div>
-                        <div class="col-sm-6">
+                        <!--<div class="col-sm-4">
                             <div class="form-group">
-                                <label class="control-label" for="input-status">Store</label>
-                                <select ng-options="store.store_id as store.name  for store in StoreList"
-                                        class="form-control" ng-model="TransactionItemReportObj.store_id" name="store_List" ng-disabled="store_id != 0">
-                                    <option value=""> --- Please Select --- </option>
+                                <label class="control-label" for="input-status">Approved</label>
+                                <select  name="filter_status" id="input-status" ng-model="StoreReportObj.approvedStatus" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
-                            <button ng-click="GetTransactionItemReportList()" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>
+                        </div>-->
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">Store:</label>
+                            <div class="col-md-12">
+                                <div class="well well-sm" style="height:250px; overflow: auto;">
+                                    <div class="col-sm-6 checkbox" ng-repeat="Item in StoreList">
+                                        <label><input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" name="checkbox" value="value">{{Item.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <!--<div class="col-sm-12">
+                            <label class="control-label" for="input-status">Store</label>
+                            <select ng-options="store.store_id as store.name  for store in StoreList"
+                                    class="form-control" ng-model="StoreReportObj.store_id" name="store_List" ng-disabled="store_id != 0">
+                                <option value=""> --- Please Select --- </option>
+                            </select>
+                        </div>-->
+
+
+                    </div>
+                   
+                    <div class="row pt-10">
+                        <div class="col-sm-12">
+                            <button ng-click="GetTransactionItemReportList()" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -61,11 +95,12 @@
                     <table id="tblStoreReport" class="table table-bordered table-striped datatable-responsive" width="100%">
                         <thead>
                             <tr>
-                                <th>Full Name</th>
+                                <th>Customer Name</th>
+                                <th>Store</th>
                                 <th>Email</th>
                                 <th>Points</th>
                                 <th>Status</th>
-                                <th>Activated</th>
+                                <th>Approved</th>
                                 <th>Date Added</th>
                             </tr>
                         </thead>
@@ -85,7 +120,7 @@
                             </h5>
 
                             <div class="heading-elements">
-          
+
                             </div>
                         </div>
                         <div class="panel-body">

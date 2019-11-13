@@ -12,6 +12,7 @@
     $scope.StoreReportObj.DateStart = null;
     $scope.StoreReportObj.DateEnd = null;
     $scope.StoreReportObj.store_id = $scope.store_id;
+    $scope.StoreReportObj.approvedStatus = 'No';
     $scope.PageTitle = "Reports - Store Report";
     $scope.CustomerByStoreForChart = {
         "Month": [],
@@ -265,7 +266,16 @@
         if ($.fn.DataTable.isDataTable("#tblStoreReport")) {
             $('#tblStoreReport').DataTable().destroy();
         }
-
+        
+        $scope.StoreReportObj.store_id = '';
+        $scope.StoreReportObj.store_ids = $filter('filter')($scope.StoreList, { IsSelected: true }, true);
+        angular.forEach($scope.StoreReportObj.store_ids, function (value, key) {
+            
+            $scope.StoreReportObj.store_id += $scope.StoreReportObj.store_ids[key].store_id + ',';
+        });
+        
+        $scope.StoreReportObj.store_id = $scope.StoreReportObj.store_id.slice(0, -1);
+        
         //var table;
         var table = $('#tblStoreReport').DataTable({
             stateSave: false,
@@ -279,6 +289,7 @@
             "bProcessing": true,
             "bServerSide": true,
             "iDisplayStart": 0,
+            "scrollY":"200px",
             "iDisplayLength": configurationService.pageSize,
             "lengthMenu": configurationService.lengthMenu,
             "sAjaxDataProp": "aaData",
@@ -290,11 +301,12 @@
 
                 aoData = BindSorting(aoData, oSettings);
                 var PageIndex = parseInt($('#tblStoreReport').DataTable().page.info().page) + 1;
+                $scope.GridParams = aoData;
                 oSettings.jqXHR = $.ajax({
                     'dataSrc': 'aaData',
                     "dataType": 'json',
                     "type": "POST",
-                    "url": sSource + '?PageIndex=' + PageIndex + '&DateStart=' + $scope.StoreReportObj.DateStart + '&DateEnd=' + $scope.StoreReportObj.DateEnd + '&StoreId=' + $scope.StoreReportObj.store_id,
+                    "url": sSource + '?PageIndex=' + PageIndex + '&DateStart=' + $scope.StoreReportObj.DateStart + '&DateEnd=' + $scope.StoreReportObj.DateEnd + '&StoreId=' + $scope.StoreReportObj.store_id ,
                     "data": aoData,
                     "success": fnCallback,
                     "error": function (data, statusCode) {
@@ -309,24 +321,37 @@
                     "bSortable": true
                 },
                 {
+                    "mData": "store",
+                    "bSortable": true
+                },
+                {
                     "mData": "email",
                     "bSortable": true
                 },
                 {
                     "mData": "points",
-                    "bSortable": true
+                    "bSortable": false
                 },
                 {
                     "mData": "status",
-                    "bSortable": true
+                    "bSortable": false
                 },
                 {
                     "mData": "activated",
-                    "bSortable": true
+                    "bSortable": false
                 },
                 {
                     "mData": "Date_Added",
-                    "bSortable": true
+                    "bSortable": false,
+                    "render": function (data, type, row) {
+                        if (data != null) {
+                            return '<label>' + $filter("date")(data, $rootScope.GlobalDateFormat); '</label>';
+
+                        }
+                        else {
+                            return "";
+                        }
+                    }
                 },
 
 
@@ -341,8 +366,59 @@
         })
     }
 
+    $scope.GetTransactionItemReportList = function() {
+        $scope.GetStoreReport();
+    };
 
+    $scope.StoreReportExportToExcel = function () {
+        var column = "";
+        if ($scope.GridParams.length != undefined) {
+            column = $filter('filter')($scope.GridParams, { name: "SortColumns" }, true);
+        }
+     
 
+        $http({
+            url: configurationService.basePath + 'api/Reportapi/StoreReportExportToExcel?PageIndex=' + 1 + "&DateStart=" + $scope.StoreReportObj.DateStart + "&DateEnd=" + $scope.StoreReportObj.DateEnd + "&StoreId=" + ($scope.StoreReportObj.store_id == null ? 0 : $scope.StoreReportObj.store_id),
+            method: "POST",
+            'dataSrc': 'aaData',
+            "dataType": 'json',
+            data: column != "" ? column[0].value : "",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers, config) {
+            
+            var type = headers('Content-Type');
+            var disposition = headers('Content-Disposition');
+            if (disposition) {
+                var match = disposition.match(/.*filename=\"?([^;\"]+)\"?.*/);
+                if (match[1])
+                    defaultFileName = match[1];
+            }
+            defaultFileName = defaultFileName.replace(/[<>:"\/\\|?*]+/g, '_');
+
+            var blob = new Blob([data], { type: type });
+
+            if (navigator.appVersion.toString().indexOf('.NET') > 0) // For IE 
+                window.navigator.msSaveBlob(blob, defaultFileName);
+            else {
+                var objectUrl = URL.createObjectURL(blob);
+                var downloadLink = document.createElement("a");
+                downloadLink.href = objectUrl;
+                downloadLink.download = defaultFileName;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                //window.open(objectUrl);
+            }
+        }).error(function (data, status, headers, config) {
+        });
+
+    }
+
+    
+    $scope.GetStoreList();
     $scope.GetStoreReport();
     $scope.GetCustomerByStoreForChart();
 

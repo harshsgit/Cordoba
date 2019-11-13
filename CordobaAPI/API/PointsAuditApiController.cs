@@ -1,4 +1,5 @@
-﻿using CordobaServices.Interfaces;
+﻿using CordobaAPI.Auth;
+using CordobaServices.Interfaces;
 using CordobaServices.Services;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace CordobaAPI.API
 
 
         [HttpGet]
+        [JwtAuthentication]
         public HttpResponseMessage GetPointsAuditList(int customer_id)
         {
             try

@@ -26,7 +26,7 @@
  *              });
  *  - can call a fnUpdateCallback() function when drop is finished
  *      (Integration of a free comment in: https://code.google.com/p/jquery-datatables-row-reordering/wiki/Index)
- *              Author: "Comment by ra...@webrun.ca, Mar 16, 2013"
+ *              Author: "Comment by , Mar 16, 2013"
  *  - can pass additional data in POST, like this:
  *              oTable.rowReordering({
  *                       sURL: 'UpdateRowOrder.php',
@@ -294,7 +294,7 @@
                                 // ###KCM### Can have a callback when drop is finished
                                 // Source: 
                                 //      https://code.google.com/p/jquery-datatables-row-reordering/wiki/Index,
-                                //      --> Free comment of "Comment by ra...@webrun.ca, Mar 16, 2013"
+                                //      --> Free comment of "Comment by , Mar 16, 2013"
                                 if (properties.fnUpdateCallback && typeof (properties.fnUpdateCallback) === 'function') {
                                     properties.fnUpdateCallback(sRequestData);
                                 }
@@ -316,7 +316,7 @@
                         // ###KCM### Can have a callback when drop is finished
                         // Source: 
                         //      https://code.google.com/p/jquery-datatables-row-reordering/wiki/Index,
-                        //      --> Free comment of "Comment by ra...@webrun.ca, Mar 16, 2013"
+                        //      --> Free comment of "Comment by , Mar 16, 2013"
                         if (properties.fnUpdateCallback && typeof (properties.fnUpdateCallback) === 'function') {
                             properties.fnUpdateCallback(sRequestData);
                         }

@@ -6,7 +6,7 @@
     Tab();
     $scope.StoreId = $rootScope.storeId;
     $scope.LoggedInUserId = $rootScope.loggedInUserId;
-
+    $scope.CatalogueStatus = [{ ID: 1, Name: 'Enabled' }, { ID: 0, Name: 'Disabled' }];
     $scope.IsEditMode = false;
     $scope.CatalogueObj = new Object();
     $scope.catalogue_id = 0;
@@ -18,7 +18,9 @@
     }
     else {
         $scope.PageTitle = "Add Product Catalogue";
+        $scope.CatalogueObj.status=1
     }
+    
     //#endregion
 
 
@@ -87,6 +89,11 @@
           .then(function (response) {
 
               $scope.CatalogueObj = response.data;
+              if ($scope.CatalogueObj.status) {
+                  $scope.CatalogueObj.status = 1;
+              } else {
+                  $scope.CatalogueObj.status = 0;
+              }
           })
       .catch(function (response) {
       })

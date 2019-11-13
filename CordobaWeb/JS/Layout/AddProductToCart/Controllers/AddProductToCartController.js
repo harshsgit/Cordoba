@@ -15,6 +15,10 @@
               UserDetail.cartgroup_id = response.data.cartgroup_id;
               UserDetail.TotalItemAdded = response.data.TotalItemAdded;
               $rootScope.CustomerDetail = UserDetail;
+              var objLoggedUser = localStorageService.get("loggedInUser");
+              if (objLoggedUser != null && objLoggedUser.JWTToken) {
+                  UserDetail.JWTToken = objLoggedUser.JWTToken;
+              }
               localStorageService.set("loggedInUser", UserDetail);             
           })
       .catch(function (response) {

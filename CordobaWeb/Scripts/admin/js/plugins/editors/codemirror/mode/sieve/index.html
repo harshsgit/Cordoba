@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 
 <title>CodeMirror: Sieve (RFC5228) mode</title>
 <meta charset="utf-8"/>
@@ -69,7 +69,7 @@ elsif address :domain :is ["From", "To"] "example.com"
 # or it contains a subject known to be spam, file it away.
 #
 elsif anyof (not address :all :contains
-               ["To", "Cc", "Bcc"] "me@example.com",
+               ["To", "Cc", "Bcc"] "",
              header :matches "subject"
                ["*make*money*fast*", "*university*dipl*mas*"])
 {

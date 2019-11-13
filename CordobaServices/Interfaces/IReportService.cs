@@ -17,7 +17,7 @@ namespace CordobaServices.Interfaces
         IEnumerable<ReportEntity> GetReturnList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int? GroupById, int? StatusId, int? StoreId, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "");
         //Sales order Report
         IEnumerable<ReportEntity> GetOrderReportList(string sortColumn, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int? GroupById, int? StatusId, int? StoreId, int? LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "");
-        
+
         //Transaction Report
         IEnumerable<ReportEntity> GetTransactionReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int StoreId, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "");
 
@@ -38,9 +38,11 @@ namespace CordobaServices.Interfaces
 
         DataSet TransactionItemCategoryReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId);
 
-        IEnumerable<ReportEntity> GetStoreReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int StoreId, TableParameter<ReportEntity> filter, string PageFrom = "");
+        IEnumerable<ReportEntity> GetStoreReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, string StoreId, TableParameter<ReportEntity> filter, string PageFrom = "");
 
         List<StoreChartEntity> GetCustomerByStoreForChart(int store_id, int ChartFilterType);
-    
+
+        DataSet StoreReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, string storeId);
+
     }
 }

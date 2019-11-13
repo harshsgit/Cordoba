@@ -366,7 +366,7 @@
     $scope.getProductByCategory = function (category_id, store_id) {
         $http.get(configurationService.basePath + "api/ProductApi/GetProductBycategoryForStore?category_id=" + category_id + "&store_id=" + store_id)
             .then(function (response) {
-                debugger;
+                 
                 //if (response.data.length > 0)
                 {
                     $scope.productListObj = response.data;

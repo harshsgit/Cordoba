@@ -1,4 +1,5 @@
-﻿using CordobaModels.Entities;
+﻿using CordobaAPI.Auth;
+using CordobaModels.Entities;
 using CordobaServices.Interfaces_Layout;
 using CordobaServices.Services_Layout;
 using System;
@@ -10,10 +11,11 @@ using System.Web.Http;
 
 namespace CordobaAPI.API_Layout
 {
+
     public class CartApiController : ApiController
     {
-        public ICartServices _CartServices;    
- 
+        public ICartServices _CartServices;
+
         public CartApiController()
         {
             _CartServices = new CartServices();
@@ -38,8 +40,8 @@ namespace CordobaAPI.API_Layout
             }
 
         }
-        
-         [HttpGet]
+
+        [HttpGet]
         public HttpResponseMessage GetCartDetailsByCartGroupId(int? StoreID, int cartgroup_id)
         {
             try
@@ -59,64 +61,66 @@ namespace CordobaAPI.API_Layout
 
         }
 
-         [HttpGet]
-         public HttpResponseMessage RemoveProductFromCart(int? CartId)
-         {
-             try
-             {
-                 var result = _CartServices.RemoveProductFromCart(CartId);
-                 if (result != null)
-                 {
-                     return Request.CreateResponse(HttpStatusCode.OK, result);
-                 }
-                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
-             }
-             catch (Exception)
-             {
+        [HttpGet]
+        public HttpResponseMessage RemoveProductFromCart(int? CartId)
+        {
+            try
+            {
+                var result = _CartServices.RemoveProductFromCart(CartId);
+                if (result != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+            }
+            catch (Exception)
+            {
 
-                 throw;
-             }
+                throw;
+            }
 
-         }
+        }
 
-         [HttpPost]
-         public HttpResponseMessage PlaceOrder(PlaceOrderEntity PlaceOrderObj)
-         {
-             try
-             {
-                 var result = _CartServices.PlaceOrder(PlaceOrderObj);
-                 if (result != null)
-                 {
-                     return Request.CreateResponse(HttpStatusCode.OK, result);
-                 }
-                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
-             }
-             catch (Exception ex)
-             {
+        [HttpPost]
+        [JwtAuthentication]
+        public HttpResponseMessage PlaceOrder(PlaceOrderEntity PlaceOrderObj)
+        {
+            try
+            {
+                var result = _CartServices.PlaceOrder(PlaceOrderObj);
+                if (result != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+            }
+            catch (Exception ex)
+            {
 
-                 throw;
-             }
+                throw;
+            }
 
-         }
+        }
 
         [HttpGet]
-         public HttpResponseMessage GetCustmoreAddressList(int? store_id, int customer_id)
-         {
-             try
-             {
-                 var result = _CartServices.GetCustmoreAddressList(store_id, customer_id);
-                 if (result != null)
-                 {
-                     return Request.CreateResponse(HttpStatusCode.OK, result);
-                 }
-                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
-             }
-             catch (Exception)
-             {
+        [JwtAuthentication]
+        public HttpResponseMessage GetCustmoreAddressList(int? store_id, int customer_id)
+        {
+            try
+            {
+                var result = _CartServices.GetCustmoreAddressList(store_id, customer_id);
+                if (result != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+            }
+            catch (Exception)
+            {
 
-                 throw;
-             }
-         }
+                throw;
+            }
+        }
 
 
         // GET: api/CartApi

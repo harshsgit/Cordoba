@@ -2,8 +2,8 @@
 <html ng-app="CordobaApp" lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
     <title ng-bind="storeName"></title>
 
     @Styles.Render("~/bundles/Layout1CSS?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
@@ -162,11 +162,13 @@
                                 <li class="active"><a href="" class="cursor-pointer" ui-sref="Home">Home</a></li>
                                 <li><a href="" class="cursor-pointer" ui-sref="LayoutCategoryORProductList({CategoryId:-1})">Rewards catalogue</a></li>
                                 <li><a href="" ui-sref="ContactUs">Contact Us</a></li>
-                                <li  ng-if="CustomerDetail.customer_id>0"><a ui-sref="MyReward" ng-hide="CustomerDetail.store_id == 23 || CustomerDetail.store_id == 44
+                                <li ng-if="CustomerDetail.customer_id>0">
+                                    <a ui-sref="MyReward" ng-hide="CustomerDetail.store_id == 23 || CustomerDetail.store_id == 44
                                            || CustomerDetail.store_id == 32 || CustomerDetail.store_id == 35 || CustomerDetail.store_id == 1082 || CustomerDetail.store_id == 1086 ||
                                            CustomerDetail.store_id == 27 || CustomerDetail.store_id == 18 || CustomerDetail.store_id == 4 || CustomerDetail.store_id == 1080 ||
                                            CustomerDetail.store_id == 1083 || CustomerDetail.store_id == 24 || CustomerDetail.store_id == 1091 || CustomerDetail.store_id == 1092 || CustomerDetail.store_id == 1096
-                                               || CustomerDetail.store_id == 40 || CustomerDetail.store_id == 33 || CustomerDetail.store_id==1097">Recognition</a></li>
+                                               || CustomerDetail.store_id == 40 || CustomerDetail.store_id == 33 || CustomerDetail.store_id==1097">Recognition</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -197,7 +199,7 @@
                                 <li class="active"><a href="#" class="cursor-pointer" ui-sref="Home">Home</a></li>
                                 <li><a href="" class="cursor-pointer" ui-sref="EditProfile" ng-if="CustomerDetail.customer_id>0">My Account</a></li>
                                 <li><a href="" class="cursor-pointer" ng-click="OpenTermsCondition()">Terms &amp; Conditions</a></li>
-                                <li><a href="" class="cursor-pointer"  ng-if="StoreDetailInSession.store_id==1087" ui-sref="TermsOfUse">Terms of Use</a></li>
+                                <li><a href="" class="cursor-pointer" ng-if="StoreDetailInSession.store_id==1087" ui-sref="TermsOfUse">Terms of Use</a></li>
                                 <li><a href="" class="cursor-pointer" ng-if="StoreDetailInSession.store_id==1087" ui-sref="WebsitePrivacyStatement">Website Privacy Statement</a></li>
                                 <li><a href="" class="cursor-pointer" ng-if="StoreDetailInSession.store_id==1087" ui-sref="CookiePolicy">Cookie Policy</a></li>
                             </ul>
@@ -255,17 +257,17 @@
                                     <p>Be first to know about great offers and save.</p>
                                 </div>
                             </div>
-                            <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate>
+                            <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate method="post">
                                 <div class="login_page">
                                     <h2>Login</h2>
                                     <div class="form-group pt-20">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" name="EmailAddress" id="email" placeholder="Enter email" ng-model="CustomerObj.email" required="required" ng-blur="validateEmailaddress()">
+                                        <input type="email" class="form-control" name="EmailAddress" id="email" placeholder="Enter email" ng-model="CustomerObj.email" required="required" ng-blur="validateEmailaddress()" autocomplete="off">
                                         <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && (loginForm.EmailAddress.$error.required || loginForm.EmailAddress.$error.email)">Enter valid email id!</p>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password:</label>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="CustomerObj.password" required="required">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="CustomerObj.password" required="required" autocomplete="off">
                                         <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && loginForm.password.$error.required">Password is required!</p>
 
                                         <a href="javascript:;" ng-click="ForgotPassword(forgotPasswordForm)" class="forgot-password">Forgot Password?</a>
@@ -487,14 +489,14 @@
 
         if ($('#back-to-top').length) {
             var scrollTrigger = 100, // px
-		        backToTop = function () {
-		            var scrollTop = $(window).scrollTop();
-		            if (scrollTop > scrollTrigger) {
-		                $('#back-to-top').addClass('show');
-		            } else {
-		                $('#back-to-top').removeClass('show');
-		            }
-		        };
+                backToTop = function () {
+                    var scrollTop = $(window).scrollTop();
+                    if (scrollTop > scrollTrigger) {
+                        $('#back-to-top').addClass('show');
+                    } else {
+                        $('#back-to-top').removeClass('show');
+                    }
+                };
             backToTop();
             $(window).on('scroll', function () {
                 backToTop();
@@ -521,22 +523,22 @@
                 var imgclone = imgtodrag.clone()
                 if (imgclone.length) {
                     imgclone.offset({
-                        top: target.offset().top,
-                        left: target.offset().left
-                    })
-                  .css({
-                      //'opacity': '0.5',
-                      'position': 'absolute',
-                      'width': '150px',
-                      'z-index': '99999'
-                  });
+                            top: target.offset().top,
+                            left: target.offset().left
+                        })
+                        .css({
+                            //'opacity': '0.5',
+                            'position': 'absolute',
+                            'width': '150px',
+                            'z-index': '99999'
+                        });
 
                     imgclone.appendTo($('body'))
-                    .animate({
-                        'top': cart.offset().top + 10,
-                        'left': cart.offset().left + 10,
-                        'width': 75,
-                    }, 1000, 'easeInOutExpo');
+                        .animate({
+                            'top': cart.offset().top + 10,
+                            'left': cart.offset().left + 10,
+                            'width': 75,
+                        }, 1000, 'easeInOutExpo');
 
                     setTimeout(function () {
                         cart.effect("shake", {
@@ -589,3 +591,17 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+    var currentUrl = window.location.href;
+    if (currentUrl.indexOf("grenkerewards.co.uk") != -1) {
+        //Google Analytics
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-148572980-1', '@(Request.IsLocal ? "none" : "auto")');
+    }
+</script>

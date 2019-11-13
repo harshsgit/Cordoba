@@ -9,12 +9,14 @@
     $scope.store_id = $rootScope.storeId;
     $scope.IsSendEmail = false;
     $scope.IsStoreDropDownEnabled = false;
-    $scope.dtOptions = DTOptionsBuilder.newOptions()
-                     .withOption('bDestroy', true)
-                     .withOption("deferRender", true);
 
+
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+        .withOption('bDestroy', true)
+        .withOption("deferRender", true)
+        .withPaginationType('full_numbers').withDisplayLength(25).withOption('lengthMenu', [[10, 25, 50, 100, 500], [10, 25, 50, 100, 500]]);
     $scope.PageTitle = "Customer Points Importer";
-    
+
     //Remove local storage of ther pages
     //$rootScope.RemoveAllFromLocalStorage_StartWith($scope.LoggedInUserId + '_Customer');
     $rootScope.RemoveAllFromLocalStorage_StartWith($scope.LoggedInUserId + '_ShowOrders');
@@ -23,26 +25,80 @@
 
     function GetStoreList() {
         $http.get(configurationService.basePath + "api/StoreApi/GetStoreList?StoreId=" + $scope.store_id + '&LoggedInUserId=' + $scope.LoggedInUserId)
-          .then(function (response) {
-              if (response.data.length > 0) {
-                  $scope.StoreList = response.data;
-              }
-          })
-      .catch(function (response) {
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.StoreList = response.data;
+                }
+            })
+            .catch(function (response) {
 
-      })
-      .finally(function () {
+            })
+            .finally(function () {
 
-      });
+            });
     }
 
-
-
-    $scope.PointsImporter = function () {
-        if ($scope.store_id == '' || $scope.files == undefined) {
+    $scope.PointsImportOnPopup = function () {
+        if (!($scope.store_id > 0) || (!$scope.files) || ($scope.files && $scope.files.length == 0)) {
             toastr.error("Select Store & file");
             return;
         }
+        var fd = new FormData();
+        for (var i in $scope.files) {
+            fd.append("uploadedFile", $scope.files[i]);
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", uploadComplete, false);
+        xhr.addEventListener("error", uploadFailed, false);
+        xhr.addEventListener("abort", uploadCanceled, false);
+
+        xhr.open("POST", configurationService.basePath + "api/CustomerApi/PointsImportOnPopup?store_id=" + $scope.store_id + '&LoggedInUserId=' + $scope.LoggedInUserId + '&IsSendEmail=' + $scope.IsSendEmail);
+
+        $scope.progressVisible = true;
+        xhr.onreadystatechange = function () {
+
+            if (xhr.readyState == 4) {
+
+                if (xhr.status == 200) {
+                    if (xhr.response == "0") {
+                        toastr.error("Records Not found!");
+                    } else {
+                        $("#PointImportModal").modal('show');
+
+                        $scope.$apply(function () {
+                            $scope.ReviewpointList = angular.copy(JSON.parse(xhr.response));
+                            if ($scope.ReviewpointList && $scope.ReviewpointList.length > 0) {
+                                $scope.uniqueNo = $scope.ReviewpointList[0].UniqueNo;
+                            }
+                        });
+
+                    }
+                } else {
+                    $scope.$apply(function () {
+                        $scope.progress = "Improper data in file";
+                    })
+                    toastr.error("There is improper data in .xlsx  OR .xls file.");
+                }
+            }
+        };
+        xhr.onerror = function () {
+            $scope.$apply(function () {
+                $scope.progress = "Improper data in file";
+            })
+
+            toastr.error("There is improper data in .xlsx  OR .xls file.");
+
+        };
+        xhr.send(fd);
+    }
+
+    $scope.PointsImporter = function () {
+
+
+        //if ($scope.store_id == '' || $scope.files == undefined) {
+        //    toastr.error("Select Store & file");
+        //    return;
+        //}
 
         var fd = new FormData();
         for (var i in $scope.files) {
@@ -59,41 +115,46 @@
         $scope.progressVisible = true;
 
         xhr.onreadystatechange = function () {
+
             if (xhr.readyState == 4) {
 
                 if (xhr.status == 200) {
                     if (xhr.response == "0") {
                         toastr.error("Records Not found!");
                     } else {
-                        var invalidEmails = JSON.parse(xhr.response);
+
+                        //var invalidEmails = JSON.parse(xhr.response);
                         //console.log(invalidEmails[0]["invalidEmail"])
-                        if (invalidEmails[0]["invalidEmail"]!='' || invalidEmails[0]["MinusPointTotalEmail"]!='') {
-                            //var uploadHtml = "<p>This Email does not exist: " + invalidEmails[0]["invalidEmail"].substring(0, invalidEmails[0]["invalidEmail"].length - 1) + "</p>";
-                            var uploadHtml = "";
-                            
-                            if (invalidEmails[0]["invalidEmail"] != '')
-                            {
-                                uploadHtml += "<p>This Email does not exist: " + invalidEmails[0]["invalidEmail"] + "</p></br>";
-                            }
-                            if (invalidEmails[0]["MinusPointTotalEmail"] != '') {
-                                uploadHtml += "<p>This Email has minus Total Points : " + invalidEmails[0]["MinusPointTotalEmail"] + "</p>";
-                            }
-                            bootbox.dialog({
-                                message: uploadHtml,
-                                title: "Alert",
-                                buttons: {
-                                    success: {
-                                        label: "Ok",
-                                        className: "btn btn-info",
-                                        //callback: function () {
-                                        //    uploadUserImage();
-                                        //}
-                                    }
-                                }
-                            });
-                        }
-                        toastr.success("File Successfully Submitted.");
+                        //if (invalidEmails[0]["invalidEmail"] != '' || invalidEmails[0]["MinusPointTotalEmail"] != '') {
+                        //    //var uploadHtml = "<p>This Email does not exist: " + invalidEmails[0]["invalidEmail"].substring(0, invalidEmails[0]["invalidEmail"].length - 1) + "</p>";
+                        //    var uploadHtml = "";
+
+                        //    if (invalidEmails[0]["invalidEmail"] != '') {
+                        //        uploadHtml += "<p>This Email does not exist: " + invalidEmails[0]["invalidEmail"] + "</p></br>";
+                        //    }
+                        //    if (invalidEmails[0]["MinusPointTotalEmail"] != '') {
+                        //        uploadHtml += "<p>This Email has minus Total Points : " + invalidEmails[0]["MinusPointTotalEmail"] + "</p>";
+                        //    }
+                        //    bootbox.dialog({
+                        //        message: uploadHtml,
+                        //        title: "Alert",
+                        //        buttons: {
+                        //            success: {
+                        //                label: "Ok",
+                        //                className: "btn btn-info",
+                        //                //callback: function () {
+                        //                //    uploadUserImage();
+                        //                //}
+                        //            }
+                        //        }
+                        //    });
+                        //}
+                        //$("#PointImportModal").modal('hide');
+                        $scope.store_id = 0;
                         $("#upload").val(null);
+                        $scope.files = [];
+                        toastr.success("File Successfully Submitted.");
+
                     }
                 } else {
                     $scope.$apply(function () {
@@ -135,7 +196,7 @@
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
         if (validExts.indexOf(fileExt) < 0) {
             toastr.error("Invalid file selected, valid files are of " +
-                     validExts.toString() + " types.");
+                validExts.toString() + " types.");
             return false;
         }
         else return true;
@@ -165,7 +226,24 @@
 
     }
 
+    $scope.ImportPointsConfirm = function () {
+        $http.post(configurationService.basePath + "api/CustomerApi/ImportPointFromTMP?uniqueNo=" + $scope.uniqueNo + "&store=" + $scope.store_id + "&sendMail=" + $scope.IsSendEmail)
+            .then(function (response) {
+                if (response) {
+                    $("#PointImportModal").modal('hide');
+                    $scope.store_id = 0;
+                    $("#upload").val(null);
+                    $scope.files = [];
+                    toastr.success("File Successfully Submitted.");
+                }
+            })
+            .catch(function (response) {
 
+            })
+            .finally(function () {
+
+            });
+    }
 
 
     GetStoreList();

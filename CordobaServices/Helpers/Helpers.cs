@@ -49,7 +49,6 @@ namespace CordobaServices.Helpers
         static ConvertToXml()
         {
             
-            
         }
 
         public static string GetXMLString(List<T> sourceList, string csvSelectedProperties= "")

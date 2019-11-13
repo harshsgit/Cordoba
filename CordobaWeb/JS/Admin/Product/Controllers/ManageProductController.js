@@ -469,7 +469,7 @@
                    title: '<B><h5>Id</h5></B>',
                    targets: [6],
                    visible:false
-               },
+                },
                 {
                     orderable: false,
                     width: '95px',
@@ -488,7 +488,7 @@
                     title: 'Action',
                     targets: [7]
                 }
-
+                
             ],
 
             "fnCreatedRow": function (nRow, aData, iDataIndex) {
@@ -497,8 +497,8 @@
         });
     }
 
-    $scope.EditHotOrSpecialProduct = function ($event)
-    {
+    $scope.EditHotOrSpecialProduct = function ($event) {
+        
      
         var table = $('#dataTableHotOrSpecial').DataTable();
         var HorOrSpecialProductObj = table.row($($event.target).parents('tr')).data();

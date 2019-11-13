@@ -1,4 +1,5 @@
-﻿using CordobaModels.Entities;
+﻿using CordobaCommon;
+using CordobaModels.Entities;
 using CordobaServices.Helpers;
 using CordobaServices.Interfaces;
 using CordobaServices.Services;
@@ -486,7 +487,7 @@ namespace CordobaAPI.API
 
                 RectangleF pointsummaryrect = new RectangleF(400, 200, 320, 300);
                 IChart pointsummarychart = ppt.Slides[2].Shapes.AppendChart(ChartType.Doughnut, pointsummaryrect, false);
-                pointsummarychart.ChartTitle.TextProperties.Text = "POINTS (" +Convert.ToInt32(result.pointsRemaining[0].Count + result.pointsRemaining[1].Count) + ")";
+                pointsummarychart.ChartTitle.TextProperties.Text = "POINTS (" + Convert.ToInt32(result.pointsRemaining[0].Count + result.pointsRemaining[1].Count) + ")";
                 pointsummarychart.ChartTitle.TextProperties.IsCentered = true;
                 pointsummarychart.ChartTitle.Height = 30;
                 string[] pointsummarycountries = new string[] { "Activated accounts", "Non activated accounts" };
@@ -603,7 +604,7 @@ namespace CordobaAPI.API
                 //set gap width  
                 participantloadedbymonthchart.GapWidth = 200;
 
-                
+
                 //Sixth slide
                 ppt.Slides.Append();
 
@@ -1320,7 +1321,231 @@ namespace CordobaAPI.API
             //}
         }
 
+        //Dashboard New
+        [HttpGet]
+        public HttpResponseMessage GetOrderPlacedByTypeByStoreList(int StoreID, int Month, int Year, long? UserId)
+        {
 
-        
+            var result = _StoreServices.GetOrderPlacedByTypeByStoreList(StoreID, Month, Year, UserId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetOrderPlacedByTypeByStoreListExport(int StoreID, int Month, int Year, long? UserId)
+        {
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            DateTime date = DateTime.Now.Date;
+            string str = string.Concat("OrderPlacedByType_Export", date.ToString("ddMMyyyy"), ".xls");
+
+            List<ColumnConfiguration> selectedColumn = new List<ColumnConfiguration>();
+            selectedColumn.Add(new ColumnConfiguration("Name", "Type Name"));
+            selectedColumn.Add(new ColumnConfiguration("OrderCount", "Order Count"));
+            var result = _StoreServices.GetOrderPlacedByTypeByStoreList(StoreID, Month, Year, UserId);
+            DataSet ds = new DataSet();
+            if (result != null && result.Count > 0)
+            {
+                DataTable dtRsult = ToDataTable(result);
+                if (dtRsult != null && dtRsult.Rows.Count > 0)
+                {
+                    ds.Tables.Add(dtRsult);
+                }
+                DataTable dt = ds.Tables[0].DefaultView.ToTable(false, selectedColumn.Select(s => s.OriginalColumnName).ToArray());
+
+                ds.Tables.RemoveAt(0);
+                ds.Tables.Add(dt);
+                ds = GeneralMethods.ChangeDataSetColumnTitleAndReorder(ds, selectedColumn);
+            }
+            try
+            {
+                if (ds == null || ds.Tables.Count == 0)
+                {
+                    return base.Request.CreateErrorResponse(HttpStatusCode.NotFound, "No records found.");
+                }
+                byte[] asByteArray = GeneralMethods.ExportToExcel(ds, "OrderPlacedByType");
+
+                HttpResponseMessage streamContent = new HttpResponseMessage(HttpStatusCode.OK);
+                Stream @null = Stream.Null;
+                streamContent.Content = new StreamContent(new MemoryStream(asByteArray));
+                streamContent.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                streamContent.Content.Headers.Add("content-disposition", string.Concat("attachment;  filename=\"", str, "\""));
+                httpResponseMessage = streamContent;
+
+            }
+            catch (Exception)
+            {
+                httpResponseMessage = base.Request.CreateResponse<bool>(HttpStatusCode.OK, false);
+            }
+            return httpResponseMessage;
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetTOPPointsHoldersByStoreList(int StoreID, int UserId)
+        {
+
+            var result = _StoreServices.GetTOPPointsHoldersByStoreList(StoreID, UserId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetTOPPointsHoldersByStoreListExport(int StoreID, int UserId)
+        {
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            DateTime date = DateTime.Now.Date;
+            string str = string.Concat("TOPPointsHoldersByStore_Export", date.ToString("ddMMyyyy"), ".xls");
+
+            List<ColumnConfiguration> selectedColumn = new List<ColumnConfiguration>();
+            selectedColumn.Add(new ColumnConfiguration("DateAdded", "Date Added"));
+            selectedColumn.Add(new ColumnConfiguration("Email", "Email"));
+            selectedColumn.Add(new ColumnConfiguration("FullName", "Full Name"));
+            selectedColumn.Add(new ColumnConfiguration("Points", "Points"));
+            selectedColumn.Add(new ColumnConfiguration("Status", "Status"));
+            var result = _StoreServices.GetTOPPointsHoldersByStoreList(StoreID, UserId);
+            DataSet ds = new DataSet();
+            if (result != null && result.Count > 0)
+            {
+                DataTable dtRsult = ToDataTable(result);
+                if (dtRsult != null && dtRsult.Rows.Count > 0)
+                {
+                    ds.Tables.Add(dtRsult);
+                }
+                DataTable dt = ds.Tables[0].DefaultView.ToTable(false, selectedColumn.Select(s => s.OriginalColumnName).ToArray());
+
+                ds.Tables.RemoveAt(0);
+                ds.Tables.Add(dt);
+                ds = GeneralMethods.ChangeDataSetColumnTitleAndReorder(ds, selectedColumn);
+            }
+            try
+            {
+                if (ds == null || ds.Tables.Count == 0)
+                {
+                    return base.Request.CreateErrorResponse(HttpStatusCode.NotFound, "No records found.");
+                }
+                byte[] asByteArray = GeneralMethods.ExportToExcel(ds, "TOPPointsHoldersByStore");
+
+                HttpResponseMessage streamContent = new HttpResponseMessage(HttpStatusCode.OK);
+                Stream @null = Stream.Null;
+                streamContent.Content = new StreamContent(new MemoryStream(asByteArray));
+                streamContent.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                streamContent.Content.Headers.Add("content-disposition", string.Concat("attachment;  filename=\"", str, "\""));
+                httpResponseMessage = streamContent;
+
+            }
+            catch (Exception)
+            {
+                httpResponseMessage = base.Request.CreateResponse<bool>(HttpStatusCode.OK, false);
+            }
+            return httpResponseMessage;
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetPointsRedeemedByMonthByStoreList(int StoreID, int Month, int Year, long UserId)
+        {
+            var result = _StoreServices.GetPointsRedeemedByMonthByStoreList(StoreID, Month, Year, UserId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        [HttpPost]
+        public HttpResponseMessage GetPointsRedeemedByMonthByStoreListExport(int StoreID, int Month, int Year, long UserId)
+        {
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            DateTime date = DateTime.Now.Date;
+            string str = string.Concat("PointsRedeemedByMonth_Export", date.ToString("ddMMyyyy"), ".xls");
+            var result = _StoreServices.GetPointsRedeemedByMonthByStoreList(StoreID, Month, Year, UserId);
+            DataSet ds = new DataSet();
+            if (result != null && result.Count > 0)
+            {
+                DataTable dtRsult = ToDataTable(result);
+                if (dtRsult != null && dtRsult.Rows.Count > 0)
+                {
+                    ds.Tables.Add(dtRsult);
+                }
+            }
+            try
+            {
+                if (ds == null || ds.Tables.Count == 0)
+                {
+                    return base.Request.CreateErrorResponse(HttpStatusCode.NotFound, "No records found.");
+                }
+                byte[] asByteArray = GeneralMethods.ExportToExcel(ds, "PointsRedeemedByMonth");
+
+                HttpResponseMessage streamContent = new HttpResponseMessage(HttpStatusCode.OK);
+                Stream @null = Stream.Null;
+                streamContent.Content = new StreamContent(new MemoryStream(asByteArray));
+                streamContent.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                streamContent.Content.Headers.Add("content-disposition", string.Concat("attachment;  filename=\"", str, "\""));
+                httpResponseMessage = streamContent;
+
+            }
+            catch (Exception)
+            {
+                httpResponseMessage = base.Request.CreateResponse<bool>(HttpStatusCode.OK, false);
+            }
+            return httpResponseMessage;
+        }
+
+
+
+        [HttpGet]
+        public HttpResponseMessage GetVoucherOrderByTypeList(int StoreID, long UserId)
+        {
+            var result = _StoreServices.GetVoucherOrderByTypeList(StoreID, UserId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        [HttpPost]
+        public HttpResponseMessage GetVoucherOrderByTypeListExport(int StoreID, int UserId)
+        {
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            DateTime date = DateTime.Now.Date;
+            string str = string.Concat("VoucherOrderByType_Export", date.ToString("ddMMyyyy"), ".xls");
+
+            List<ColumnConfiguration> selectedColumn = new List<ColumnConfiguration>();
+            selectedColumn.Add(new ColumnConfiguration("ReportCategoryName", "Category Name"));
+            selectedColumn.Add(new ColumnConfiguration("Orders", "Orders"));
+            var result = _StoreServices.GetVoucherOrderByTypeList(StoreID, UserId);
+            DataSet ds = new DataSet();
+            if (result != null && result.Count > 0)
+            {
+                DataTable dtRsult = ToDataTable(result);
+                if (dtRsult != null && dtRsult.Rows.Count > 0)
+                {
+                    ds.Tables.Add(dtRsult);
+                }
+                DataTable dt = ds.Tables[0].DefaultView.ToTable(false, selectedColumn.Select(s => s.OriginalColumnName).ToArray());
+
+                ds.Tables.RemoveAt(0);
+                ds.Tables.Add(dt);
+                ds = GeneralMethods.ChangeDataSetColumnTitleAndReorder(ds, selectedColumn);
+            }
+            try
+            {
+                if (ds == null || ds.Tables.Count == 0)
+                {
+                    return base.Request.CreateErrorResponse(HttpStatusCode.NotFound, "No records found.");
+                }
+                byte[] asByteArray = GeneralMethods.ExportToExcel(ds, "VoucherOrderByType");
+
+                HttpResponseMessage streamContent = new HttpResponseMessage(HttpStatusCode.OK);
+                Stream @null = Stream.Null;
+                streamContent.Content = new StreamContent(new MemoryStream(asByteArray));
+                streamContent.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                streamContent.Content.Headers.Add("content-disposition", string.Concat("attachment;  filename=\"", str, "\""));
+                httpResponseMessage = streamContent;
+
+            }
+            catch (Exception)
+            {
+                httpResponseMessage = base.Request.CreateResponse<bool>(HttpStatusCode.OK, false);
+            }
+            return httpResponseMessage;
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetActiveInAciveCustomersByStoreList(int StoreID, long UserId)
+        {
+            var result = _StoreServices.GetActiveInAciveCustomersByStoreList(StoreID, UserId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
     }
 }

@@ -194,10 +194,150 @@ namespace CordobaAPI.API
                 throw;
             }
         }
+        //New Logic  
+        [HttpPost]
+        public HttpResponseMessage ImportPointsFromTMPTable(int store_id, int LoggedInUserId, bool IsSendEmail)
+        {
+            try
+            {
+
+                var TMPauditPointList = _CustomerService.GetauditPointTMP();
+                if (TMPauditPointList != null && TMPauditPointList.Count > 0)
+                {
+                    var dtResult = GeneralMethods.ToDataTable(TMPauditPointList);
+                    try
+                    {
+                        dtResult.Columns["emailAddress"].ColumnName = "email";
+                        dtResult.Columns["adjustmentPoints"].ColumnName = "points";
+                        dtResult.Columns["comment"].ColumnName = "comment";
+
+                        var result = _CustomerService.PointsImporter(store_id, LoggedInUserId, IsSendEmail, dtResult);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, result);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, 0);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        //New Logic  
+        [HttpPost]
+        public HttpResponseMessage PointsImportOnPopup(int store_id, int LoggedInUserId, bool IsSendEmail)
+        {
+            try
+            {
+
+                var directoryPath = System.Web.HttpContext.Current.Server.MapPath("~/TempFiles");
+
+                if (!System.IO.Directory.Exists(directoryPath))
+                {
+                    System.IO.Directory.CreateDirectory(directoryPath);
+                }
+                string filePath = directoryPath + @"\" + Guid.NewGuid().ToString() + ".xlsx";
+                if (HttpContext.Current.Request.Files.AllKeys.Any())
+                {
+                    // Get the uploaded image from the Files collection
+                    var httpPostedFile = HttpContext.Current.Request.Files[0];
+
+                    if (httpPostedFile != null)
+                    {
+                        string fileName = httpPostedFile.FileName;
+                        string contentType = httpPostedFile.ContentType;
+                        string extension = contentType.Substring(contentType.IndexOf('/') + 1, contentType.Length - contentType.IndexOf('/') - 1);
+                        int fileSize = httpPostedFile.ContentLength;
+                        byte[] fileData = null;
+
+                        using (var binaryReader = new BinaryReader(HttpContext.Current.Request.Files[0].InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(HttpContext.Current.Request.Files[0].ContentLength);
+
+                            File.WriteAllBytes(filePath, fileData);
+                        }
 
 
+                    }
+                }
+
+                string excelfilepath = filePath;
+                string strConnectionString = "";
+                if (excelfilepath.ToLower().Trim().EndsWith(".xlsx") || excelfilepath.ToLower().Trim().EndsWith(".xls") || excelfilepath.ToLower().Trim().EndsWith(".csv"))
+                {
+                    strConnectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";", excelfilepath);
+                }
+                OleDbConnection OleDbConn = new OleDbConnection(strConnectionString);
+
+                OleDbConn.Open();
+                DataTable dtSheets = OleDbConn.GetSchema("Tables");
+
+                OleDbDataAdapter OleDbAdapter = new OleDbDataAdapter();
+
+                string sql = "SELECT * FROM [" + dtSheets.Rows[0]["Table_name"] + "]";
+                DataTable dtXLS = new DataTable(Convert.ToString(dtSheets.Rows[0]["Table_name"]).Replace("$", ""));
+                dtXLS.TableName = "Sheet1";
+                OleDbCommand oleDbcommand = new OleDbCommand(sql, OleDbConn);
+
+                OleDbAdapter.SelectCommand = oleDbcommand;
+                OleDbAdapter.Fill(dtXLS);
+                OleDbConn.Close();
+
+                if (File.Exists(excelfilepath))
+                {
+                    File.Delete(excelfilepath);
+                }
+
+                if (dtXLS != null && dtXLS.Rows.Count > 0)
+                {
+                    try
+                    {
+                        dtXLS.Columns["Customer Email Address"].ColumnName = "email";
+                        dtXLS.Columns["Points Adjustment"].ColumnName = "points";
+                        dtXLS.Columns["Comment"].ColumnName = "comment";
+                        dtXLS.DefaultView.Sort = "points desc";
+                        dtXLS = dtXLS.DefaultView.ToTable();
+
+                        var ReviewResult = _CustomerService.PointsImportOnPopup(store_id, LoggedInUserId, IsSendEmail, dtXLS);
+                        if (ReviewResult != null && ReviewResult.Count > 0)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK, ReviewResult);
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
 
 
+                return Request.CreateResponse(HttpStatusCode.OK, 0);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+
+        }
+
+        //New Logic  
+        [HttpPost]
+        public HttpResponseMessage ImportPointFromTMP(string uniqueNo, int store, bool sendMail)
+        {
+            var result = _CustomerService.ImportPointFromTMP(uniqueNo, store, sendMail);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        //Old Logic Import from sheet
         [HttpPost]
         public HttpResponseMessage PointsImporter(int store_id, int LoggedInUserId, bool IsSendEmail)
         {
@@ -639,7 +779,7 @@ namespace CordobaAPI.API
                 //string encryptedpasssword = Security.Encrypt(rnd.Next(0, 1000000).ToString("D6"));
 
                 var result = _CustomerService.SendCustomerPassword(customer_id, NewPassword);
-               
+
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception e)
@@ -647,7 +787,7 @@ namespace CordobaAPI.API
                 throw;
             }
         }
-        
+
 
         public bool IsValidEmail(string email)
         {

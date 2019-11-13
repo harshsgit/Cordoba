@@ -53,7 +53,7 @@ namespace CordobaServices.Services
         public int InsertUpdateStore(StoreEntity storeEntity, int LoggedInUserId)
         {
             SqlParameter[] sqlParameter = new SqlParameter[] {
-                                                                                    
+
                                                    new SqlParameter("store_id", storeEntity.store_id)
                                                  , new SqlParameter("LoggedInUserId", LoggedInUserId)
                                                  , new SqlParameter("url", storeEntity.url?? (object) DBNull.Value)
@@ -72,7 +72,7 @@ namespace CordobaServices.Services
                                                  , new SqlParameter("css_overrides", storeEntity.css_overrides ??   DBNull.Value.ToString())
                                                  , new SqlParameter("template", storeEntity.template ??   DBNull.Value.ToString())
                                                  , new SqlParameter("layout", storeEntity.layout ??   DBNull.Value.ToString())
-                                                 
+
                                                  , new SqlParameter("country_id", storeEntity.country_id)
                                                  , new SqlParameter("language", storeEntity.language  ??   DBNull.Value.ToString())
                                                  , new SqlParameter("currency", storeEntity.currency  ??   DBNull.Value.ToString())
@@ -92,7 +92,7 @@ namespace CordobaServices.Services
         public int? DeleteStoreById_Admin(int storeId, int LoggedInUserId)
         {
             SqlParameter[] sqlParameter = new SqlParameter[] {
-                                                   new SqlParameter("StoreID", storeId)                                                 
+                                                   new SqlParameter("StoreID", storeId)
                                                    ,new SqlParameter("LoggedInUserId", LoggedInUserId)
                                                };
             var result = objGenericRepository.ExecuteSQL<int>("DeleteStoreById_Admin", sqlParameter).FirstOrDefault();
@@ -103,7 +103,7 @@ namespace CordobaServices.Services
         {
             try
             {
-                SqlParameter[] sqlParameter = new SqlParameter[] { 
+                SqlParameter[] sqlParameter = new SqlParameter[] {
                     new SqlParameter("Store_Id", Store_Id),
                     new SqlParameter("ImageName", !string.IsNullOrWhiteSpace(ImageName)?(object)ImageName:(object)DBNull.Value),
                     new SqlParameter("ImageKey", ImageKey),
@@ -130,7 +130,7 @@ namespace CordobaServices.Services
 
             try
             {
-                SqlParameter[] sqlParameter = new SqlParameter[] { 
+                SqlParameter[] sqlParameter = new SqlParameter[] {
                     new SqlParameter("store_id", store_id),
                     new SqlParameter("logo",logo)
                 };
@@ -155,8 +155,8 @@ namespace CordobaServices.Services
         {
             try
             {
-                SqlParameter[] sqlParameter = new SqlParameter[] { 
-                    new SqlParameter("store_id", StoreId),                  
+                SqlParameter[] sqlParameter = new SqlParameter[] {
+                    new SqlParameter("store_id", StoreId),
                 };
                 var result = objGenericRepository.ExecuteSQL<StoreImageEntity>("GetAdvertisementImageList", sqlParameter).ToList();
                 return result;
@@ -185,12 +185,12 @@ namespace CordobaServices.Services
                 var objParticipantsLoadedByMonth = objGenericRepository.ExecuteSQL<ParticipantsLoadedByMonth>("GetParticipantByMonthByStore", new SqlParameter("StoreID", StoreID),
                                                                                                                                               new SqlParameter("Month", Month),
                                                                                                                                               new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
-                    
+
                 objStoreHTMLEntity.participantsLoadedByMonth = objParticipantsLoadedByMonth;
 
                 var objPointsloadedbyMonth = objGenericRepository.ExecuteSQL<PointsLoadedByMonth>("GetPointsLoadedByMonthByStore", new SqlParameter("StoreID", StoreID),
                                                                                                                                    new SqlParameter("Month", Month),
-                                                                                                                                   new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList(); 
+                                                                                                                                   new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
                 objStoreHTMLEntity.pointsLoadedByMonth = objPointsloadedbyMonth;
 
                 var objPointsRedeemedByMonth = objGenericRepository.ExecuteSQL<PointsRedeemedByMonth>("GetPointsRedeemedByMonthByStore", new SqlParameter("StoreID", StoreID),
@@ -220,7 +220,35 @@ namespace CordobaServices.Services
             }
         }
 
+        //Dashboard New 
+        public List<OrderPlacedByTypeByStore> GetOrderPlacedByTypeByStoreList(int StoreID, int Month, int Year, long? UserId)
+        {
+            return objGenericRepository.ExecuteSQL<OrderPlacedByTypeByStore>("GetOrderPlacedByTypeByStore", new SqlParameter("StoreID", StoreID),
+                new SqlParameter("Month", Month),
+                new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
+        }
 
-         
+        public List<TopPointsHoldersByStore> GetTOPPointsHoldersByStoreList(int StoreID, int UserId)
+        {
+            return objGenericRepository.ExecuteSQL<TopPointsHoldersByStore>("GetTOPPointsHoldersByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
+        }
+
+        public List<PointsRedeemedByMonth> GetPointsRedeemedByMonthByStoreList(int StoreID, int Month, int Year, long UserId)
+        {
+            return objGenericRepository.ExecuteSQL<PointsRedeemedByMonth>("GetPointsRedeemedByMonthByStore",
+                new SqlParameter("StoreID", StoreID),
+                new SqlParameter("Month", Month),
+                new SqlParameter("Year", Year), new SqlParameter("UserId", UserId)).ToList();
+        }
+
+        public List<VoucherOrderByType> GetVoucherOrderByTypeList(int StoreID, long UserId)
+        {
+            return objGenericRepository.ExecuteSQL<VoucherOrderByType>("GetVoucherOrderByType", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
+        }
+
+        public List<StoreSummary> GetActiveInAciveCustomersByStoreList(int StoreID, long UserId)
+        {
+            return objGenericRepository.ExecuteSQL<StoreSummary>("GetActiveInAciveCustomersByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
+        }
     }
 }

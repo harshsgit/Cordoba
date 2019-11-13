@@ -64,7 +64,7 @@
                 <div class="col-sm-3" ng-if="category.parent_Id==SelectedCategoryId" ng-repeat="category in CategoryList | filter:{ parent_Id: category.Category_Id } ">
                     <div class="col-product text-center">
                         <div class="background-bg" ng-click="GetSubCategory(category.Category_Id,1)">
-                            <img ng-src="{{category.image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Img">
+                            <img class="imgCursor" title="{{category.name}}" ng-src="{{category.image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Img">
                         </div>
                         <a href="" ng-click="GetSubCategory(category.Category_Id,1)" ng-bind-html="category.name | limitTo:20" title="{{category.name}}"></a>
                     </div>

@@ -61,7 +61,9 @@ namespace CordobaModels.Entities
         public bool IsFromAdmin { get; set; }
         public int? Language { get; set; }
         public bool? is_department { get; set; }
+        public string JWTToken { get; set; }
     }
+    
 }
 
 

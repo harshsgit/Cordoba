@@ -8,24 +8,32 @@ using System.Threading.Tasks;
 
 namespace CordobaServices.Interfaces
 {
-   public interface IStoreServices
+    public interface IStoreServices
     {
-       List<StoreEntity> GetStoreList(int? StoreID, int LoggedInUserId);
+        List<StoreEntity> GetStoreList(int? StoreID, int LoggedInUserId);
 
-       StoreEntity GetStoreById(int store_id, int LoggedInUserId);
+        StoreEntity GetStoreById(int store_id, int LoggedInUserId);
 
-       int InsertUpdateStore(StoreEntity storeEntity, int LoggedInUserId);
+        int InsertUpdateStore(StoreEntity storeEntity, int LoggedInUserId);
 
-       int? DeleteStoreById_Admin(int storeId, int LoggedInUserId);
+        int? DeleteStoreById_Admin(int storeId, int LoggedInUserId);
 
-       bool UploadStoreImage(int Store_Id, string ImageName, int ImageKey,int layout);
+        bool UploadStoreImage(int Store_Id, string ImageName, int ImageKey, int layout);
 
-       bool UploadStoreLogo(int store_id, string logo);
+        bool UploadStoreLogo(int store_id, string logo);
 
-       List<StoreImageEntity> GetAdvertisementImageList(int StoreId);
+        List<StoreImageEntity> GetAdvertisementImageList(int StoreId);
 
-       StoreHTMLEntity GetStoreHTMLCharts(int StoreID, int Month, int Year, long? UserId);
+        StoreHTMLEntity GetStoreHTMLCharts(int StoreID, int Month, int Year, long? UserId);
 
-       
+        List<OrderPlacedByTypeByStore> GetOrderPlacedByTypeByStoreList(int StoreID, int Month, int Year, long? UserId);
+
+        List<TopPointsHoldersByStore> GetTOPPointsHoldersByStoreList(int StoreID, int UserId);
+
+        List<PointsRedeemedByMonth> GetPointsRedeemedByMonthByStoreList(int StoreID, int Month, int Year, long UserId);
+
+        List<VoucherOrderByType> GetVoucherOrderByTypeList(int StoreID, long UserId);
+
+        List<StoreSummary> GetActiveInAciveCustomersByStoreList(int StoreID, long UserId);
     }
 }

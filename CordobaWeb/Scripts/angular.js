@@ -11759,11 +11759,11 @@ var locationPrototype = {
    *
    *
    * ```js
-   * // given url http://example.com/#/some/path?foo=bar&baz=xoxo
+   * // given url 
    * var host = $location.host();
    * // => "example.com"
    *
-   * // given url http://user:password@example.com:8080/#/some/path?foo=bar&baz=xoxo
+   * // given url 
    * host = $location.host();
    * // => "example.com"
    * host = location.host;
@@ -21445,7 +21445,7 @@ var inputType = {
            angular.module('emailExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
                $scope.email = {
-                 text: 'me@example.com'
+                 text: ''
                };
              }]);
          </script>
@@ -21473,7 +21473,7 @@ var inputType = {
           var input = element(by.model('email.text'));
 
           it('should initialize to model', function() {
-            expect(text.getText()).toContain('me@example.com');
+            expect(text.getText()).toContain('');
             expect(valid.getText()).toContain('true');
           });
 
@@ -23136,7 +23136,7 @@ var ngCloakDirective = ngDirective({
  *      this.name = "John Smith";
  *      this.contacts = [
  *        {type: 'phone', value: '408 555 1212'},
- *        {type: 'email', value: 'john.smith@example.org'} ];
+ *        {type: 'email', value: ''} ];
  *    }
  *
  *    SettingsController1.prototype.greet = function() {
@@ -23144,7 +23144,7 @@ var ngCloakDirective = ngDirective({
  *    };
  *
  *    SettingsController1.prototype.addContact = function() {
- *      this.contacts.push({type: 'email', value: 'yourname@example.org'});
+ *      this.contacts.push({type: 'email', value: ''});
  *    };
  *
  *    SettingsController1.prototype.removeContact = function(contactToRemove) {
@@ -23172,7 +23172,7 @@ var ngCloakDirective = ngDirective({
  *           .toBe('408 555 1212');
  *
  *       expect(secondRepeat.element(by.model('contact.value')).getAttribute('value'))
- *           .toBe('john.smith@example.org');
+ *           .toBe('');
  *
  *       firstRepeat.element(by.buttonText('clear')).click();
  *
@@ -23184,7 +23184,7 @@ var ngCloakDirective = ngDirective({
  *       expect(container.element(by.repeater('contact in settings.contacts').row(2))
  *           .element(by.model('contact.value'))
  *           .getAttribute('value'))
- *           .toBe('yourname@example.org');
+ *           .toBe('');
  *     });
  *   </file>
  * </example>
@@ -23219,14 +23219,14 @@ var ngCloakDirective = ngDirective({
  *     $scope.name = "John Smith";
  *     $scope.contacts = [
  *       {type:'phone', value:'408 555 1212'},
- *       {type:'email', value:'john.smith@example.org'} ];
+ *       {type:'email', value:''} ];
  *
  *     $scope.greet = function() {
  *       alert($scope.name);
  *     };
  *
  *     $scope.addContact = function() {
- *       $scope.contacts.push({type:'email', value:'yourname@example.org'});
+ *       $scope.contacts.push({type:'email', value:''});
  *     };
  *
  *     $scope.removeContact = function(contactToRemove) {
@@ -23255,7 +23255,7 @@ var ngCloakDirective = ngDirective({
  *      expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
  *          .toBe('408 555 1212');
  *      expect(secondRepeat.element(by.model('contact.value')).getAttribute('value'))
- *          .toBe('john.smith@example.org');
+ *          .toBe('');
  *
  *      firstRepeat.element(by.buttonText('clear')).click();
  *
@@ -23267,7 +23267,7 @@ var ngCloakDirective = ngDirective({
  *      expect(container.element(by.repeater('contact in contacts').row(2))
  *          .element(by.model('contact.value'))
  *          .getAttribute('value'))
- *          .toBe('yourname@example.org');
+ *          .toBe('');
  *    });
  *  </file>
  *</example>

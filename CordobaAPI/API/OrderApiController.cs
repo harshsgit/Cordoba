@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Web.Http;
 using CordobaServices;
 using CordobaServices.Helpers;
+using CordobaAPI.Auth;
 
 namespace CordobaAPI.API
 {
+    
     public class OrderApiController : ApiController
     {
         public IOrderService _orderService;
@@ -24,6 +26,7 @@ namespace CordobaAPI.API
 
 
         [HttpGet]
+        [JwtAuthentication]
         public HttpResponseMessage GetOrderHistory(int StoreId, int LoggedInUserId, int customer_id)
         {
             try

@@ -2,8 +2,8 @@
 <html ng-app="CordobaApp" lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
     <title ng-bind="storeName"></title>
     <!-- Bootstrap -->
     @Styles.Render("~/bundles/Layout2CSS?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
@@ -121,7 +121,7 @@
                             <div class="login">
                                 <ul class="topnavbar-nav">
                                     @*<li><a href="{{StoreDetailInSession.url}}" target="_blank" ng-bind="StoreDetailInSession.url"></a></li>*@
-                                    
+
                                     <li ng-if="CustomerDetail.customer_id>0">
                                         <p class="hi-text ">You have {{CustomerDetail.points}} Points</p>
                                     </li>
@@ -282,17 +282,17 @@
                                 <h2>Login</h2>
                                 <img src="~/Content/layout2/images/online-shopping.png" class="pt-20" alt="online-shopping">
                             </div>
-                            <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate>
+                            <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate method="post">
                                 <div class="login_page_right">
                                     <div class="form-group pt-20">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" ng-model="CustomerObj.email" required="required" ng-blur="validateEmailaddress()">
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" ng-model="CustomerObj.email" required="required" ng-blur="validateEmailaddress()" autocomplete="off">
                                         <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && (loginForm.email.$error.required || loginForm.email.$error.email)">Enter valid email id!</p>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password:</label>
                                         <a href="javascript:;" ng-click="ForgotPassword(forgotPasswordForm)" class="forgot-password pull-right">Forgot Password?</a>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="CustomerObj.password" required="required">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="CustomerObj.password" required="required" autocomplete="off">
                                         <p class="text-danger validationErrors" ng-show="loginForm.$submitted && (!loginForm.$valid) && loginForm.password.$error.required">Password is required!</p>
                                         @*<a href="javascript:;" ng-click="ForgotPassword(forgotPasswordForm)" class="forgot-password">Forgot Password?</a>*@
                                     </div>
@@ -454,7 +454,7 @@
 
             $(".content, #aboutScroll").mCustomScrollbar();
 
-            $(".showDesc").click(function () {
+            $(".showDesc").click(function() {
                 var hidden = $(".about-us");
                 if (hidden.hasClass("visible")) {
                     hidden.animate({ "right": "-350px" }, "slow").removeClass("visible");
@@ -470,13 +470,13 @@
                 }
             });
 
-            $(".readMore").click(function () {
+            $(".readMore").click(function() {
                 $('.more-content').slideToggle();
                 $(".readMore").hide();
                 $(".readLess").show();
             });
 
-            $(".readLess").click(function () {
+            $(".readLess").click(function() {
                 $('.more-content').slideToggle();
                 $(".readLess").hide();
                 $(".readMore").show();
@@ -486,18 +486,17 @@
 
         });
 
-        $(window).scroll(function () {
+        $(window).scroll(function() {
             if ($(this).scrollTop() > 1) {
                 $('.top-nav').addClass("hidden");
-            }
-            else {
+            } else {
                 $('.top-nav').removeClass("hidden");
             }
         });
 
         if ($('#back-to-top').length) {
             var scrollTrigger = 100, // px
-                backToTop = function () {
+                backToTop = function() {
                     var scrollTop = $(window).scrollTop();
                     if (scrollTop > scrollTrigger) {
                         $('#back-to-top').addClass('show');
@@ -506,15 +505,18 @@
                     }
                 };
             backToTop();
-            $(window).on('scroll', function () {
-                backToTop();
-            });
-            $('#back-to-top').on('click', function (e) {
-                e.preventDefault();
-                $('html,body').animate({
-                    scrollTop: 0
-                }, 700);
-            });
+            $(window).on('scroll',
+                function() {
+                    backToTop();
+                });
+            $('#back-to-top').on('click',
+                function(e) {
+                    e.preventDefault();
+                    $('html,body').animate({
+                            scrollTop: 0
+                        },
+                        700);
+                });
         }
 
         function CartAnimation(target, Image) {
@@ -522,8 +524,7 @@
             if (Image != undefined && Image != null) {
                 var imgtodrag = $('<img id="dynamic">');
                 imgtodrag.attr('src', Image);
-            }
-            else {
+            } else {
                 var imgtodrag = $('<img id="dynamic">');
                 imgtodrag.attr('src', '/Content/layout1/images/step-4-process.png');
             }
@@ -531,37 +532,56 @@
                 var imgclone = imgtodrag.clone()
                 if (imgclone.length) {
                     imgclone.offset({
-                        top: target.offset().top,
-                        left: target.offset().left
-                    })
-                  .css({
-                      //'opacity': '0.5',
-                      'position': 'absolute',
-                      'width': '150px',
-                      'z-index': '99999'
-                  });
+                            top: target.offset().top,
+                            left: target.offset().left
+                        })
+                        .css({
+                            //'opacity': '0.5',
+                            'position': 'absolute',
+                            'width': '150px',
+                            'z-index': '99999'
+                        });
 
                     imgclone.appendTo($('body'))
-                    .animate({
-                        'top': cart.offset().top + 10,
-                        'left': cart.offset().left + 10,
-                        'width': 75,
-                    }, 1000, 'easeInOutExpo');
+                        .animate({
+                                'top': cart.offset().top + 10,
+                                'left': cart.offset().left + 10,
+                                'width': 75,
+                            },
+                            1000,
+                            'easeInOutExpo');
 
-                    setTimeout(function () {
-                        cart.effect("shake", {
-                            times: 2
-                        }, 200);
-                    }, 0);
+                    setTimeout(function() {
+                            cart.effect("shake",
+                                {
+                                    times: 2
+                                },
+                                200);
+                        },
+                        0);
 
                     imgclone.animate({
-                        'width': 0,
-                        'height': 0
-                    }, function () {
-                        $(this).detach()
-                    });
+                            'width': 0,
+                            'height': 0
+                        },
+                        function() {
+                            $(this).detach()
+                        });
                 }
             }
+        }
+
+
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148572980-1"></script>
+    <script>
+        var currentUrl = window.location.href;
+        if (currentUrl.indexOf("grenkerewards.co.uk") != -1) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-148572980-1');
         }
     </script>
 
