@@ -1547,5 +1547,66 @@ namespace CordobaAPI.API
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetGetRemainingPointsByStoreList(int StoreID, long UserId)
+        {
+            var result = _StoreServices.GetGetRemainingPointsByStoreList(StoreID, UserId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        [HttpGet]
+        public HttpResponseMessage GetPointsLoadedByMonthByStoreList(int StoreID, int Month, int Year, int userId)
+        {
+            var result = _StoreServices.GetPointsLoadedByMonthByStoreList(StoreID, Month, Year, userId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetPointsLoadedByMonthByStoreListExport(int StoreID, int Month, int Year, int userId)
+        {
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            DateTime date = DateTime.Now.Date;
+            string str = string.Concat("PointsLoadedByMonth_Export", date.ToString("ddMMyyyy"), ".xls");
+
+            List<ColumnConfiguration> selectedColumn = new List<ColumnConfiguration>();
+            selectedColumn.Add(new ColumnConfiguration("Month", "Month"));
+            selectedColumn.Add(new ColumnConfiguration("Points", "Points"));
+            var result = _StoreServices.GetPointsLoadedByMonthByStoreList(StoreID, Month, Year, userId);
+            DataSet ds = new DataSet();
+            if (result != null && result.Count > 0)
+            {
+                DataTable dtRsult = ToDataTable(result);
+                if (dtRsult != null && dtRsult.Rows.Count > 0)
+                {
+                    ds.Tables.Add(dtRsult);
+                }
+                DataTable dt = ds.Tables[0].DefaultView.ToTable(false, selectedColumn.Select(s => s.OriginalColumnName).ToArray());
+
+                ds.Tables.RemoveAt(0);
+                ds.Tables.Add(dt);
+                ds = GeneralMethods.ChangeDataSetColumnTitleAndReorder(ds, selectedColumn);
+            }
+            try
+            {
+                if (ds == null || ds.Tables.Count == 0)
+                {
+                    return base.Request.CreateErrorResponse(HttpStatusCode.NotFound, "No records found.");
+                }
+                byte[] asByteArray = GeneralMethods.ExportToExcel(ds, "PointsLoadedByMonth");
+
+                HttpResponseMessage streamContent = new HttpResponseMessage(HttpStatusCode.OK);
+                Stream @null = Stream.Null;
+                streamContent.Content = new StreamContent(new MemoryStream(asByteArray));
+                streamContent.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                streamContent.Content.Headers.Add("content-disposition", string.Concat("attachment;  filename=\"", str, "\""));
+                httpResponseMessage = streamContent;
+
+            }
+            catch (Exception)
+            {
+                httpResponseMessage = base.Request.CreateResponse<bool>(HttpStatusCode.OK, false);
+            }
+            return httpResponseMessage;
+        }
+
     }
 }

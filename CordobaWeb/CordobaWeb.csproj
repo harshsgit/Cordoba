@@ -2644,6 +2644,7 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-parse-ext.js" />
     <Content Include="Scripts\angular-parse-ext.min.js" />
+    <Content Include="Scripts\angular-recaptcha.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />

@@ -35,5 +35,9 @@ namespace CordobaServices.Interfaces
         List<VoucherOrderByType> GetVoucherOrderByTypeList(int StoreID, long UserId);
 
         List<StoreSummary> GetActiveInAciveCustomersByStoreList(int StoreID, long UserId);
+        List<PointsRemaining> GetGetRemainingPointsByStoreList(int StoreID, long UserId);
+        List<PointsLoadedByMonth> GetPointsLoadedByMonthByStoreList(int StoreID, int Month, int Year, int userId);
+
+
     }
 }

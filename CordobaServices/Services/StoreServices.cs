@@ -250,5 +250,19 @@ namespace CordobaServices.Services
         {
             return objGenericRepository.ExecuteSQL<StoreSummary>("GetActiveInAciveCustomersByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
         }
+        public List<PointsRemaining> GetGetRemainingPointsByStoreList(int StoreID, long UserId)
+        {
+            return objGenericRepository.ExecuteSQL<PointsRemaining>("GetRemainingPointsByStore", new SqlParameter("StoreID", StoreID), new SqlParameter("UserId", UserId)).ToList();
+        }
+        public List<PointsLoadedByMonth> GetPointsLoadedByMonthByStoreList(int StoreID, int Month, int Year, int userId)
+        {
+            return objGenericRepository
+                .ExecuteSQL<PointsLoadedByMonth>("GetPointsLoadedByMonthByStore", new SqlParameter("StoreID", StoreID),
+                    new SqlParameter("month", Month),
+                    new SqlParameter("year", Year),
+                    new SqlParameter("UserId", userId)
+                )
+                .ToList();
+        }
     }
 }

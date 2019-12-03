@@ -21,7 +21,7 @@
                 }
             })
             .catch(function (response) {
-                debugger;
+                 
             })
             .finally(function () {
 
@@ -186,7 +186,7 @@
                     }
                 })
                 .catch(function (response) {
-                    debugger;
+                     
                 })
                 .finally(function () {
 

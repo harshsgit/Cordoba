@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="page-header-content">
             <div class="page-title">
-                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Dashboard</h4>
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Store Summary</h4>
             </div>
             <div class="heading-elements">
                 <div class="heading-btn-group">
@@ -13,14 +13,14 @@
         <div class="breadcrumb-line">
             <ul class="breadcrumb">
                 <li><a><i class="icon-home2 position-left"></i> Home</a></li>
-                <!--<li class="active">Generate PPT</li>-->
+                <li class="active">Store Summary</li>
 
 
             </ul>
-            <ul class="breadcrumb-elements">
+            <!--<ul class="breadcrumb-elements">
                 <li> <button type="button" class="btn btn-success btn-md" data-placement="top" data-toggle="tooltip" title="Export Store" ng-click="ExportStoreHTMLPDF()"> Generate Store PPT<i class="icon-arrow-right14 position-right"></i></button></li>
                 <li ng-hide="true"> <a id='Generatepdf' ng-hide="true">Generate ppt</a></li>
-            </ul>
+            </ul>-->
         </div>
     </div>
     <div class="drop" style="padding:0 20px 20px 20px;">
@@ -50,7 +50,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="panel">
-                    <div class="panel-heading">
+                    <div class="panel-heading dashboardreiewPanel">
                         <h5 class="panel-title">TOP POINTS HOLDERS</h5>
                     </div>
                     <div class="panel-body">
@@ -115,7 +115,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="chart-container text-center">
-                            <button class="btn btn-primary">SHOW DATA</button>
+                            <button class="btn btn-primary" ng-click="MonthlyPointModalClick()">SHOW DATA</button>
                         </div>
                     </div>
                 </div>
@@ -135,26 +135,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="page-header-content">
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <div class="tableFixHead">
-                                    <table class="table table-bordered  table-striped datatable-responsive" datatable="ng" id="tblOrderType" dt-options="dtOptions" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Type Name</th>
-                                                <th>Order Count</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="Item in OrderPlaceTypeList">
-                                                <td ng-bind="Item.Name"></td>
-                                                <td ng-bind="Item.OrderCount"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+
+                        <div class="tableFixHead">
+                            <table class="table table-bordered  table-striped datatable-responsive" datatable="ng" id="tblOrderType" dt-options="dtOptions" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Type Name</th>
+                                        <th>Order Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="Item in OrderPlaceTypeList">
+                                        <td ng-bind="Item.Name"></td>
+                                        <td ng-bind="Item.OrderCount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer pt-5">
@@ -177,32 +175,30 @@
                 </div>
                 <div class="modal-body">
                     <div class="page-header-content">
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <div class="tableFixHead">
-                                    <table class="table table-bordered table-striped datatable-responsive" id="tblTOPPoint" dt-options="dtOptions" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Full Name</th>
-                                                <th>Email</th>
-                                                <th>Points</th>
-                                                <th>Status</th>
-                                                <th>Date Added</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="Item in TopPointsHolderList">
-                                                <td ng-bind="Item.FullName"></td>
-                                                <td ng-bind="Item.Email"></td>
-                                                <td ng-bind="Item.Points"></td>
-                                                <td ng-bind="Item.Status"></td>
-                                                <td> {{Item.DateAdded| date: GlobalDateFormat}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+
+                        <div class="tableFixHead">
+                            <table class="table table-bordered table-striped datatable-responsive" id="tblTOPPoint" dt-options="dtOptions" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Points</th>
+                                        <th>Status</th>
+                                        <th>Date Added</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="Item in TopPointsHolderList">
+                                        <td ng-bind="Item.FullName"></td>
+                                        <td ng-bind="Item.Email"></td>
+                                        <td ng-bind="Item.Points"></td>
+                                        <td ng-bind="Item.Status"></td>
+                                        <td> {{Item.DateAdded| date: GlobalDateFormat}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer pt-5">
@@ -225,26 +221,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="page-header-content">
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <div class="tableFixHead">
-                                    <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblPointRedeem" dt-options="dtOptions" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Month</th>
-                                                <th>Points</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="Item in PointsRedeemList">
-                                                <td ng-bind="Item.Month"></td>
-                                                <td ng-bind="Item.Points"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+
+                        <div class="tableFixHead">
+                            <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblPointRedeem" dt-options="dtOptions" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="Item in PointsRedeemList">
+                                        <td ng-bind="Item.Month"></td>
+                                        <td ng-bind="Item.Points"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer pt-5">
@@ -265,26 +259,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="page-header-content">
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <div class="tableFixHead">
-                                    <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblPointRedeem" dt-options="dtOptions" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Category Name</th>
-                                                <th>Orders</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="Item in VoucherOrderByTypeList">
-                                                <td ng-bind="Item.ReportCategoryName"></td>
-                                                <td ng-bind="Item.Orders"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div class="tableFixHead">
+                            <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblPointRedeem" dt-options="dtOptions" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Category Name</th>
+                                        <th>Orders</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="Item in VoucherOrderByTypeList">
+                                        <td ng-bind="Item.ReportCategoryName"></td>
+                                        <td ng-bind="Item.Orders"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer pt-5">
@@ -305,20 +296,40 @@
                 </div>
                 <div class="modal-body">
                     <div class="page-header-content">
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4>PARTICIPANTS</h4>
                                 <div class="tableFixHead">
-                                    <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblStoreSummary" dt-options="dtOptions" width="100%">
+                                    <table class="table table-bordered table-striped datatable-responsive" id="tblStoreSummary" dt-options="dtOptions" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Category Name</th>
-                                                <th>Orders</th>
+                                                <th>Activated</th>
+                                                <th>Not Activated</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="Item in StoreSummaryList">
-                                                <td ng-bind="Item.ReportCategoryName"></td>
-                                                <td ng-bind="Item.Orders"></td>
+                                            <tr>
+                                                <td ng-bind="activatedParticipants"></td>
+                                                <td ng-bind="notActivatedParticipants"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4>POINTS</h4>
+                                <div class="tableFixHead">
+                                    <table class="table table-bordered table-striped datatable-responsive" id="tblStoreSummary" dt-options="dtOptions" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Activated Accounts</th>
+                                                <th>Not Activated Accounts</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td ng-bind="activatedacounts"></td>
+                                                <td ng-bind="notActivatedaccounts"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -328,7 +339,43 @@
                     </div>
                 </div>
                 <div class="modal-footer pt-5">
-                    <button type="button" class="btn btn-primary" ng-click="exportToExcelStoreSummary()">Export To Excel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--Points Loaded Modal Popup-->
+    <div id="MonthlyPointsModel" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">POINTS LOADED {{selectedyear-1}}/{{selectedyear}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="page-header-content">
+                        <div class="tableFixHead">
+                            <table class="table table-bordered table-striped datatable-responsive" datatable="ng" id="tblPointRedeem" dt-options="dtOptions" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Month Name</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="Item in MonthlyPointsList">
+                                        <td ng-bind="Item.Month"></td>
+                                        <td ng-bind="Item.Points"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer pt-5">
+                    <button type="button" class="btn btn-primary" ng-click="exportToExcelMonthlyPoint()">Export To Excel</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -339,7 +386,7 @@
 
 <style type="text/css">
     .dashboardreiewPanel {
-        border-bottom: solid 1px #ddd;
-        background: #ddd
+        border-bottom: solid 1px lightblue;
+        background: lightblue;
     }
 </style>

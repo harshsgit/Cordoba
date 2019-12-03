@@ -1138,5 +1138,6 @@
     $scope.getStoreWidth =function() {
         return '1270px';   
     }
+    
 
 });

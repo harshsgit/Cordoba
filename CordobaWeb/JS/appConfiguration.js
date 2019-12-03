@@ -1,6 +1,6 @@
 ﻿
 'use strict';
-var app = angular.module("CordobaApp", ["ui.router", "LocalStorageModule", "datatables", "ngFileUpload", "ngSanitize", 'ngAnimate', 'ngDragDrop', "textAngular", "uiSwitch", "ngCkeditor", "angular-star-rating", "ui.bootstrap", "textAngular"]);
+var app = angular.module("CordobaApp", ["ui.router", "LocalStorageModule", "datatables", "ngFileUpload", "ngSanitize", 'ngAnimate', 'ngDragDrop', "textAngular", "uiSwitch", "ngCkeditor", "angular-star-rating", "ui.bootstrap", "textAngular", "vcRecaptcha"]);
 GetAdminUserDetail();
 GetLayoutName();
 

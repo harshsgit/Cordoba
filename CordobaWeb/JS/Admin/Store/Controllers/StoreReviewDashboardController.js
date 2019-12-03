@@ -205,14 +205,19 @@
 
 
 
-    $scope.StoreSummaryList = [];
+    $scope.PaticipantsStoreSummaryList = [];
+    $scope.activatedParticipants = 0;
+    $scope.notActivatedParticipants = 0;
+    $scope.activatedacounts = 0;
+    $scope.notActivatedaccounts = 0;
+
     $scope.StoreSummaryModalClick = function () {
         $http.get(configurationService.basePath + "api/StoreApi/GetActiveInAciveCustomersByStoreList?StoreID=" + $scope.StoreId +
             "&UserId=" + $scope.LoggedInUserId)
             .then(function (response) {
                 if (response.data.length > 0) {
-                    debugger;
-                    $scope.StoreSummaryList = response.data;
+                    $scope.activatedParticipants = response.data.filter(x => x.Status == 'Active')[0].Count;
+                    $scope.notActivatedParticipants = response.data.filter(x => x.Status == 'Not Active')[0].Count;
                 }
                 $("#StoreSummaryModel").modal('show');
             })
@@ -221,11 +226,45 @@
             .finally(function () {
             });
 
+        $http.get(configurationService.basePath + "api/StoreApi/GetGetRemainingPointsByStoreList?StoreID=" + $scope.StoreId +
+            "&UserId=" + $scope.LoggedInUserId)
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.activatedacounts = response.data.filter(x => x.Status == 'Activated accounts')[0].Count;
+                    $scope.notActivatedaccounts = response.data.filter(x => x.Status == 'Non activated accounts')[0].Count;
+                }
+                $("#StoreSummaryModel").modal('show');
+            })
+            .catch(function (response) {
+            })
+            .finally(function () {
+            });
     }
-    $scope.exportToExcelStoreSummary = function () {
+
+
+
+    //Montly Points
+    $scope.MonthlyPointsList = [];
+    $scope.MonthlyPointModalClick = function () {
+        $http.get(configurationService.basePath + "api/StoreApi/GetPointsLoadedByMonthByStoreList?StoreID=" + $scope.StoreId + "&Month=" +
+            $scope.selectedmonth + "&Year=" + $scope.selectedyear + "&userId=" + $scope.LoggedInUserId
+        )
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.MonthlyPointsList = response.data;
+                }
+                $("#MonthlyPointsModel").modal('show');
+            })
+            .catch(function (response) {
+            })
+            .finally(function () {
+            });
+
+    }
+    $scope.exportToExcelMonthlyPoint = function () {
         $http({
-            url: configurationService.basePath + "api/StoreApi/GetActiveInAciveCustomersByStoreList?StoreID=" + $scope.StoreId +
-                "&UserId=" + $scope.LoggedInUserId,
+            url: configurationService.basePath + "api/StoreApi/GetPointsLoadedByMonthByStoreListExport?StoreID=" + $scope.StoreId + "&Month=" +
+                $scope.selectedmonth + "&Year=" + $scope.selectedyear + "&userId=" + $scope.LoggedInUserId,
             method: "POST",
             'dataSrc': 'aaData',
             "dataType": 'json',

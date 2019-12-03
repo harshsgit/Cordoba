@@ -10,7 +10,7 @@
         color: #36A0FF;
     }
 
-   /* .account-block {
+    /* .account-block {
         float: right;
         width: 97%;
     }*/
@@ -22,12 +22,12 @@
             <div class="points personal-info">
                 <h3>Contact Us</h3>
             </div>
-            
+
         </div>
     </div>
 </div>
 <!--<aside id="contact-info" class="pull-right">
-    <dl>      
+    <dl>
         <dd class="social-links">
           <span><b>Find us on:</b></span>   &nbsp;
             <a class="fb cursor-pointer" href="" title="Find us on Facebook">Facebook</a>
@@ -39,9 +39,9 @@
     <!--<div class="page-header">
         <h1>Contact Form <small>Always there for you</small></h1>
     </div>-->
-    <!-- Contact Form - START -->    
+    <!-- Contact Form - START -->
     <div class="col-md-12">
-       
+
         <div class="note">
             <p>
                 We are here to answer any questions you may have about our <b>{{StoreDetailInSession.name}}</b>
@@ -62,7 +62,7 @@
                         <li ng-show="contactForm.Email.$error.required || contactForm.Email.$error.email">Email address is not valid.</li>
                         <li ng-show="contactForm.Phone.$error.required">Phone is required.</li>
                         <li ng-show="contactForm.Message.$error.required">Message is required.</li>
-                        <!--<li ng-show="!captchaValid">You must complete the antispam verification.</li>-->
+                        <li ng-show="!(googleresponse.length>0)">Captcha is required.</li>
                     </ul>
                 </div>
             </div>
@@ -101,6 +101,19 @@
                         <textarea class="form-control" id="Message" ng-model="contactUsObj.description" name="Message" placeholder="If your enquiry relates to an order placed on the site, Please include your order id here" rows="7" required="required"></textarea>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-md-4 ">
+                    </div>
+                    <div class="col-md-8 ">
+                        <div vc-recaptcha
+                             theme="'light'"
+                             key="model.key"
+                             on-create="setWidgetId(widgetId)"
+                             on-success="setResponse(response)"
+                             on-expire="cbExpiration()"></div>
+                    </div>
+
+                </div>
                 <!--<div class="form-group">
                     <span class="col-md-1 col-md-offset-2 text-center required">
                       <label for="id_tapcha_0"> </label>
@@ -109,19 +122,19 @@
                     <div class="g-recaptcha" data-sitekey="6LdVYCoUAAAAAKY0fQMj0adUreM8txNLs59ULs8J"></div>
                       </div>
                 </div>-->
-                    <div class="form-group">
-                        <div class="col-md-12 text-center">
-                            <button type="submit" ng-click="SendContactUsDetail(contactForm)" class="btn btn-primary btn-lg">Submit</button>
-                        </div>
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" ng-click="SendContactUsDetail(contactForm)" class="btn btn-primary btn-lg">Submit</button>
                     </div>
-        </fieldset>
+                </div>
+            </fieldset>
         </form>
 
     </div>
 </div>
-    
 
-    <!-- Contact Form - END -->
+
+<!-- Contact Form - END -->
 
 
 <script type="text/javascript">
@@ -132,21 +145,6 @@
     });
 </script>
 <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!--<div class="jumbotron jumbotron-sm">
     <div class="container">
         <div class="row">
