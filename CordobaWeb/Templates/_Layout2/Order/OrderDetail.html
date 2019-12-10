@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-5 col-sm-4">
                         <p class="product-price"><span>Points:</span> <span ng-bind="(Item.points | number :0) +' points'"></span></p>
-                        <p class="product-price" ng-if="Item.quantity>1"><span>Subtotal: </span><span ng-bind="(Item.total | number :0) +' points'"></span></p>
+                        <p class="product-price" ng-if="Item.quantity>1"><span>Subtotal: </span><span ng-bind="(Item.totalpoints | number :0) +' points'"></span></p>
                     </div>
                     <div class="cart-detail" ng-if="OrderdetailObj.order_status_id == OrderStatusEnum.Processing || OrderdetailObj.order_status_id == OrderStatusEnum.Shipped || OrderdetailObj.order_status_id == OrderStatusEnum.Delivered">
                         <ul class="order-status">
