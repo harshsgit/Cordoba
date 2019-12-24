@@ -2606,5 +2606,24 @@ label {
     white-space: nowrap;
     width: 100%;
     float: left;
-
 }
+
+.search_products .add-on .dropdown-menu {
+    max-height: 400px;
+    max-width: 100%;
+    overflow: auto;
+}
+
+    .search_products .add-on .dropdown-menu li a {
+        color: black !important;
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .search_products .add-on.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+        background-color: navajowhite;
+    }
+
+    .search_products .add-on .dropdown-menu li active {
+        background-color: navajowhite !important;
+    }

@@ -474,6 +474,12 @@ namespace CordobaServices.Services
             var result = objGenericRepository.ExecuteSQL<BestSellerEntity>("GetBestSellerByProductId", paramProductId).ToList();
             return result;
         }
+        public List<string> GetAutoCompleteProductList(int storeId)
+        {
+            var param = new SqlParameter { ParameterName = "store_id", DbType = DbType.Int32, Value = storeId };
+            var result = objGenericRepository.ExecuteSQL<string>("GetAutoCompleteProductList", param).ToList();
+            return result;
+        }
     }
 
 

@@ -298,7 +298,6 @@
             "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
 
                 aoData = BindSearchCriteria(aoData);
-
                 aoData = BindSorting(aoData, oSettings);
                 var PageIndex = parseInt($('#tblStoreReport').DataTable().page.info().page) + 1;
                 $scope.GridParams = aoData;

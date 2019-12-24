@@ -84,7 +84,7 @@ namespace CordobaAPI.API
 
 
         [HttpPost]
-        public TableParameter<ReportEntity> GetTransactionReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
+        public TableParameter<ReportEntity> GetTransactionReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int? LoggedInUserId, object tableParameter)
+        public HttpResponseMessage TransactionReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -208,7 +208,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public TableParameter<ReportEntity> GetTransactionItemReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
+        public TableParameter<ReportEntity> GetTransactionItemReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
         {
             try
             {
@@ -236,7 +236,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionItemReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int? LoggedInUserId, object tableParameter)
+        public HttpResponseMessage TransactionItemReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;
@@ -371,7 +371,7 @@ namespace CordobaAPI.API
 
 
         [HttpPost]
-        public TableParameter<ReportEntity> GetTransactionItemCategoryReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
+        public TableParameter<ReportEntity> GetTransactionItemCategoryReportList(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, int LoggedInUserId, TableParameter<ReportEntity> tableParameter)
         {
             try
             {
@@ -399,7 +399,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage TransactionItemCategoryReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, int StoreId, int? LoggedInUserId, object tableParameter)
+        public HttpResponseMessage TransactionItemCategoryReportExportToExcel(int PageIndex, Nullable<DateTime> DateStart, Nullable<DateTime> DateEnd, string StoreId, int? LoggedInUserId, object tableParameter)
         {
             SortColumn sr;
             string sortColumn;

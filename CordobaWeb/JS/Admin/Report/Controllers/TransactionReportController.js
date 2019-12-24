@@ -12,7 +12,7 @@
     $scope.TransactionReportObj.DateStart = null;
     $scope.TransactionReportObj.DateEnd = null;
     $scope.TransactionReportObj.store_id = $rootScope.storeId;
-   
+
 
     $scope.PageTitle = "Reports - Transaction Report";
 
@@ -24,17 +24,17 @@
 
     $scope.GetStoreList = function () {
         $http.get(configurationService.basePath + "api/StoreApi/GetStoreList?StoreID=" + $scope.store_id + '&LoggedInUserId=' + $scope.LoggedInUserId)
-          .then(function (response) {
-              if (response.data.length > 0) {
-                  $scope.StoreList = response.data;
-              }
-          })
-      .catch(function (response) {
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.StoreList = response.data;
+                }
+            })
+            .catch(function (response) {
 
-      })
-      .finally(function () {
+            })
+            .finally(function () {
 
-      });
+            });
     }
 
     $scope.GetStoreList();
@@ -62,11 +62,22 @@
         return aoData;
     }
 
-    $scope.GetTransactionReportList = function () {   
+    $scope.GetTransactionReportList = function () {
+
         if ($.fn.DataTable.isDataTable("#tblTransactionReport")) {
             $('#tblTransactionReport').DataTable().destroy();
         }
+        $scope.TransactionReportObj.store_id = '';
+        $scope.TransactionReportObj.store_ids = $filter('filter')($scope.StoreList, { IsSelected: true }, true);
+        if ($scope.TransactionReportObj.store_ids.length > 0) {
+            angular.forEach($scope.TransactionReportObj.store_ids, function (value, key) {
+                $scope.TransactionReportObj.store_id += $scope.TransactionReportObj.store_ids[key].store_id + ',';
+            });
+            $scope.TransactionReportObj.store_id = $scope.TransactionReportObj.store_id.slice(0, -1);
+        }
+        
 
+        
         //var table;
         var table = $('#tblTransactionReport').DataTable({
             stateSave: false,
@@ -119,18 +130,18 @@
                         }
                     }
                 },
-                   //{
-                   //    "mData": "DateEnd", "bSortable": true,
-                   //    "render": function (data, type, row) {
-                   //        if (data != null) {
-                   //            return '<label>' + $filter("date")(data, $rootScope.GlobalDateFormat); '</label>';
+                //{
+                //    "mData": "DateEnd", "bSortable": true,
+                //    "render": function (data, type, row) {
+                //        if (data != null) {
+                //            return '<label>' + $filter("date")(data, $rootScope.GlobalDateFormat); '</label>';
 
-                   //        }
-                   //        else {
-                   //            return "";
-                   //        }
-                   //    }
-                   //},
+                //        }
+                //        else {
+                //            return "";
+                //        }
+                //    }
+                //},
                 {
                     "mData": "firstname",
                     "bSortable": true

@@ -61,16 +61,20 @@
                         </div>-->
                     </div>
                     <div class="row">
-                        <div class="form-group">
-                            <label class="col-md-1 control-label">Store:</label>
-                            <div class="col-md-12">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="input-status">Store</label>
+
+
                                 <div class="well well-sm" style="height:250px; overflow: auto;">
-                                    <div class="col-sm-6 checkbox" ng-repeat="Item in StoreList">
-                                        <label><input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" name="checkbox" value="value">{{Item.name}}</label>
+                                    <div ng-repeat="Item in StoreList">
+                                        <label><input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" name="checkbox" value="value">&nbsp;{{Item.name}}</label>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
+                        
                         <!--<div class="col-sm-12">
                             <label class="control-label" for="input-status">Store</label>
                             <select ng-options="store.store_id as store.name  for store in StoreList"
@@ -81,7 +85,7 @@
 
 
                     </div>
-                   
+
                     <div class="row pt-10">
                         <div class="col-sm-12">
                             <button ng-click="GetTransactionItemReportList()" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Filter</button>

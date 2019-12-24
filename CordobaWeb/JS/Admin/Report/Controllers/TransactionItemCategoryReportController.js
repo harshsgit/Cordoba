@@ -67,6 +67,15 @@
             $('#tblTransactionItemCategoryReport').DataTable().destroy();
         }
 
+        $scope.TransactionItemCategoryReportObj.store_id = '';
+        $scope.TransactionItemCategoryReportObj.store_ids = $filter('filter')($scope.StoreList, { IsSelected: true }, true);
+        angular.forEach($scope.TransactionItemCategoryReportObj.store_ids, function (value, key) {
+
+            $scope.TransactionItemCategoryReportObj.store_id += $scope.TransactionItemCategoryReportObj.store_ids[key].store_id + ',';
+        });
+
+        $scope.TransactionItemCategoryReportObj.store_id = $scope.TransactionItemCategoryReportObj.store_id.slice(0, -1);
+
         //var table;
         var table = $('#tblTransactionItemCategoryReport').DataTable({
             stateSave: false,

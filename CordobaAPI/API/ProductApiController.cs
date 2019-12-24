@@ -446,6 +446,24 @@ namespace CordobaAPI.API
 
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetAutoCompleteProductList(int storeId)
+        {
+            try
+            {
+                var result = _ProductServices.GetAutoCompleteProductList(storeId);
+                if (result != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
 
     }

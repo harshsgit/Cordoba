@@ -189,7 +189,9 @@
                                 </div>
                                 <div class="search_products">
                                     <div class="input-group add-on">
-                                        <input class="form-control add-on" placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" name="srch-term" ng-model="WhatYouarelookingfor" id="srch-term" type="text">
+                                        <input name="srch-term" ng-model="WhatYouarelookingfor" placeholder="Search" id="srch-term" type="text" class="form-control autocomplete"  my-enter="GotoProductList(WhatYouarelookingfor)" typeahead="item for item in autoproductList | filter:$viewValue">
+                                        @*<input auto-complete class="form-control add-on" ui-items="names" placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" ng-model="WhatYouarelookingfor" id="srch-term" type="text">*@
+                                        @*<input class="form-control add-on" placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" name="srch-term" ng-model="WhatYouarelookingfor" id="srch-term" type="text">*@
                                         <div class="input-group-btn">
                                             <button class="btn btn-default" ng-click="GotoProductList(WhatYouarelookingfor)"><i class="glyphicon glyphicon-search"></i></button>
                                         </div>

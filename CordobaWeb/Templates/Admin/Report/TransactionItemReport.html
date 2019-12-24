@@ -36,6 +36,9 @@
                                     </span>
                                 </div>
                             </div>
+                           
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label" for="input-date-end">Date End</label>
                                 <div class="input-group myDatePicker date">
@@ -45,17 +48,26 @@
                                     </span>
                                 </div>
                             </div>
+                          
+
                         </div>
-                        <div class="col-sm-6">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="control-label" for="input-status">Store</label>
-                                <select ng-options="store.store_id as store.name  for store in StoreList"
+                                <div class="well well-sm" style="height:250px; overflow: auto;">
+                                    <div   ng-repeat="Item in StoreList">
+                                        <label><input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" name="checkbox" value="value">&nbsp;{{Item.name}}</label>
+                                    </div>
+                                </div>
+                                <!--<select ng-options="store.store_id as store.name  for store in StoreList"
                                         class="form-control" ng-model="TransactionItemReportObj.store_id" name="store_List" ng-disabled="store_id != 0">
                                     <option value=""> --- Please Select --- </option>
-                                </select>
+                                </select>-->
                             </div>
-                            
                         </div>
+                        
                     </div>
                     <!--<div class="row">
                         <div class="form-group">

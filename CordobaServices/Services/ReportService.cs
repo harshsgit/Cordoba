@@ -74,7 +74,7 @@ namespace CordobaServices.Services
         }
 
 
-        public IEnumerable<ReportEntity> GetTransactionReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int store_id, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
+        public IEnumerable<ReportEntity> GetTransactionReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, string store_id, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
         {
             try
             {
@@ -124,7 +124,7 @@ namespace CordobaServices.Services
             //return result;
         }
 
-        public DataSet TransactionReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId)
+        public DataSet TransactionReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, string storeId, int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -199,7 +199,7 @@ namespace CordobaServices.Services
 
         }
 
-        public IEnumerable<ReportEntity> GetTransactionItemReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int store_id, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
+        public IEnumerable<ReportEntity> GetTransactionItemReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, string store_id, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
         {
             try
             {
@@ -227,7 +227,7 @@ namespace CordobaServices.Services
         }
 
 
-        public DataSet TransactionItemReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId)
+        public DataSet TransactionItemReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, string storeId, int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -266,7 +266,7 @@ namespace CordobaServices.Services
 
         }
 
-        public IEnumerable<ReportEntity> GetTransactionItemCategoryReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, int store_id, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
+        public IEnumerable<ReportEntity> GetTransactionItemCategoryReportList(string sortColumn, DateTime? DateStart, DateTime? DateEnd, string store_id, int LoggedInUserId, TableParameter<ReportEntity> filter, string PageFrom = "")
         {
             try
             {
@@ -293,7 +293,7 @@ namespace CordobaServices.Services
             //return result;
         }
 
-        public DataSet TransactionItemCategoryReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, int? storeId, int? LoggedInUserId)
+        public DataSet TransactionItemCategoryReportExportToExcel(string sortColumn, object tableParameter, DateTime? dateStart, DateTime? dateEnd, string storeId, int? LoggedInUserId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             SqlCommand cmd = new SqlCommand();

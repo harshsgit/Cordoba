@@ -38,6 +38,6 @@ namespace CordobaServices.Interfaces
         int updateShippingCost(int product_id, int country_id, decimal shipping_cost);
 
         List<BestSellerEntity> GetBestSellerByProductId(int productId);
-
+        List<string> GetAutoCompleteProductList(int storeId);
     }
 }

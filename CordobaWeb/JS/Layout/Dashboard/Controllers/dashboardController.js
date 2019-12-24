@@ -516,8 +516,23 @@
         })
     };
 
-   
-    
+    function getAutoCompleteProductList() {
+        $http.get(configurationService.basePath + "API/ProductApi/GetAutoCompleteProductList?storeId=" + $scope.StoreDetailInSession.store_id)
+            .then(function (response) {
+                $scope.autoproductList = response.data;
+                
+            })
+            .catch(function (response) {
+                 
+            })
+            .finally(function () {
+
+            });
+        
+    }
+
+    getAutoCompleteProductList();
+
 });
 
 
