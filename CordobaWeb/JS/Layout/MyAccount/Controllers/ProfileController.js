@@ -11,8 +11,11 @@
 
 
     $scope.StoreDetailInSession = StoreSessionDetail;
-    $scope.GetCustomerDetails = function () {    
-        $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + UserDetail.customer_id + "&StoreId=" + $scope.StoreDetailInSession.store_id)    
+    $scope.GetCustomerDetails = function () {
+        var encryptedCustomerId = encryptedServerString(UserDetail.customer_id);
+        var encryptedStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+
+        $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + encryptedCustomerId + "&StoreId=" + encryptedStoreId)    
         .then(function (response) {   
             $scope.GetCustomerDetailObj = response.data;       
           })

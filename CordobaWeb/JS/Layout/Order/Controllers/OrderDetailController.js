@@ -9,8 +9,11 @@
     $scope.order_id = parseInt($stateParams.OrderId);
 
     $scope.OrderStatusEnum = OrderStatusEnum;
-    $scope.GetOrderDetail_Layout = function () {    
-        $http.get(configurationService.basePath + "api/OrderApi/GetOrderDetail_Layout?order_id=" + $scope.order_id + "&store_id=" + $scope.StoreDetailInSession.store_id)
+    $scope.GetOrderDetail_Layout = function () {
+        var encryptOrderId = encryptedServerString($scope.order_id);
+        var encryptStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+
+        $http.get(configurationService.basePath + "api/OrderApi/GetOrderDetail_Layout?order_id=" + encryptOrderId + "&store_id=" + encryptStoreId)
           .then(function (response) {             
               $scope.OrderdetailObj = response.data;
             

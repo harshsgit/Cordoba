@@ -5,3 +5,10 @@ E:\Harsh\Projects\Cordoba3\Cordoba\CordobaProductImageDownloadService\obj\Debug\
 E:\Harsh\Projects\Cordoba3\Cordoba\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.csproj.CoreCompileInputs.cache
 E:\Harsh\Projects\Cordoba3\Cordoba\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.exe
 E:\Harsh\Projects\Cordoba3\Cordoba\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.pdb
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\bin\Debug\CordobaProductImageDownloadService.exe.config
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\bin\Debug\CordobaProductImageDownloadService.exe
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\bin\Debug\CordobaProductImageDownloadService.pdb
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.csprojAssemblyReference.cache
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.csproj.CoreCompileInputs.cache
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.exe
+C:\Krupesh Patel\Projects\CordobaLatest\CordobaProductImageDownloadService\obj\Debug\CordobaProductImageDownloadService.pdb

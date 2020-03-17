@@ -118,11 +118,19 @@ namespace CordobaAPI.API
         }
         [HttpGet]
         [JwtAuthentication]
-        public HttpResponseMessage GetCustomerWishProductList(int StoreID, int CategoryId, int PageIndex, int Customer_Id = 0, string WhatAreYouLookingFor = "", string SearchByFilterId = "", int OrderById = 1)
+        public HttpResponseMessage GetCustomerWishProductList(string StoreID, int CategoryId, int PageIndex, string Customer_Id = "0", string WhatAreYouLookingFor = "", string SearchByFilterId = "", int OrderById = 1)
         {
             try
             {
-                var result = _ProductServices.GetProductListByCategoryAndStoreId(StoreID, CategoryId, PageIndex, Customer_Id, WhatAreYouLookingFor, SearchByFilterId, OrderById);
+                int storeId = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(StoreID));
+                int CustID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(Customer_Id));
+
+                if (Convert.ToInt32(User.Identity.Name) != CustID)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+                }
+
+                var result = _ProductServices.GetProductListByCategoryAndStoreId(storeId, CategoryId, PageIndex, CustID, WhatAreYouLookingFor, SearchByFilterId, OrderById);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -135,12 +143,12 @@ namespace CordobaAPI.API
             }
         }
 
-        [HttpGet]
-        public HttpResponseMessage GetProductListByCategoryAndStoreId(int StoreID, int CategoryId, int PageIndex, int Customer_Id = 0, string WhatAreYouLookingFor = "", string SearchByFilterId = "", int OrderById = 1)
+        [HttpPost]
+        public HttpResponseMessage GetProductListByCategoryAndStoreId(SearchProductEntity model)
         {
             try
             {
-                var result = _ProductServices.GetProductListByCategoryAndStoreId(StoreID, CategoryId, PageIndex, Customer_Id, WhatAreYouLookingFor, SearchByFilterId, OrderById);
+                var result = _ProductServices.GetProductListByCategoryAndStoreId(model.StoreID, model.CategoryId, model.PageIndex, model.Customer_Id, model.WhatAreYouLookingFor, model.SearchByFilterId, model.OrderById);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);

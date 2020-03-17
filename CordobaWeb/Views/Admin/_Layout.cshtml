@@ -123,7 +123,7 @@
                     </li>
                 </ul>*@
             @*<p class="navbar-text"><span class="label bg-success-400">Online</span></p>*@
-            <ul class="nav navbar-nav navbar-right pull-right">         
+            <ul class="nav navbar-nav navbar-right pull-right">
                 <li class="dropdown" title="Stores">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-life-ring fa-lg"></i></a>
 
@@ -171,26 +171,26 @@
                                 {{AlertObj.Name}}
                             </a>
                         </li>*@
-                        @*<li class="dropdown-header">Products</li>
-                        <li ng-if="AlertObj.type==3" ng-repeat="AlertObj in TopAlertStatusDropDown | filter:{ 'Active' : 1}">
-                            <a class="cursor-pointer" href="" ng-click="GoToState(AlertObj)">
-                                <span ng-if="AlertObj.Name=='Completed' && AlertObj.IncludeInTotal!=1" class="label label-success pull-right" ng-bind="AlertObj.NumberOfCount"></span>
-                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal!=1" class="label label-warning pull-right" ng-bind="AlertObj.NumberOfCount"></span>
-                                <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal==1" class="label label-danger pull-right" ng-bind="AlertObj.NumberOfCount"></span>
-                                {{AlertObj.Name}}
-                            </a>
-                        </li>*@
+                @*<li class="dropdown-header">Products</li>
+                    <li ng-if="AlertObj.type==3" ng-repeat="AlertObj in TopAlertStatusDropDown | filter:{ 'Active' : 1}">
+                        <a class="cursor-pointer" href="" ng-click="GoToState(AlertObj)">
+                            <span ng-if="AlertObj.Name=='Completed' && AlertObj.IncludeInTotal!=1" class="label label-success pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                            <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal!=1" class="label label-warning pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                            <span ng-if="AlertObj.Name!='Completed' && AlertObj.IncludeInTotal==1" class="label label-danger pull-right" ng-bind="AlertObj.NumberOfCount"></span>
+                            {{AlertObj.Name}}
+                        </a>
+                    </li>*@
 
-                        @*<li><a class="cursor-pointer"  href=""><span class="label label-success pull-right">{{DeliveredOrderCount}}</span>Delivered</a></li>
-                            <li><a class="cursor-pointer"  href=""><span class="label label-danger pull-right">{{ReturnedOrderCount}}</span>Returned</a></li>*@
-                        @*<li class="divider"></li>*@
-                        @*<li class="dropdown-header">Customers</li>
-                            <li><a><span class="label label-danger pull-right">363</span>Pending approval</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Products</li>
-                                        @*<li class="divider"></li>*@
-                    @*</ul>
-                </li>*@
+                @*<li><a class="cursor-pointer"  href=""><span class="label label-success pull-right">{{DeliveredOrderCount}}</span>Delivered</a></li>
+                    <li><a class="cursor-pointer"  href=""><span class="label label-danger pull-right">{{ReturnedOrderCount}}</span>Returned</a></li>*@
+                @*<li class="divider"></li>*@
+                @*<li class="dropdown-header">Customers</li>
+                    <li><a><span class="label label-danger pull-right">363</span>Pending approval</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Products</li>
+                                @*<li class="divider"></li>*@
+                @*</ul>
+                    </li>*@
 
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle " data-toggle="dropdown">
@@ -214,7 +214,7 @@
     </div>
     <!-- /main navbar -->
     <!-- Page container -->
-    <div class="page-container" >
+    <div class="page-container">
         <!-- Page content -->
         <div class="page-content">
             <!-- Main sidebar -->
@@ -297,13 +297,13 @@
 
 
                                         @*<li><a href="#"><i class="icon-forward"></i> <span> Gift Vouchers</span></a></li>
-                            <li><a href="#"><i class="icon-forward"></i> <span> PayPal</span></a></li>*@
+                                            <li><a href="#"><i class="icon-forward"></i> <span> PayPal</span></a></li>*@
 
                                         @*<li><a href="#" ui-sref="ShowCategory"><i class="icon-forward"></i> <span> Categories</span></a></li>
-                            <li><a href="#" ui-sref="ShowSupplier"><i class="icon-forward"></i> <span> Supplier</span></a></li>
-                            <li><a href="#" ui-sref="ShowManufacturer"><i class="icon-forward"></i> <span> Manufacturers</span></a></li>
-                            <li><a href="#" ui-sref="Product"><i class="icon-forward"></i> <span> Products</span></a></li>
-                            <li><a href="#" ui-sref="ShowProductCatalogue"><i class="icon-forward"></i> <span>  Product Catalogues</span></a></li>*@
+                                            <li><a href="#" ui-sref="ShowSupplier"><i class="icon-forward"></i> <span> Supplier</span></a></li>
+                                            <li><a href="#" ui-sref="ShowManufacturer"><i class="icon-forward"></i> <span> Manufacturers</span></a></li>
+                                            <li><a href="#" ui-sref="Product"><i class="icon-forward"></i> <span> Products</span></a></li>
+                                            <li><a href="#" ui-sref="ShowProductCatalogue"><i class="icon-forward"></i> <span>  Product Catalogues</span></a></li>*@
 
                                     </ul>
                                 </li>
@@ -406,24 +406,36 @@
 
     @Scripts.Render("~/bundles/jquery?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
     <script src="~/Scripts/admin/js/core/app.js"></script>
-    <script src="~/Scripts/jquery-ui.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap-modalmanager.js"></script>
     <script src="~/Scripts/bootstrap-modal.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
     <script src="~/Scripts/bootbox.js"></script>
-    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
-    <script src="~/Scripts/angular.js"></script>
-    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/ckeditor/upgrade/ckeditor.js"></script>
+
+    <script src="~/Scripts/upgrade/angular.js"></script>
+    <script src="~/Scripts/upgrade/angular-animate.min.js"></script>
     <script src="~/Scripts/angular-dragdrop.min.js"></script>
-    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/upgrade/angular-ui-router.min.js"></script>
     <script src="~/Scripts/angular-local-storage.js"></script>
-    <script src="~/Scripts/angular-sanitize.js"></script>
+    <script src="~/Scripts/upgrade/angular-sanitize.js"></script>
     <script src="~/Scripts/angular-datatables.min.js"></script>
     <script src="~/Scripts/angular-ui-switch.min.js"></script>
-    <script src="~/Scripts/angular-sanitize.js"></script>
     <script src="~/Scripts/angular-star-rating/main.js"></script>
+
+    @*Olde code*@
+    @*<script src="~/Scripts/angular.js"></script>
+        <script src="~/Scripts/angular-animate.min.js"></script>
+        <script src="~/Scripts/angular-dragdrop.min.js"></script>
+        <script src="~/Scripts/angular-ui-router.min.js"></script>
+        <script src="~/Scripts/angular-local-storage.js"></script>
+        <script src="~/Scripts/angular-sanitize.js"></script>
+        <script src="~/Scripts/angular-datatables.min.js"></script>
+        <script src="~/Scripts/angular-ui-switch.min.js"></script>
+        <script src="~/Scripts/angular-sanitize.js"></script>
+        <script src="~/Scripts/angular-star-rating/main.js"></script>*@
     <script src="~/Scripts/ng-ckeditor.js"></script>
     <script src="~/Scripts/ui-bootstrap-tpls-0.12.1.min.js"></script>
     @Scripts.Render("~/bundles/appConfig?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))

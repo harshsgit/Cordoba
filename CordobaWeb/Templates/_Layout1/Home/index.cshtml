@@ -27,7 +27,7 @@
                             @*<div class="row best-seller" data-bx-slider="pager:false,nextText:'',prevText:''">*@
                             <div class="seller-block" ng-repeat="BestSeller in BestSellerList" data-notify-when-repeat-finished>
                                 <div class="col-xs-4">
-                                    <img class="full-width" ng-src="{{BestSeller.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="seller" style="max-height:100px" />
+                                    <img class="full-width imgCursor" ng-src="{{BestSeller.Image}}" ui-sref="LayoutProductDetail({ProductId:BestSeller.product_id})" title="{{BestSeller.name}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="seller" style="max-height:100px" />
                                 </div>
                                 <div class="col-xs-8">
                                     <a href="" ui-sref="LayoutProductDetail({ProductId:BestSeller.product_id})" class="seller-desc" ng-bind="BestSeller.name"></a>
@@ -83,7 +83,7 @@
                         @*<div class="hot-deals" data-bx-slider="pager: false,nextText: '',prevText: '',minSlides: 1,maxSlides: 1,mode: 'vertical'">*@
                         <div class="media col-sm-12" ng-repeat="HotDeals in HotDealsList" data-notify-when-repeat-finished>
                             <div class="media-left">
-                                <img class="media-object" ng-src="{{HotDeals.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="deals" />
+                                <img class="media-object imgCursor" ng-src="{{HotDeals.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="deals" title="{{HotDeals.name}}" ui-sref="LayoutProductDetail({ProductId:HotDeals.product_id})"/>
                             </div>
                             <div class="media-body">
                                 <a ui-sref="LayoutProductDetail({ProductId:HotDeals.product_id})" ng-bind-html="HotDeals.name"></a>
@@ -224,7 +224,7 @@
                         <div class="col-sm-3" ng-repeat="LatestProduct in LatestProductList" data-notify-when-repeat-finished>
                             <div class="product-block">
                                 <div class="product-img">
-                                    <img ng-src='{{LatestProduct.Image}}' onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="latest product" />
+                                    <img class="imgCursor" ng-src='{{LatestProduct.Image}}' onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="latest product" title="{{LatestProduct.name}}"  ui-sref="LayoutProductDetail({ProductId:LatestProduct.product_id})"/>
                                 </div>
                                 <a ui-sref="LayoutProductDetail({ProductId:LatestProduct.product_id})" ng-bind-html="LatestProduct.name | limitTo:27" title="{{LatestProduct.name}}"></a>
                                 <p ng-bind="LatestProduct.Model| limitTo:15" title="{{LatestProduct.Model}}"></p>

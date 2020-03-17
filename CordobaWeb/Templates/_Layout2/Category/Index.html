@@ -34,12 +34,15 @@
 <div class="catagories_slider productlist" ng-controller="CategoryListController">
     <div class="container">
         <div class="col-md-3">
-            <div class="letest-product catagories" > <!--ng-if="SelectedSubCategory==-3"-->
+            <div class="letest-product catagories">
+                <!--ng-if="SelectedSubCategory==-3"-->
                 <h3>Search by Points</h3>
+                
                 <div class="searchByPointsContent">
                     <ul>
+
                         <li ng-repeat="SearchByPoint in SearchByPointsEnum">
-                            <input type="checkbox" class="cursor-pointer ng-pristine ng-valid ng-touched" ng-checked="SearchByPoint.Checked" ng-model="SearchByPoint.Checked" ng-change="SearchFilterByArray()"><span>{{'  '+SearchByPoint.Name}}</span>
+                            <label style="float: none;margin-bottom: 0px"><input type="checkbox" name="checkbox" ng-checked="SearchByPoint.Checked" ng-model="SearchByPoint.Checked" ng-change="SearchFilterByArray()">{{'  '+SearchByPoint.Name}}</label>
                         </li>
                     </ul>
                 </div>
@@ -110,7 +113,7 @@
                     <div class="col-sm-3" ng-repeat="product in ProductList">
                         <div class="col-product text-center">
                             <div class="background-bg" ng-controller="AddProductToCartController">
-                                <img ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Img" data-action="zoom">
+                                <img ng-src="{{product.Image}}" title="{{product.name}}" class="imgCursor" ui-sref="LayoutProductDetail({ProductId:product.product_id})" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="Img" >
                                 <div class="cart-btn" ng-controller="AddProductToCartController">
                                     <input type="button" name="cart_btn" class="add_cart" ng-click="AddProductToCart(product,$event)" value="ADD TO CART">
                                 </div>

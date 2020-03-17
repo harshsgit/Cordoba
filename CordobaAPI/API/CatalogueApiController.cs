@@ -189,7 +189,7 @@ namespace CordobaAPI.API
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -217,10 +217,10 @@ namespace CordobaAPI.API
                 //    sc.Start();
                 //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 
-                throw;
+                throw ex;
             }
             
 

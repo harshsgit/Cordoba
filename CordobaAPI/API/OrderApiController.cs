@@ -27,11 +27,20 @@ namespace CordobaAPI.API
 
         [HttpGet]
         [JwtAuthentication]
-        public HttpResponseMessage GetOrderHistory(int StoreId, int LoggedInUserId, int customer_id)
+        public HttpResponseMessage GetOrderHistory(string StoreId, string LoggedInUserId, string customer_id)
         {
             try
             {
-                var result = _orderService.GetOrderHistory(StoreId, LoggedInUserId, customer_id);
+
+                int storeID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(StoreId));
+                int LoggedUserID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(LoggedInUserId));
+                int CustID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(customer_id));
+
+                if (Convert.ToInt32(User.Identity.Name) != CustID)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+                }
+                var result = _orderService.GetOrderHistory(storeID, LoggedUserID, CustID);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -255,11 +264,15 @@ namespace CordobaAPI.API
         }
 
         [HttpGet]
-        public HttpResponseMessage GetOrderDetail_Layout(int order_id, int store_id)
+        [JwtAuthentication]
+        public HttpResponseMessage GetOrderDetail_Layout(string order_id, string store_id)
         {
             try
             {
-                var result = _orderService.GetOrderDetail_Layout(order_id, store_id);
+                int OrderID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(order_id));
+                int storeID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(store_id));
+
+                var result = _orderService.GetOrderDetail_Layout(OrderID, storeID);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception)

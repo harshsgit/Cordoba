@@ -200,6 +200,8 @@ namespace CordobaServices.Services
                                                  , new SqlParameter("AddressXml", AddressXml ??  (object)DBNull.Value)
                                                  , new SqlParameter("PointsAuditXml", PointsAuditXml ??  (object)DBNull.Value)
                                                  , new SqlParameter("is_department", (object)customerEntity.is_department??DBNull.Value)
+                                                 , new SqlParameter("comment", (object)customerEntity.Comment??DBNull.Value)
+
                                                 };
             int result = CustomerEntityGenericRepository.ExecuteSQL<int>("InsertUpdateCustomer", sqlParameter).FirstOrDefault();
             return result;

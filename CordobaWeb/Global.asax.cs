@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -14,8 +15,11 @@ namespace CordobaWeb
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();           
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+
+            AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //GlobalFilters.Filters.Add(new RequireHttpsAttribute());
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
@@ -24,7 +28,7 @@ namespace CordobaWeb
         {
             string url = HttpContext.Current.Request.Url.AbsoluteUri;
             if (url.IndexOf("http://afl-rewards.co.uk") > -1 || url.IndexOf("http://www.afl-rewards.co.uk") > -1 ||
-                 //url.IndexOf("http://www.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://pbmakeadifferencethankyou.com") > -1
+                 url.IndexOf("http://www.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://pbmakeadifferencethankyou.com") > -1 ||
                  url.IndexOf("http://webapp6.cordobarewards.co.uk") > -1 ||
                 url.IndexOf("http://www.rigbycapital-rewards.com") > -1 || url.IndexOf("http://rigbycapital-rewards.com") > -1 ||
                 url.IndexOf("http://www.maxxiagrouprewards.co.uk") > -1 || url.IndexOf("http://maxxiagrouprewards.co.uk") > -1 ||
@@ -33,7 +37,7 @@ namespace CordobaWeb
                 url.IndexOf("http://grenkerewards.co.uk") > -1 || url.IndexOf("http://www.grenkerewards.co.uk") > -1 ||
                 url.IndexOf("http://www.morechoicerewards.co.uk") > -1 || url.IndexOf("http://morechoicerewards.co.uk") > -1 ||
                 url.IndexOf("http://www.kennet-rewards.co.uk") > -1 || url.IndexOf("http://kennet-rewards.co.uk") > -1 ||
-                //url.IndexOf("http://fr.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://www.fr.pbmakeadifferencethankyou.com") > -1
+                url.IndexOf("http://fr.pbmakeadifferencethankyou.com") > -1 || url.IndexOf("http://www.fr.pbmakeadifferencethankyou.com") > -1 ||
                 url.IndexOf("http://www.vitrxrewards.co.uk") > -1 || url.IndexOf("http://vitrxrewards.co.uk") > -1 ||
                 url.IndexOf("http://www.jaycityrewards.co.uk") > -1 || url.IndexOf("http://jaycityrewards.co.uk") > -1 ||
                 url.IndexOf("http://www.xporewards.co.uk") > -1 || url.IndexOf("http://xporewards.co.uk") > -1 ||
@@ -70,6 +74,6 @@ namespace CordobaWeb
             //}
 
         }
-   
+
     }
 }

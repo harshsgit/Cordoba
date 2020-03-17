@@ -22,7 +22,11 @@ app.controller('OrderHistoryController', function ($timeout, StoreSessionDetail,
     $scope.StoreDetailInSession = StoreSessionDetail;
 
     $scope.GetOrderHistory = function () {
-        $http.get(configurationService.basePath + "API/OrderApi/GetOrderHistory?StoreId=" + StoreSessionDetail.store_id + "&LoggedInUserId=" + UserDetail.customer_id + "&customer_id=" + UserDetail.customer_id)
+        var encryptStoreId = encryptedServerString(StoreSessionDetail.store_id);
+        var encryptCustomerId = encryptedServerString(UserDetail.customer_id);
+
+
+        $http.get(configurationService.basePath + "API/OrderApi/GetOrderHistory?StoreId=" + encryptStoreId + "&LoggedInUserId=" + encryptCustomerId + "&customer_id=" + encryptCustomerId)
           .then(function (response) {              
               $scope.OrderHisotry = response.data;
           })

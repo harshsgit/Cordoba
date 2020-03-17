@@ -38,7 +38,7 @@ namespace CordobaWeb
                     "~/Scripts/bootstrap-datepicker.js",
                     "~/Scripts/jquery.bootstrap-duallistbox.js",
                      "~/Scripts/bootbox.js",
-                     "~/Scripts/ckeditor/ckeditor.js"
+                     "~/Scripts/ckeditor/upgrade/ckeditor.js"
                      ));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
@@ -55,16 +55,17 @@ namespace CordobaWeb
                       "~/Content/css/jquery-ui.min.css"));
 
             var angularBundle = new Bundle("~/bundles/angular");
-            angularBundle.Include("~/Scripts/angular.js");
-            angularBundle.Include("~/Scripts/angular-animate.js");
+            
+            angularBundle.Include("~/Scripts/upgrade/angular.js");
+            angularBundle.Include("~/Scripts/upgrade/angular-animate.js");
             angularBundle.Include("~/Scripts/angular-dragdrop.min.js");
-            angularBundle.Include("~/Scripts/angular-ui-router.min.js");
-            angularBundle.Include("~/Scripts/angular-local-storage.js");
-            angularBundle.Include("~/Scripts/angular-sanitize.js");
+            angularBundle.Include("~/Scripts/upgrade/angular-ui-router.min.js");
+            angularBundle.Include("~/Scripts/upgrade/angular-local-storage.js");
+            angularBundle.Include("~/Scripts/upgrade/angular-sanitize.js");
             angularBundle.Include("~/Scripts/angular-datatables.min.js");
             angularBundle.Include("~/Scripts/angular-ui-switch.min.js");
             angularBundle.Include("~/Scripts/angular-star-rating/main.js");
-            
+
             angularBundle.Orderer = new NonOrderingBundleOrderer();
             bundles.Add(angularBundle);
 
@@ -75,7 +76,7 @@ namespace CordobaWeb
             appConfigBundle.Include("~/Scripts/ng-file-upload.min.js");
             appConfigBundle.Include("~/Scripts/ng-file-upload-shim.min.js");
             appConfigBundle.Include("~/Scripts/textAngular-rangy.min.js");
-            appConfigBundle.Include("~/Scripts/textAngular-sanitize.js");
+            appConfigBundle.Include("~/Scripts/upgrade/textAngular-sanitize.js");
             appConfigBundle.Include("~/Scripts/textAngular.min.js");
             appConfigBundle.Include("~/Scripts/jquery.responsiveTabs.js");
             appConfigBundle.Include("~/Scripts/menuscript.js");
@@ -124,7 +125,7 @@ namespace CordobaWeb
                        "~/Scripts/admin/js/plugins/pickers/daterangepicker.js",
                        "~/Scripts/admin/js/core/app.js",
                        "~/Scripts/admin/js/pages/dashboard.js",
-                       "~/Scripts/ckeditor/ckeditor.js"
+                       "~/Scripts/ckeditor/upgrade/ckeditor.js"
                       ));
 
             var AdminControllerBundle = new Bundle("~/bundles/AdminControllers");
@@ -164,8 +165,9 @@ namespace CordobaWeb
             //------------------------js-------------------------//
 
             var Layout1Js = new Bundle("~/bundles/Layout1Js");
-            Layout1Js.Include("~/Scripts/layout1/js/jquery.min.js");
-            Layout1Js.Include("~/Scripts/layout1/js/bootstrap.min.js");
+            Layout1Js.Include("~/Scripts/layout1/js/upgrade/jquery.min.js");
+            Layout1Js.Include("~/Scripts/layout1/js/upgrade/popper.min.js");
+            Layout1Js.Include("~/Scripts/layout1/js/upgrade/bootstrap.min.js");
             Layout1Js.Include("~/Scripts/layout1/js/jquery.bxslider.min.js");
             Layout1Js.Include("~/Scripts/layout1/js/jquery.mCustomScrollbar.concat.min.js");
             Layout1Js.Include("~/Scripts/layout1/js/dpNumberPicker.min.js");
@@ -176,7 +178,7 @@ namespace CordobaWeb
             Layout1Js.Include("~/Scripts/bootstrap-datepicker.js");
             Layout1Js.Include("~/Scripts/jquery.bootstrap-duallistbox.js");
             Layout1Js.Include("~/Scripts/bootbox.js");
-            Layout1Js.Include("~/Scripts/ckeditor/ckeditor.js");
+            Layout1Js.Include("~/Scripts/ckeditor/upgrade/ckeditor.js");
             Layout1Js.Include("~/Scripts/angular-recaptcha.js");
             bundles.Add(Layout1Js);
             //------------------------js-------------------------//
@@ -219,15 +221,16 @@ namespace CordobaWeb
             //------------------------js-------------------------//
             //js/jquery.min.js
             bundles.Add(new ScriptBundle("~/bundles/Layout2Js").Include(
-                     "~/Scripts/layout2/js/jquery.min.js",
-                     "~/Scripts/layout2/js/bootstrap.min.js",
+                     "~/Scripts/layout2/js/upgrade/jquery.min.js",
+                     "~/Scripts/layout2/js/upgrade/popper.min.js",
+                     "~/Scripts/layout2/js/upgrade/bootstrap.min.js",
                      //"~/Scripts/layout2/js/jquery.flexslider.js",
                      "~/Scripts/bootstrap-modalmanager.js",
                     "~/Scripts/bootstrap-modal.js",
                     "~/Scripts/bootstrap-datepicker.js",
                     "~/Scripts/jquery.bootstrap-duallistbox.js",
                      "~/Scripts/bootbox.js",
-                     "~/Scripts/ckeditor/ckeditor.js",
+                     "~/Scripts/ckeditor/upgrade/ckeditor.js",
                   "~/Scripts/layout1/js/jquery.bxslider.min.js",
                   "~/Scripts/layout1/js/dpNumberPicker.min.js",
                   "~/Scripts/layout1/js/enhance.js",
@@ -251,8 +254,9 @@ namespace CordobaWeb
 
             ////////////////////////Layout2 Complete Js Bundling////////////////
             var Layout2AllJs = new Bundle("~/bundles/Layout2AllJs");
-            Layout2AllJs.Include("~/Scripts/layout2/js/jquery.min.js");
-            Layout2AllJs.Include("~/Scripts/layout2/js/bootstrap.min.js");
+            Layout2AllJs.Include("~/Scripts/layout2/js/upgrade/jquery.min.js");
+            Layout2AllJs.Include("~/Scripts/layout2/js/upgrade/popper.min.js");
+            Layout2AllJs.Include("~/Scripts/layout2/js/upgrade/bootstrap.min.js");
             //Layout2AllJs.Include("~/Scripts/layout2/js/jquery.flexslider.js");
             Layout2AllJs.Include("~/Scripts/layout2/js/jquery.mCustomScrollbar.concat.min.js");
             Layout2AllJs.Include("~/Scripts/bootstrap-modalmanager.js");
@@ -260,21 +264,24 @@ namespace CordobaWeb
             Layout2AllJs.Include("~/Scripts/bootstrap-datepicker.js");
             Layout2AllJs.Include("~/Scripts/jquery.bootstrap-duallistbox.js");
             Layout2AllJs.Include("~/Scripts/bootbox.js");
-            Layout2AllJs.Include("~/Scripts/ckeditor/ckeditor.js");
+            Layout2AllJs.Include("~/Scripts/ckeditor/upgrade/ckeditor.js");
             Layout2AllJs.Include("~/Scripts/layout1/js/jquery.bxslider.min.js");
             Layout2AllJs.Include("~/Scripts/layout1/js/dpNumberPicker.min.js");
             Layout2AllJs.Include("~/Scripts/layout1/js/enhance.js");
             Layout2AllJs.Include("~/Scripts/layout1/js/velocity.min.js");
             Layout2AllJs.Include("~/Scripts/jquery-ui.min.js");
-            Layout2AllJs.Include("~/Scripts/angular.js");
-            Layout2AllJs.Include("~/Scripts/angular-animate.js");
+
+            Layout2AllJs.Include("~/Scripts/upgrade/angular.js");
+            Layout2AllJs.Include("~/Scripts/upgrade/angular-animate.js");
             Layout2AllJs.Include("~/Scripts/angular-dragdrop.min.js");
-            Layout2AllJs.Include("~/Scripts/angular-ui-router.min.js");
+            Layout2AllJs.Include("~/Scripts/upgrade/angular-ui-router.min.js");
             Layout2AllJs.Include("~/Scripts/angular-local-storage.js");
-            Layout2AllJs.Include("~/Scripts/angular-sanitize.js");
+            Layout2AllJs.Include("~/Scripts/upgrade/angular-sanitize.js");
             Layout2AllJs.Include("~/Scripts/angular-datatables.min.js");
             Layout2AllJs.Include("~/Scripts/angular-ui-switch.min.js");
             Layout2AllJs.Include("~/Scripts/angular-star-rating/main.js");
+            
+          
             Layout2AllJs.Include("~/Scripts/ui-bootstrap-tpls-0.12.1.min.js");
             Layout2AllJs.Include("~/Scripts/ng-ckeditor.js");
             Layout2AllJs.Include("~/Scripts/jquery.dataTables.min.js");
@@ -283,7 +290,7 @@ namespace CordobaWeb
             Layout2AllJs.Include("~/Scripts/ng-file-upload.min.js");
             Layout2AllJs.Include("~/Scripts/ng-file-upload-shim.min.js");
             Layout2AllJs.Include("~/Scripts/textAngular-rangy.min.js");
-            Layout2AllJs.Include("~/Scripts/textAngular-sanitize.js");
+            Layout2AllJs.Include("~/Scripts/upgrade/textAngular-sanitize.js");
             Layout2AllJs.Include("~/Scripts/textAngular.min.js");
             Layout2AllJs.Include("~/Scripts/jquery.responsiveTabs.js");
             Layout2AllJs.Include("~/Scripts/menuscript.js");

@@ -25,7 +25,7 @@
                 <div class="col-sm-3" ng-repeat="product in ProductList">
                     <div class="col-product text-center">
                         <div class="background-bg">
-                            <img class="product-img" ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product" />
+                            <img class="product-img" ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product"/>
                             <div class="cart-btn" ng-controller="AddProductToCartController">
                                 <input type="button" name="cart_btn" ng-click="AddProductToCart(product,$event)" class="add_cart" value="ADD TO CART">
                             </div>

@@ -12,7 +12,10 @@
     $scope.ValidateAddress = false;
     $scope.orderSuccess = false;
     $scope.GetCustomerDetails = function () {
-        $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + UserDetail.customer_id + "&StoreId=" + $scope.StoreDetailInSession.store_id)
+        var encryptedCustomerId = encryptedServerString(UserDetail.customer_id);
+        var encryptedStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+
+        $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + encryptedCustomerId + "&StoreId=" + encryptedStoreId)
             .then(function (response) {
                 $rootScope.CustomerDetail.points = response.data.points;
                 UserDetail.points = $rootScope.CustomerDetail.points;
@@ -100,7 +103,9 @@
     }
 
     $scope.GetCustmoreAddressList = function () {
-        $http.get(configurationService.basePath + "API/CartApi/GetCustmoreAddressList?store_id=" + $scope.StoreDetailInSession.store_id + "&customer_id=" + UserDetail.customer_id)
+        var encryptStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+        var encryptCustomerId = encryptedServerString(UserDetail.customer_id);
+        $http.get(configurationService.basePath + "API/CartApi/GetCustmoreAddressList?store_id=" + encryptStoreId + "&customer_id=" + encryptCustomerId)
             .then(function (response) {
                 if (response.data.length > 0) {
                     $scope.CustomerAddressList = response.data;
@@ -168,7 +173,10 @@
                 toastr.warning("To Checkout,Remove Items that are Out Of Stock from the Shopping Bag.");
                 return;
             }
-            $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + UserDetail.customer_id + "&StoreId=" + $scope.StoreDetailInSession.store_id)
+            var encryptedCustomerId = encryptedServerString(UserDetail.customer_id);
+            var encryptedStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+
+            $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + encryptedCustomerId + "&StoreId=" + encryptedStoreId)
                 .then(function (response) {
                     $rootScope.CustomerDetail.points = response.data.points;
                     UserDetail.points = $rootScope.CustomerDetail.points;

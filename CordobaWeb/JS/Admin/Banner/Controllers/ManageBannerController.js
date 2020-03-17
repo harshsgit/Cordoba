@@ -33,6 +33,7 @@
         NewBannerImage.link = null;
         NewBannerImage.image = null;
         NewBannerImage.sort_order = null;
+        NewBannerImage.categoryId = null;
         $scope.BannerImageObj.push(NewBannerImage);
         if ($scope.BannerImageObj == null) {
             $scope.BannerImageObj = [];
@@ -176,7 +177,8 @@
         }
     }
 
-    $scope.UploadBannerImage = function (index) {      
+    $scope.UploadBannerImage = function (index) {
+        
         var data = new FormData();
         var files = $("#Image" + index).get(0).files;
         if (files.length == 0 && !($scope.BannerImageObj[index]["banner_image_id"]>0)) {
@@ -195,7 +197,7 @@
 
         var ajaxRequest = $.ajax({
             type: "POST",
-            url: configurationService.basePath + 'api/BannerApi/UploadBannerImage?banner_id=' + $scope.BannerObj.banner_id + '&banner_image_id=' + $scope.BannerImageObj[index]["banner_image_id"] + '&link=' + ($scope.BannerImageObj[index]["link"]!=null?$scope.BannerImageObj[index]["link"]:'') + '&sort_order=' + ($scope.BannerImageObj[index]["sort_order"]!=null?$scope.BannerImageObj[index]["sort_order"]:0),
+            url: configurationService.basePath + 'api/BannerApi/UploadBannerImage?banner_id=' + $scope.BannerObj.banner_id + '&banner_image_id=' + $scope.BannerImageObj[index]["banner_image_id"] + '&link=' + ($scope.BannerImageObj[index]["link"] != null ? $scope.BannerImageObj[index]["link"] : '') + '&sort_order=' + ($scope.BannerImageObj[index]["sort_order"] != null ? $scope.BannerImageObj[index]["sort_order"] : 0) + '&categoryId=' + $scope.BannerImageObj[index]["categoryId"],
             contentType: false,
             processData: false,
             data: data,
@@ -214,9 +216,24 @@
         });
     }
 
-    $scope.GetBannerById();
+    function GetCategoryList() {
+        $http.get(configurationService.basePath + "api/ProductApi/GetSubCategoryList?&StoreId=" + $scope.StoreId + '&LoggedInUserId=' + $scope.LoggedInUserId)
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.CategoryList = response.data;
+                }
+            })
+            .catch(function (response) {
 
-        $scope.GetBannerImageById();
+            })
+            .finally(function () {
+
+            });
+    }
+
+    GetCategoryList();
+    $scope.GetBannerById();
+    $scope.GetBannerImageById();
     
 
 });

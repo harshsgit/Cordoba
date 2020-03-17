@@ -29,8 +29,9 @@ app.controller('AddressBookController', function ($timeout,StoreSessionDetail,Us
     }
 
     $scope.GetCustomerAddressList = function () {
-        
-        $http.get(configurationService.basePath + "API/LayoutDashboardAPI/GetCustomerAddressList_Layout?StoreId=" + $scope.StoreDetailInSession.store_id + "&customer_id=" + UserDetail.customer_id)
+        var encryptStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+        var encryptCustomerId = encryptedServerString(UserDetail.customer_id);
+        $http.get(configurationService.basePath + "API/LayoutDashboardAPI/GetCustomerAddressList_Layout?StoreId=" + encryptStoreId + "&customer_id=" + encryptCustomerId)
           .then(function (response) {              
               $scope.AddressList = response.data;
           })

@@ -7,7 +7,7 @@ $(function () {
     //}
     //var datepicker = $.fn.datepicker.noConflict(); 
     //$.fn.bootstrapDP = datepicker;
-    var datepicker = $.fn.datepicker; 
+    var datepicker = $.fn.datepicker;
     $.fn.bootstrapDP = datepicker;
     //var bootstrapDualListbox = $.fn.datepicker.bootstrapDualListbox.noConflict(); // return $.fn.bootstrapDualListbox to previously assigned value
     //$.fn.bootstrapListBox = bootstrapDualListbox;
@@ -31,14 +31,13 @@ $(function () {
     $(document).ajaxStart(function () {
         $('.spinner').show();
     })
-    .ajaxStop(function () {
-        $('.spinner').hide();
-        setTimeout(function () { SetAnchorLinks() }, 400);
-    });
+        .ajaxStop(function () {
+            $('.spinner').hide();
+            setTimeout(function () { SetAnchorLinks() }, 400);
+        });
 
     $("li", '.menu').click(function () {
-        if (!$('li', this).length)
-        {
+        if (!$('li', this).length) {
             if (!$(this).hasClass("ExternalLink")) {
                 $("li", '.menu').removeClass('current');
                 $(this).closest('li.top').addClass('current');
@@ -81,7 +80,7 @@ $(function () {
 });
 
 function setMenu() {
- 
+
     var url = window.location.toString();
     url = url.split("?")[0];
     var temp = url.split("/");
@@ -102,12 +101,12 @@ function setMenu() {
 
 function BindCustomerSearchBar($scope, $compile, dataTable) {
     var searchBar = '<div class="row searcharea"><div id="customSearch" ><div class="col-sm-12"><label class="control-label">Search Criteria:</label></div>' +
-            '<div class="col-sm-7"><input type="text" id="txtCustomSearch" ng-model="customSearchKeyValue"  my-enter="dataTableSearch()" placeholder="Enter Search Keyword" class="form-control no-margin"></div>' +
-            '<div class="col-sm-2"><button type="button" class="btn btn-primary" ng-click="dataTableSearch()">Search</button></div></div></div>';
+        '<div class="col-sm-7"><input type="text" id="txtCustomSearch" ng-model="customSearchKeyValue"  my-enter="dataTableSearch()" placeholder="Enter Search Keyword" class="form-control no-margin"></div>' +
+        '<div class="col-sm-2"><button type="button" class="btn btn-primary" ng-click="dataTableSearch()">Search</button></div></div></div>';
     $(".dataTables_filter").html(searchBar);
 
     $compile(angular.element("#customSearch"))($scope);
-   
+
     $scope.dataTableSearchKeyUp = function (event) {
         if (event.keyCode == 13) {
             $scope.localStorageService.set($scope.localStorageCustomSearchKey, angular.element("#txtCustomSearch").val());
@@ -116,13 +115,13 @@ function BindCustomerSearchBar($scope, $compile, dataTable) {
         }
     }
     $scope.dataTableSearch = function (event) {
-        
-        if(($scope.localStorageCustomSearchKey!=undefined))
+
+        if (($scope.localStorageCustomSearchKey != undefined))
             $scope.localStorageService.set($scope.localStorageCustomSearchKey, angular.element("#txtCustomSearch").val());
         dataTable.search(angular.element("#txtCustomSearch").val()).draw();
         setTimeout(function () { SetAnchorLinks() }, 200);
     }
-   
+
 
     if ($scope.customSearchKeyValue != undefined && $scope.customSearchKeyValue != '') {
         dataTable.search($scope.customSearchKeyValue).draw();
@@ -364,12 +363,12 @@ function showValidationErrors($scope, error) {
 var keylength = 4;
 var specialCharacter = "~";
 
-function encodeParams(toParams) {  
+function encodeParams(toParams) {
     if (toParams != undefined && toParams != null) {
         $.each(toParams, function (key, element) {
 
             if (element != undefined && element != null) {
-                if (!(element.indexOf(specialCharacter) > -1)) {                    
+                if (!(element.indexOf(specialCharacter) > -1)) {
                     toParams[key] = Encodestring(element);
 
                     //makeid(keylength) + "~" + element + "`" + makeid(keylength);
@@ -401,7 +400,7 @@ function decodeParams($stateParams) {
 }
 
 function SetAnchorLinks() {
-     
+
     $("a[href*='\\#']").each(function () {
 
         if (this.href.indexOf('?') > 0) {
@@ -488,9 +487,9 @@ function paddingLeft(stringvalue, paddingValue) {
 //            var opera2 = inputdateString.split(', ');
 //            lopera1 = opera1.length;
 //            lopera2 = opera2.length;
-           
+
 //            var dd = parseInt(opera1[0]);
-          
+
 //            var mm = opera1[1];
 //            if (mm.indexOf(',') > 0)
 //            {
@@ -571,7 +570,7 @@ function paddingLeft(stringvalue, paddingValue) {
 //}
 
 function validatedate(dateString) {
-  
+
     // First check for the pattern
     if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
         return false;
@@ -624,16 +623,16 @@ function createDatePicker(defautvalue) {
     $('.myDatePicker').bootstrapDP({
         format: 'mm/dd/yyyy',
         autoclose: true,
-        "setDate":  defautvalue == undefined? new Date() : ""
+        "setDate": defautvalue == undefined ? new Date() : ""
     });
 }
 
-function GetCSVFromJsonArray(objectArray, ColumnName) {    
+function GetCSVFromJsonArray(objectArray, ColumnName) {
     try {
         var valueArray = [];
         objectArray.forEach(function (entry) {
             var value = eval("entry." + ColumnName);
-            if (value != null && value !=undefined) {
+            if (value != null && value != undefined) {
                 valueArray.push(value);
             }
 
@@ -661,7 +660,7 @@ function SubstringWithMaxStringlength(dataStr, maxLimit) {
 }
 
 function GetDateDiff(dt1, dt2) {
-  
+
     /*
      * setup 'empty' return object
      */
@@ -675,14 +674,13 @@ function GetDateDiff(dt1, dt2) {
     /*
      * ensure dt2 > dt1
      */
-    if (dt1 > dt2)
-    {
+    if (dt1 > dt2) {
         var dtmp = dt2;
         dt2 = dt1;
         dt1 = dtmp;
     }
 
-    
+
     /*
      * First get the number of full years
      */
@@ -758,13 +756,12 @@ function SetInputValueWithMaxLength(object) {
 
 function ReplaceCSVWithPrefix(CSV, Replace, ReplaceWith) {
 
-  
+
     var regex = new RegExp(',', 'g');
-    if (CSV != undefined || CSV != null)
-    {
+    if (CSV != undefined || CSV != null) {
         return (CSV.replace(regex, ReplaceWith));
     }
-  
+
 }
 /*
 function encrypt(inputMessage) {
@@ -833,4 +830,17 @@ function BindSortingCommon(aoData, oSettings) {
         return;
     });
     return aoData;
+}
+function encryptedServerString(str) {
+    var key = CryptoJS.enc.Utf8.parse('8080808080808080');
+    var iv = CryptoJS.enc.Utf8.parse('8080808080808080');
+
+    var encryptedStr = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(str), key,
+        {
+            keySize: 128 / 8,
+            iv: iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+    return encryptedStr;
 }

@@ -125,6 +125,7 @@
 
         $scope.SelectedSubCategory = SubCategoryId;
         $state.go('.', { CategoryId: EncodededParentCategoryValue, SubCategoryId: EncodededChildCategoryValue, PageIndex: pageIndex }, { notify: false, reload: false, location: 'replace', inherit: true });
+        
         var CategoryObj = $filter('filter')($scope.CategoryList, { 'Category_Id': $scope.SelectedSubCategory }, true);
         if (CategoryObj != undefined && CategoryObj != null && CategoryObj.length > 0) {
             $scope.SelectedCategory = CategoryObj[0];
@@ -136,11 +137,15 @@
 
     $scope.GetProductListByCategoryAndStoreId = function () {
         if ($scope.SelectedSubCategory == -2) {
+
+            var encryptStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+            var encryptCustomerId = encryptedServerString(UserDetail.customer_id);
+
             $http.get(configurationService.basePath + "API/ProductApi/GetCustomerWishProductList?StoreID="
-                + $scope.StoreDetailInSession.store_id +
+                + encryptStoreId +
                 "&CategoryId=" + $scope.SelectedSubCategory +
                 "&PageIndex=" + $scope.SelectedPageIndex +
-                "&Customer_Id=" + UserDetail.customer_id +
+                "&Customer_Id=" + encryptCustomerId +
                 "&WhatAreYouLookingFor=" + $scope.WhatAreYouLookingFor +
                 "&SearchByFilterId=" + $scope.SearchByFilterId +
                 "&OrderById=" + $scope.SortById
@@ -161,16 +166,18 @@
 
                 });
         } else {
-            $http.get(configurationService.basePath + "API/ProductApi/GetProductListByCategoryAndStoreId?StoreID="
-                + $scope.StoreDetailInSession.store_id +
-                "&CategoryId=" + $scope.SelectedSubCategory +
-                "&PageIndex=" + $scope.SelectedPageIndex +
-                "&Customer_Id=" + UserDetail.customer_id +
-                "&WhatAreYouLookingFor=" + $scope.WhatAreYouLookingFor +
-                "&SearchByFilterId=" + $scope.SearchByFilterId +
-                "&OrderById=" + $scope.SortById
-            )
+
+            var obj = new Object();
+            obj.StoreID = $scope.StoreDetailInSession.store_id;
+            obj.CategoryId = $scope.SelectedSubCategory;
+            obj.PageIndex = $scope.SelectedPageIndex;
+            obj.Customer_Id = UserDetail.customer_id;
+            obj.WhatAreYouLookingFor = $scope.WhatAreYouLookingFor;
+            obj.SearchByFilterId = $scope.SearchByFilterId;
+            obj.OrderById = $scope.SortById;
+            $http.post(configurationService.basePath + "API/ProductApi/GetProductListByCategoryAndStoreId",obj)
                 .then(function (response) {
+                    
                     $scope.ProductList = response.data;
                     if ($scope.ProductList.length > 0) {
                         $scope.totalRecords = $scope.ProductList[0].TotalRecords;

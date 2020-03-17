@@ -261,6 +261,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Auth\AESEncrytDecry.cs" />
     <Compile Include="Auth\AuthFailureResult.cs" />
     <Compile Include="Auth\HttpAuthChallengeContextExtension.cs" />
     <Compile Include="Auth\JwtAuthentication.cs" />
@@ -504,7 +505,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:1012/CordobaAPI</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:1012/CordobaAPI</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:54564/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

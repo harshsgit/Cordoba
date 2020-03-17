@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CordobaAPI", "CordobaAPI\CordobaAPI.csproj", "{18A57A28-18E3-4670-AA2D-261F490A8C99}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -131,5 +131,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72D34A7F-8CF0-4A64-A00A-BBC641FDE595}
 	EndGlobalSection
 EndGlobal

@@ -116,7 +116,8 @@
                 <div class="row">
                     <div class="product-block" ng-repeat="product in ProductList">
                         <div class="product-img" ng-controller="AddProductToCartController">
-                            <img ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product" data-action="zoom" />
+                            <img ng-src="{{product.Image}}" onerror="angular.element(this).scope().SetNoImageSrc(this)" alt="product" ui-sref="LayoutProductDetail({ProductId:product.product_id})" title="{{product.name}}"  />
+                            
                             <button class="btn btnaddtocart add-cart-btn add_to_cart_dish" ng-click="AddProductToCart(product,$event)" data-label="Add to cart"> Add to Cart</button> <!--<i class="fa fa-opencart"></i>-->
                         </div>
                         <a href="" class="cursor-pointer" ui-sref="LayoutProductDetail({ProductId:product.product_id})" title="{{product.name}}" ng-bind="product.name"></a>

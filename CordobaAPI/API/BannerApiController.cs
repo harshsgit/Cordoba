@@ -78,7 +78,7 @@ namespace CordobaAPI.API
         }
 
         [HttpPost]
-        public HttpResponseMessage UploadBannerImage(int banner_id, int banner_image_id, string link, int sort_order)
+        public HttpResponseMessage UploadBannerImage(int banner_id, int banner_image_id, string link, int sort_order,int? categoryId)
         {
             //bool res = false;
             long res = 0;
@@ -111,7 +111,7 @@ namespace CordobaAPI.API
                             //string fileName = banner_id + "/" + banner_image_id + "/" + httpPostedFile.FileName;
                             
                             //res = _BannerServices.UploadBannerImage(banner_id, banner_image_id, link, sort_order, "data/" + CordobaCommon.Enum.CommonEnums.FolderName.BannerImage.ToString() + "/" + fileName, 0);
-                            res = _BannerServices.UploadBannerImage(banner_id, banner_image_id, link, sort_order, "data/" + CordobaCommon.Enum.CommonEnums.FolderName.BannerImage.ToString(), httpPostedFile.FileName, 0);
+                            res = _BannerServices.UploadBannerImage(banner_id, banner_image_id, link, sort_order, "data/" + CordobaCommon.Enum.CommonEnums.FolderName.BannerImage.ToString(), httpPostedFile.FileName, 0,categoryId);
 
                             string fileName = banner_id + "/" + res + "/" + httpPostedFile.FileName;
                             childFolderPath += "/" + res;
@@ -163,7 +163,7 @@ namespace CordobaAPI.API
             }
             else
             {
-                res = _BannerServices.UploadBannerImage(banner_id, banner_image_id, link, sort_order, null, null, 0);
+                res = _BannerServices.UploadBannerImage(banner_id, banner_image_id, link, sort_order, null, null, 0,categoryId);
                 if (res > 0)
                 {
                     result = true;

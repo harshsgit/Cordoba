@@ -35,8 +35,11 @@
     }];
 
     $scope.GetCustomerDetails = function () {
+        var encryptedCustomerId = encryptedServerString(UserDetail.customer_id);
+        var encryptedStoreId = encryptedServerString($scope.StoreDetailInSession.store_id);
+
         if (UserDetail.customer_id > 0) {
-            $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + UserDetail.customer_id + "&StoreId=" + $scope.StoreDetailInSession.store_id)
+            $http.get(configurationService.basePath + "API/LayoutDashboardAPI/CustomerDetailLayout?CustomerId=" + encryptedCustomerId + "&StoreId=" + encryptedStoreId)
                 .then(function (response) {
 
                     $rootScope.CustomerDetail.points = response.data.points;

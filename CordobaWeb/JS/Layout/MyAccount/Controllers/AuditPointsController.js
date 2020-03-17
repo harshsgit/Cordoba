@@ -19,8 +19,8 @@ app.controller('AuditPointsController', function ($timeout, StoreSessionDetail, 
 
 
     $scope.AuditPoints = function () {
-
-        $http.get(configurationService.basePath + "API/PointsAuditApi/GetPointsAuditList?customer_id=" + UserDetail.customer_id)
+        var encryptCustomerId = encryptedServerString(UserDetail.customer_id);
+        $http.get(configurationService.basePath + "API/PointsAuditApi/GetPointsAuditList?customer_id=" + encryptCustomerId)
             .then(function (response) {
                 if (response && response.data) {
                     $scope.AuditPointsList = response.data;

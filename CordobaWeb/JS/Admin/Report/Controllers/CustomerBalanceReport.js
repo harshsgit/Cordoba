@@ -174,8 +174,9 @@
                 'Content-type': 'application/json'
             },
             responseType: 'arraybuffer'
-        }).success(function (data, status, headers, config) {
-
+        }).then(function (response) {
+            var data = response.data;
+            var headers = response.headers;
             var type = headers('Content-Type');
             var disposition = headers('Content-Disposition');
             if (disposition) {
@@ -199,7 +200,8 @@
                 document.body.removeChild(downloadLink);
                 //window.open(objectUrl);
             }
-        }).error(function (data, status, headers, config) {
+        }, function (error) {
+
         });
 
     }

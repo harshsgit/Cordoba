@@ -409,6 +409,7 @@ function htmlParser(html, handler) {
   }
 
   function parseEndTag(tag, tagName) {
+     
     var pos = 0, i;
     tagName = angular.lowercase(tagName);
     if (tagName)
@@ -623,7 +624,13 @@ function htmlSanitizeWriter(buf, uriValidator) {
         out('<');
         out(tag);
         angular.forEach(attrs, function(value, key) {
-          var lkey=angular.lowercase(key);
+            console.log("Script/Txtangular-sanitize")
+            var lkey = '';
+if (key) {
+    lkey = key.toLowerCase();
+}
+
+          
           var isImage=(tag === 'img' && lkey === 'src') || (lkey === 'background');
           if ((lkey === 'style' && (value = validStyles(value)) !== '') || validCustomTag(tag, attrs, lkey, value) || validAttrs[lkey] === true &&
             (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {

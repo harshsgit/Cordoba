@@ -129,7 +129,7 @@
                                                         </a>-->
                                                         <div class="col-sm-6 checkbox" ng-repeat="Item in CategoryObj.StoreList">
                                                             <label>
-                                                                <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" ng-click="CheckUnCheckList($index)">
+                                                                <input type="checkbox" class="cursor-pointer" ng-model="Item.IsSelected" ng-change="CheckUnCheckList($index)">
                                                                 {{Item.name}}
                                                             </label>
                                                         </div>

@@ -189,7 +189,7 @@
                                 </div>
                                 <div class="search_products">
                                     <div class="input-group add-on">
-                                        <input name="srch-term" ng-model="WhatYouarelookingfor" placeholder="Search" id="srch-term" type="text" class="form-control autocomplete"  my-enter="GotoProductList(WhatYouarelookingfor)" typeahead="item for item in autoproductList | filter:$viewValue">
+                                        <input name="srch-term" autocomplete="off"  ng-model="WhatYouarelookingfor" placeholder="Search" id="srch-term" type="text" class="form-control autocomplete"  my-enter="GotoProductList(WhatYouarelookingfor)" typeahead="item for item in autoproductList | filter:$viewValue">
                                         @*<input auto-complete class="form-control add-on" ui-items="names" placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" ng-model="WhatYouarelookingfor" id="srch-term" type="text">*@
                                         @*<input class="form-control add-on" placeholder="Search" my-enter="GotoProductList(WhatYouarelookingfor)" name="srch-term" ng-model="WhatYouarelookingfor" id="srch-term" type="text">*@
                                         <div class="input-group-btn">
@@ -285,6 +285,7 @@
                                 <img src="~/Content/layout2/images/online-shopping.png" class="pt-20" alt="online-shopping">
                             </div>
                             <form name="loginForm" id="loginForm" ng-hide="IsVisibleloginForm" class="form-horizontal" novalidate method="post">
+                                @Html.AntiForgeryToken()
                                 <div class="login_page_right">
                                     <div class="form-group pt-20">
                                         <label for="email">Email:</label>
@@ -445,7 +446,7 @@
     </div>
 
     @Scripts.Render("~/bundles/Layout2AllJs?v=" + @Html.Raw(System.Configuration.ConfigurationManager.AppSettings["ApplicationVersion"]))
-
+    <script src="~/Scripts/aes.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {

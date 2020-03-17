@@ -155,6 +155,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
+                                                                <label class="col-lg-2 control-label ">Comment</label>
+                                                                <div class="col-lg-9">
+                                                                    <textarea type="text" class="form-control" name="Comment" rows="5" placeholder="Enter Comment" ng-model="CustomerObj.Comment"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label class="col-lg-2 control-label ">Store</label>
                                                                 <div class="col-lg-9">
                                                                     <select ng-options="store.store_id as store.name  for store in StoreList"

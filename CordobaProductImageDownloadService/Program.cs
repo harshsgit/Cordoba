@@ -86,6 +86,7 @@ namespace CordobaProductImageDownloadService
                     {
                         fileimageyrl = productCatalogue[i].image_full;
                         //request.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                        
                         request.DownloadFile(new Uri(productCatalogue[i].image_full_url), DirectoryPath + "//" + productCatalogue[i].image_full);
                         bool fileexists = System.IO.File.Exists(DirectoryPath + "//" + productCatalogue[i].image_full);
                         if (fileexists)
@@ -93,7 +94,7 @@ namespace CordobaProductImageDownloadService
                             UpdateStatusDownloadedImage(productCatalogue[i].product_id);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex) 
                     {
                         notdownloadableproducts.Add(objproductCatalogue);
                     }
@@ -187,7 +188,7 @@ namespace CordobaProductImageDownloadService
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

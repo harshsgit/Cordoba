@@ -382,7 +382,7 @@
                                                 <div class="well well-sm" style="height: 315px; overflow: auto;">
                                                     <div class="col-sm-6 checkbox" ng-repeat="item in ProductStoresList">
                                                         <label>
-                                                            <input type="checkbox" class="cursor-pointer" ng-model="item.IsSelected"  ng-click="bestSellerChecked(item.store_id,item.IsSelected)">
+                                                            <input type="checkbox" class="cursor-pointer" ng-model="item.IsSelected" ng-change="bestSellerChecked(item.store_id,item.IsSelected)">
                                                             &nbsp;{{item.name}}
                                                         </label>
                                                     </div>

@@ -119,7 +119,7 @@ namespace CordobaServices.Services
         //    }
         //}
 
-        public long UploadBannerImage(int banner_id, int banner_image_id, string link, int sort_order, string ImageName, string ImageFileName, int ImageKey)
+        public long UploadBannerImage(int banner_id, int banner_image_id, string link, int sort_order, string ImageName, string ImageFileName, int ImageKey,int? categoryId)
         {
             try
             {
@@ -129,7 +129,9 @@ namespace CordobaServices.Services
                     new SqlParameter("link",!string.IsNullOrWhiteSpace(link)?(object)link:(object)DBNull.Value),
                     new SqlParameter("sort_order" ,sort_order),
                     new SqlParameter("ImageName", !string.IsNullOrWhiteSpace(ImageName)?(object)ImageName:(object)DBNull.Value),
-                    new SqlParameter("ImageFileName",!string.IsNullOrWhiteSpace(ImageFileName)?(object)ImageFileName:(object)DBNull.Value)
+                    new SqlParameter("ImageFileName",!string.IsNullOrWhiteSpace(ImageFileName)?(object)ImageFileName:(object)DBNull.Value),
+                    new SqlParameter("categoryId",(categoryId!=null && categoryId>0)?(object)categoryId:(object)DBNull.Value)
+
                 };
                 int result = BannerEntityGenericRepository.ExecuteSQL<int>("UploadBannerImage", sqlParameter).FirstOrDefault();
                 return result;

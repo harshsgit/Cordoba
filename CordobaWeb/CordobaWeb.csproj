@@ -2624,6 +2624,10 @@
     <Content Include="Scripts\admin\js\plugins\visualization\echarts\echarts.js" />
     <Content Include="Scripts\admin\js\plugins\visualization\echarts\theme\limitless.js" />
     <Content Include="Scripts\admin\js\plugins\visualization\sparkline.min.js" />
+    <Content Include="Scripts\admin\js\upgrade\bootstrap.min.js" />
+    <Content Include="Scripts\admin\js\upgrade\jquery.min.js" />
+    <Content Include="Scripts\admin\js\upgrade\popper.min.js" />
+    <Content Include="Scripts\aes.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -3037,6 +3041,7 @@
     <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Scripts\ckeditor\skins\bootstrapck\skin.js" />
     <Content Include="Scripts\ckeditor\styles.js" />
+    <Content Include="Scripts\ckeditor\upgrade\ckeditor.js" />
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\dataTables.buttons.min.js" />
     <Content Include="Scripts\dataTables.fixedColumns.min.js" />
@@ -3845,11 +3850,19 @@
     <Content Include="Scripts\layout1\js\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Scripts\layout1\js\jquery.min.js" />
     <Content Include="Scripts\layout1\js\jquery.simpleLens.js" />
+    <Content Include="Scripts\layout1\js\upgrade\bootstrap.min.js" />
+    <Content Include="Scripts\layout1\js\upgrade\jquery.min.js" />
+    <Content Include="Scripts\layout1\js\upgrade\popper.min.js" />
     <Content Include="Scripts\layout1\js\velocity.min.js" />
     <Content Include="Scripts\layout2\js\bootstrap.min.js" />
     <Content Include="Scripts\layout2\js\jquery.flexslider.js" />
     <Content Include="Scripts\layout2\js\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Scripts\layout2\js\jquery.min.js" />
+    <Content Include="Scripts\layout2\js\upgrade\bootstrap.min.js" />
+    <Content Include="Scripts\layout2\js\upgrade\jquery-ui.min.js" />
+    <Content Include="Scripts\layout2\js\upgrade\jquery.min.js" />
+    <Content Include="Scripts\layout2\js\upgrade\jquery.slim.min.js" />
+    <Content Include="Scripts\layout2\js\upgrade\popper.min.js" />
     <Content Include="Scripts\menuscript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ng-ckeditor.js" />
@@ -3870,6 +3883,19 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.12.1.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\upgrade\angular-animate.js" />
+    <Content Include="Scripts\upgrade\angular-animate.min.js" />
+    <Content Include="Scripts\upgrade\angular-drag-and-drop-lists.min.js" />
+    <Content Include="Scripts\upgrade\angular-local-storage.js" />
+    <Content Include="Scripts\upgrade\angular-sanitize.js" />
+    <Content Include="Scripts\upgrade\angular-ui-router.js" />
+    <Content Include="Scripts\upgrade\angular-ui-router.min.js" />
+    <Content Include="Scripts\upgrade\angular-ui-switch.min.js" />
+    <Content Include="Scripts\upgrade\angular.js" />
+    <Content Include="Scripts\upgrade\bootstrap.min.js" />
+    <Content Include="Scripts\upgrade\dataTable.min.js" />
+    <Content Include="Scripts\upgrade\popper.min.js" />
+    <Content Include="Scripts\upgrade\textAngular-sanitize.js" />
     <Content Include="Templates\Admin\Banner\Index.html" />
     <Content Include="Templates\Admin\Banner\ManageBanner.html" />
     <Content Include="Templates\Admin\Category\Index.html" />
@@ -4128,7 +4154,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:1012</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:1012</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:51989/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

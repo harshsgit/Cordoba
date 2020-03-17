@@ -410,6 +410,7 @@ function htmlParser(html, handler) {
   }
 
   function parseEndTag(tag, tagName) {
+      
     var pos = 0, i;
     tagName = angular.lowercase(tagName);
     if (tagName) {
@@ -490,6 +491,8 @@ function htmlSanitizeWriter(buf, uriValidator) {
         out('<');
         out(tag);
         angular.forEach(attrs, function(value, key) {
+            debugger
+            console.log("Script/angular-sanitize")
           var lkey=angular.lowercase(key);
           var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
           if (validAttrs[lkey] === true &&

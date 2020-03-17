@@ -87,6 +87,11 @@ namespace CordobaAPI.API_Layout
         {
             try
             {
+                if (Convert.ToInt32(User.Identity.Name) != PlaceOrderObj.customer_id)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+                }
+
                 var result = _CartServices.PlaceOrder(PlaceOrderObj);
                 if (result != null)
                 {
@@ -104,11 +109,19 @@ namespace CordobaAPI.API_Layout
 
         [HttpGet]
         [JwtAuthentication]
-        public HttpResponseMessage GetCustmoreAddressList(int? store_id, int customer_id)
+        public HttpResponseMessage GetCustmoreAddressList(string store_id, string customer_id)
         {
             try
             {
-                var result = _CartServices.GetCustmoreAddressList(store_id, customer_id);
+                int CustID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(customer_id));
+                int storeID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(store_id));
+
+                if (Convert.ToInt32(User.Identity.Name) != CustID)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+                }
+
+                var result = _CartServices.GetCustmoreAddressList(storeID, CustID);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);

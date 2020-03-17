@@ -30,6 +30,7 @@ namespace CordobaWeb.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         // GET: Admin/Details/5
         public async Task<ActionResult> Login(UserEntity model)
         {            

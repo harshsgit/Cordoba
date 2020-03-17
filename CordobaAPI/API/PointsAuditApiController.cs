@@ -21,11 +21,19 @@ namespace CordobaAPI.API
 
         [HttpGet]
         [JwtAuthentication]
-        public HttpResponseMessage GetPointsAuditList(int customer_id)
+        public HttpResponseMessage GetPointsAuditList(string customer_id)
         {
             try
             {
-                var result = _PointsAuditServices.GetPointsAuditList(customer_id);
+                int CustID = Convert.ToInt32(AESEncrytDecry.DecryptStringAES(customer_id));
+
+
+                if (Convert.ToInt32(User.Identity.Name) != CustID)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Something wrong! Please try again later.");
+                }
+
+                var result = _PointsAuditServices.GetPointsAuditList(CustID);
                 if (result != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, result);

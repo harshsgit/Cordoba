@@ -17,10 +17,9 @@
     <link href="~/Content/admin/css/components.css" rel="stylesheet" type="text/css">
     <link href="~/Content/admin/css/colors.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
-    
     <!-- Core JS files -->
     <script type="text/javascript" src="~/Scripts/admin/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/admin/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/admin/js/upgrade/jquery.min.js"></script>
     <script type="text/javascript" src="~/Scripts/admin/js/core/libraries/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/admin/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
@@ -70,7 +69,7 @@
                     <!-- Simple login form -->
                    @using (Html.BeginForm("Login", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                    {
-                  
+                    @Html.AntiForgeryToken()
                      <div class="panel panel-body login-form">
                          <div class="text-center">
                              <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>

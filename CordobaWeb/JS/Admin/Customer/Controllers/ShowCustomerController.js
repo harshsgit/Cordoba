@@ -1,6 +1,6 @@
 ﻿app.controller('ShowCustomerController', function ($timeout, $state, $http, $rootScope, $stateParams, $filter, $scope, $window, $state, notificationFactory, configurationService, $compile, $interval, DTOptionsBuilder, $http, $log, $q, $sce, localStorageService) {
     //#region CallGlobalFunctions
-    
+
     decodeParams($stateParams);
     BindToolTip();
     Tab();
@@ -10,7 +10,7 @@
     $scope.IsStoreDropDownEnabled = false;
     createDatePicker();
     $scope.dtOptions = DTOptionsBuilder.newOptions()
-                 .withOption('bDestroy', true)
+        .withOption('bDestroy', true)
     $scope.PageTitle = "Show Customer";
 
     $scope.CustomerFilter = new Object();
@@ -23,7 +23,7 @@
     $scope.CustomerFilter.date_added = "";
     $scope.CustomerFilter.storeId = "";
     $scope.CustomerFilter.storeId = $scope.StoreId;
-    
+
 
     if ($stateParams.CustomerApproved != undefined && $stateParams.CustomerApproved != null) {
         $scope.CustomerFilter.approved = $stateParams.CustomerApproved;
@@ -238,9 +238,9 @@
 
                 {
                     "mData": "date_added", "bSortable": true
-                  , "render": function (data, type, row) {
-                      return $filter('date')(data, $rootScope.GlobalDateFormat);
-                  }
+                    , "render": function (data, type, row) {
+                        return $filter('date')(data, $rootScope.GlobalDateFormat);
+                    }
                 },
                 {
                     "mData": null, "bSortable": true,
@@ -293,9 +293,7 @@
             column = $filter('filter')($scope.GridParams, { name: "SortColumns" }, true);
             //  alert(JSON.stringify(column));
         }
-
         $http({
-            //url: configurationService.basePath + 'api/Customerapi/CustomerExportToExcel?PageIndex=' + 1 + "&customerName=" + $scope.CustomerFilter.customerName + "&email=" + $scope.CustomerFilter.email + "&customer_group_id=" + $scope.CustomerFilter.customer_group_id + "&status=" + $scope.CustomerFilter.status + "&approved=" + $scope.CustomerFilter.approved + "&ip=" + $scope.CustomerFilter.ip + "&date_added=" + $scope.CustomerFilter.date_added + "&storeId=" + ($scope.CustomerFilter.storeId == null ? 0 : $scope.CustomerFilter.storeId),
             url: configurationService.basePath + 'api/Customerapi/CustomerExportToExcel?PageIndex=' + 1 + "&customerName=" + $scope.CustomerFilter.customerName + "&email=" + $scope.CustomerFilter.email + "&customer_group_id=" + $scope.CustomerFilter.customer_group_id + "&status=" + $scope.CustomerFilter.status + "&approved=" + $scope.CustomerFilter.approved + "&ip=" + $scope.CustomerFilter.ip + "&date_added=" + $scope.CustomerFilter.date_added + "&storeId=" + ($scope.CustomerFilter.storeId == null ? 0 : $scope.CustomerFilter.storeId + "&UserId=" + userid),
             method: "POST",
             'dataSrc': 'aaData',
@@ -305,8 +303,9 @@
                 'Content-type': 'application/json'
             },
             responseType: 'arraybuffer'
-        }).success(function (data, status, headers, config) {
-
+        }).then(function (response) {
+            var data = response.data;
+            var headers = response.headers;
             var type = headers('Content-Type');
             var disposition = headers('Content-Disposition');
             if (disposition) {
@@ -330,42 +329,42 @@
                 document.body.removeChild(downloadLink);
                 //window.open(objectUrl);
             }
-        }).error(function (data, status, headers, config) {
-        });
+        }, function (error) {
 
+        });
     }
 
 
 
     function GetCustomerGroupList() {
         $http.get(configurationService.basePath + "api/CustomerGroupApi/GetCustomerGroupList?StoreId=" + $scope.StoreId + '&LoggedInUserId=' + $scope.LoggedInUserId)
-          .then(function (response) {
-              if (response.data.length > 0) {
-                  $scope.CustomerGroupList = response.data;
-              }
-          })
-      .catch(function (response) {
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.CustomerGroupList = response.data;
+                }
+            })
+            .catch(function (response) {
 
-      })
-      .finally(function () {
+            })
+            .finally(function () {
 
-      });
+            });
     }
 
     function GetStoreList() {
         $http.get(configurationService.basePath + "api/StoreApi/GetStoreList?StoreId=" + $scope.StoreId + '&LoggedInUserId=' + $scope.LoggedInUserId)
-          .then(function (response) {
-              if (response.data.length > 0) {
-                  $scope.StoreList = response.data;
-                  $scope.CustomerFilter.storeId = $scope.StoreId;
-              }
-          })
-      .catch(function (response) {
+            .then(function (response) {
+                if (response.data.length > 0) {
+                    $scope.StoreList = response.data;
+                    $scope.CustomerFilter.storeId = $scope.StoreId;
+                }
+            })
+            .catch(function (response) {
 
-      })
-      .finally(function () {
+            })
+            .finally(function () {
 
-      });
+            });
     }
 
     $scope.CheckStoreDropDownEnabled = function () {
@@ -389,7 +388,7 @@
         GetCustomerGroupList();
         GetStoreList();
         $scope.GetCustomerList();
-        $scope.CustomerFilter.storeId = (localStorageService.get(userid + "_Customer_Store") != "" || localStorageService.get(userid + "_Customer_Store") != null) ?localStorageService.get(userid + "_Customer_Store"):0;
+        $scope.CustomerFilter.storeId = (localStorageService.get(userid + "_Customer_Store") != "" || localStorageService.get(userid + "_Customer_Store") != null) ? localStorageService.get(userid + "_Customer_Store") : 0;
     }
 
     Init();

@@ -13,6 +13,9 @@ namespace CordobaModels.Entities
         public string Link { get; set; }
         public string Image { get; set; }
         public Nullable<int> SortOrder { get; set; }
+        public int? parentCategoryId { get; set; }
+        public int? categoryId { get; set; }
+        public int bannerImageId { get; set; }
     }
 }
 
